@@ -3,7 +3,7 @@ import 'fontsource-roboto';
 import Song from './Song'
 import axios from 'axios'
 
-function Home() {
+function Allsongs() {
 
     const [songs, setSongs] = useState([])
 
@@ -16,24 +16,27 @@ function Home() {
   return (
   <div className="App">
     <header className="App-header">
+      <div className={"all-songs-container"}>
         {songs.map((song, i) => (
             <Song
               id={song.id}
-              youtubeLink={song.Youtube_link}
-              albumId={song.Album_id}
-              artistId={song.Artist_id}
-              title={song.Title}
-              length={song.Length}
+              youtubeLink={song.youtube_link}
+              albumId={song.album_id}
+              artistId={song.artist_id}
+              title={song.title}
+              length={song.length}
               trackNumber={song.track_number}
-              lyrics={song.Lyrics}
-              createdAt={song.Created_at}
-              uploadAt={song.Upload_at}
+              lyrics={song.lyrics}
+              createdAt={song.created_at}
+              uploadAt={song.upload_at}
+              coverImg={song.cover_img}
             >
             </Song>
         ))}
+      </div>
     </header>
   </div>
   );
 }
 
-export default Home;
+export default Allsongs;

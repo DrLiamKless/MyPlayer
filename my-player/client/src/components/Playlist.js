@@ -14,6 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { CardMedia } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,22 +38,17 @@ const useStyles = makeStyles((theme) => ({
   }));
  
 
-function Song(props) {
+function Playlist(props) {
 
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
 
-
+const date = new Date(props.createdAt);
   return (
-    <div className={"song"}>
+    <div className={"playlist"}>
    <Card>
       <CardHeader
         avatar={
-          <Avatar alt="artist img" src={props.coverImg}>
+          <Avatar alt="playlist img" src={"https://i.pinimg.com/originals/2f/cc/e8/2fcce87dd6b29a3a8615cb9e6f434af6.png"}>
           </Avatar>
         }
         action={
@@ -60,10 +56,14 @@ function Song(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={props.title}
-        // subheader="song's artist"
+        title={props.name}
+        subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()}
       />
-      <div className="auto-resizable-iframe" dangerouslySetInnerHTML={{ __html: props.youtubeLink }}/>
+      <CardMedia
+        className={classes.media}
+        image="https://www.fusionsoundmix.com/image/catalog/pre-mixed-music-home.png"
+        title="playlist image"
+      />
       <CardContent>
       </CardContent>
       <CardActions disableSpacing>
@@ -73,25 +73,13 @@ function Song(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show Lyrics"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Lyrics:</Typography>
+          <Typography paragraph>Songs:</Typography>
           <Typography paragraph>
-            {props.lyrics}
+            {props.songsList}
           </Typography>
         </CardContent>
-      </Collapse>
     </Card>
     </div>
 
@@ -101,4 +89,4 @@ function Song(props) {
   )
 }
 
-export default Song;
+export default Playlist;
