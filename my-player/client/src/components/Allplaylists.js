@@ -21,8 +21,8 @@ function Allplaylists() {
       <div className={"all-playlists-container"}>
         {playlists.map(playlist => (
             <Playlist
-              key={playlist.id}
-              id={playlist.id}
+              key={playlist.playlist_id}
+              id={playlist.playlist_id}
               name={playlist.name}
               createdAt={playlist.created_at}
               uploadAt={playlist.upload_at}

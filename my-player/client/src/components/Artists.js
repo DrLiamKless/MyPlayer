@@ -56,9 +56,9 @@ function Artists() {
                                 title={artist.name}
                                 titlePosition="top"
                                 actionIcon={
-                                    <IconButton aria-label={`star ${artist.name}`} className={classes.icon}>
-                                    <StarBorderIcon />
-                                    </IconButton>
+                                  <IconButton aria-label={`star ${artist.name}`} className={classes.icon}>
+                                  <StarBorderIcon />
+                                  </IconButton>
                                 }
                                 actionPosition="left"
                                 className={classes.titleBar}

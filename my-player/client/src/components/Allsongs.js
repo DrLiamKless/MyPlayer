@@ -19,7 +19,7 @@ function Allsongs() {
       <div className={"all-songs-container"}>
         {songs.map((song, i) => (
             <Song
-              id={song.id}
+              id={song.song_id}
               youtubeLink={song.youtube_link}
               albumId={song.album_id}
               artistId={song.artist_id}

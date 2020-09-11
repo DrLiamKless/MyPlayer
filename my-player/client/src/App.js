@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import 'fontsource-roboto';
-import Home from './components/Allsongs';
+import Home from './components/Home/Home';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import Admin from './components/Admin';
@@ -22,6 +22,7 @@ function App() {
       <Topbar></Topbar>
       <Router>
       <Sidebar></Sidebar>
+        <Route path={"/Home"} exact component={Home}/>
         <Route path="/Allsongs" exact component={Allsongs}/>
         <Route path="/Admin" exact component={Admin}/>
         <Route path="/Allartists" exact component={Artists}/>

@@ -5,10 +5,10 @@ const app = express();
 app.use(express.json())
 
 const db = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'Liam1234',
-    database : 'myplayer'
+    host:'localhost',
+    user:'root',
+    password:'Liam1234',
+    database:'myplayer'
 });
 
 db.connect((err) => {
@@ -46,9 +46,18 @@ app.get('/playlists', (req,res) => {
     })
 })
 
-// Get top 20 songs - for now its 2
+// Get newest songs
+app.get('/newest_songs', (req,res) => {
+    const sql = 'Select * from songs ORDER BY created_at DESC LIMIT 5'
+    db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results)
+    })
+})
+
+// Get top 20 songs
 app.get('/top_songs', (req,res) => {
-    const sql = 'Select * from songs LIMIT 2'
+    const sql = 'SELECT * FROM songs INNER JOIN interactions ON songs.song_id = interactions.song_id WHERE is_liked = 1 LIMIT 20;'
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -73,9 +82,9 @@ app.get('/top_albums', (req,res) => {
     })
 })
 
-// Get top 20 playlists - for now its 1
+// Get top 20 playlists
 app.get('/top_playlists', (req,res) => {
-    const sql = 'Select * from playlists LIMIT 1'
+    const sql = 'Select * from playlists'
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
