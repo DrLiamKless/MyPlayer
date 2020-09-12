@@ -14,7 +14,7 @@ function TopPlaylists() {
     }, []);
   
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"home-section"} style={{backgroundColor: "rgb(43,19,21)"}}>
         <p>Your Most Favorite Playlists</p>
         <div className={"all-songs-container"}>
             {topPlaylists.map((playlist, i) => (

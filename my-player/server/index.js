@@ -46,9 +46,18 @@ app.get('/playlists', (req,res) => {
     })
 })
 
+// Get all albums
+app.get('/albums', (req,res) => {
+    const sql = 'Select * from albums'
+    db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results)
+    })
+})
+
 // Get newest songs
 app.get('/newest_songs', (req,res) => {
-    const sql = 'Select * from songs ORDER BY created_at DESC LIMIT 5'
+    const sql = 'Select * from songs INNER JOIN artists ON songs.artist_id = artists.artist_id ORDER BY created_at DESC LIMIT 10'
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -57,7 +66,7 @@ app.get('/newest_songs', (req,res) => {
 
 // Get top 20 songs
 app.get('/top_songs', (req,res) => {
-    const sql = 'SELECT * FROM songs INNER JOIN interactions ON songs.song_id = interactions.song_id WHERE is_liked = 1 AND user_id = 1 LIMIT 20;'
+    const sql = 'SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id INNER JOIN interactions ON songs.song_id = interactions.song_id WHERE is_liked = 1 AND user_id = 1 LIMIT 20;'
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -91,9 +100,9 @@ app.get('/top_playlists', (req,res) => {
     })
 })
 
-// Get a specific song by id
-app.get('/song/:id', (req,res) => {
-    const sql = `SELECT * FROM songs WHERE id = ${req.params.id}`
+// Get a specific song by title
+app.get('/song/:title', (req,res) => {
+    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE title LIKE "%${req.params.title}%" `
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)
@@ -102,7 +111,7 @@ app.get('/song/:id', (req,res) => {
 
 // Get a specific artist by id
 app.get('/artist/:id', (req,res) => {
-    const sql = `SELECT * FROM artists WHERE id = ${req.params.id}`
+    const sql = `SELECT * FROM artists WHERE atist_id = ${req.params.id}`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)
@@ -111,7 +120,7 @@ app.get('/artist/:id', (req,res) => {
 
 // Get a specific album by id
 app.get('/album/:id', (req,res) => {
-    const sql = `SELECT * FROM albums WHERE id = ${req.params.id}`
+    const sql = `SELECT * FROM albums WHERE album_id = ${req.params.id}`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)
@@ -120,7 +129,7 @@ app.get('/album/:id', (req,res) => {
 
 // Get a specific playlist by id
 app.get('/playlist/:id', (req,res) => {
-    const sql = `SELECT * FROM playlists WHERE id = ${req.params.id}`
+    const sql = `SELECT * FROM playlists WHERE playlist_id = ${req.params.id}`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)
@@ -133,7 +142,6 @@ app.post('/song', (req,res) => {
     const sql = 'INSERT INTO songs SET ?';
     db.query(sql, newSong, (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -144,7 +152,6 @@ app.post('/album', (req,res) => {
     const sql = 'INSERT INTO albums SET ?';
     db.query(sql, newAlbum, (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -155,29 +162,26 @@ app.post('/playlist', (req,res) => {
     const sql = 'INSERT INTO playlists SET ?';
     db.query(sql, newPlaylist, (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
 
 // Insert artist to artists:
-app.post('/playlist', (req,res) => {
+app.post('/artist', (req,res) => {
     const newArtist = req.body;
-    const sql = 'INSERT INTO playlists SET ?';
+    const sql = 'INSERT INTO artists SET ?';
     db.query(sql, newArtist, (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
 
 // update a song from songs
-app.put('/song/:id', (req,res) => {
+app.put('/song', (req,res) => {
     const update = req.body
-    const sql = 'UPDATE songs SET title = ?, artist_id = ? WHERE id = ?';
-    db.query(sql, [update.title, update.artist_id, req.params.id], (err, result) => {
+    const sql = 'UPDATE songs SET title = ?, artist_id = ? WHERE title = ?';
+    db.query(sql, [update.title, update.artist_id, req.params.title], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -188,7 +192,6 @@ app.put('/artist/:id', (req,res) => {
     const sql = 'UPDATE artist SET name = ?, cover_img = ? WHERE id = ?';
     db.query(sql, [update.name, update.cover_img, req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -199,8 +202,7 @@ app.put('/album/:id', (req,res) => {
     const sql = 'UPDATE albums SET name = ? WHERE id = ?';
     db.query(sql, [update.name, req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
-        res.json(result)
+        res.json(result) 
     })
 })
 
@@ -210,7 +212,6 @@ app.put('/playlist/:id', (req,res) => {
     const sql = 'UPDATE playlists SET name = ?, cover_img = ? WHERE id = ?';
     db.query(sql, [update.name, update.cover_img, req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -220,7 +221,6 @@ app.delete('/song/:id', (req,res) => {
     const sql = 'DELETE FROM songs WHERE id = ?';
     db.query(sql, [req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -230,7 +230,6 @@ app.delete('/artist/:id', (req,res) => {
     const sql = 'DELETE FROM artists WHERE id = ?';
     db.query(sql, [req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -240,7 +239,6 @@ app.delete('/album/:id', (req,res) => {
     const sql = 'DELETE FROM albums WHERE id = ?';
     db.query(sql, [req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })
@@ -250,7 +248,6 @@ app.delete('/playlist/:id', (req,res) => {
     const sql = 'DELETE FROM playlists WHERE id = ?';
     db.query(sql, [req.params.id], (err, result) => {
         if (err) throw (err);
-        console.log(result);
         res.json(result)
     })
 })

@@ -49,50 +49,50 @@ function Song(props) {
 
   return (
     <div className={"song"}>
-   <Card>
-      <CardHeader
-        avatar={
-          <Avatar alt="artist img" src={props.coverImg}>
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={props.title}
-        // subheader="song's artist"
-      />
-      <div className="auto-resizable-iframe" dangerouslySetInnerHTML={{ __html: props.youtubeLink }}/>
-      <CardContent>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Like">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show Lyrics"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Card>
+        <CardHeader
+          avatar={
+            <Avatar alt="artist img" src={props.coverImg}>
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={props.title}
+          // subheader="song's artist"
+        />
+        <div className="auto-resizable-iframe" dangerouslySetInnerHTML={{ __html: props.youtubeLink }}/>
         <CardContent>
-          <Typography paragraph>Lyrics:</Typography>
-          <Typography paragraph>
-            {props.lyrics}
-          </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <IconButton aria-label="Like">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show Lyrics"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>Lyrics:</Typography>
+            <Typography paragraph>
+              {props.lyrics}
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
     </div>
 
 

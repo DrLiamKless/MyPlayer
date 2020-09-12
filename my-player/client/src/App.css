@@ -11,6 +11,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-top: 20vh;
 }
 
 .all-songs-container {
@@ -24,11 +25,14 @@
   margin-left: 13vw;
 }
 
+.first-home-section{
+  padding-bottom: 20vh;
+  width: 100vw;
+}
 
 .home-section{
-  margin-top: 8vh;
-  padding-top: 8vh;
-  padding-bottom: 12vh;
+  padding-top: 12vh;
+  padding-bottom: 20vh;
   width: 100vw;
 }
 
@@ -46,6 +50,10 @@
 .all-artists-container{
   margin-top: 70px;
   margin-bottom: 10px;
+  margin-left: 11vw;
+}
+
+.all-artists-header{
   margin-left: 11vw;
 }
 
@@ -91,4 +99,15 @@
 
 #top-bar img {
   height: 10vh;
+}
+
+.add-artist-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.add-artist-modal{
+  margin-top: 16px;
+  margin-left: auto;
 }

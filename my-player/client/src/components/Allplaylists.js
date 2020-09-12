@@ -5,6 +5,7 @@ import Song from './Song'
 import Playlist from './Playlist';
 import { Container, Typography } from '@material-ui/core';
 
+
 function Allplaylists() {
 
     const [playlists, setPlaylists] = useState([])
@@ -18,6 +19,7 @@ function Allplaylists() {
   return (
   <div className="App">
     <header className="App-header">
+      <p>All Playlists</p>
       <div className={"all-playlists-container"}>
         {playlists.map(playlist => (
             <Playlist

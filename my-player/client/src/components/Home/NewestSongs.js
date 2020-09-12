@@ -19,6 +19,7 @@ function NewestSongs() {
         <div className={"all-songs-container"}>
             {newestSongs.map((song, i) => (
                 <Song
+                key={song.song_id}
                 id={song.song_id}
                 youtubeLink={song.youtube_link}
                 albumId={song.album_id}

@@ -6,14 +6,6 @@ import TopPlaylists from './TopPlaylists'
 import axios from 'axios'
 
 function Home() {
-
-    const [newestSongs, setnNewsetSongs] = useState([])
-
-    useEffect(() => {
-      axios.get("/newest_songs").then((res) => {
-          setnNewsetSongs(res.data)
-      });
-    }, []);
   
   return (
   <div className="App">

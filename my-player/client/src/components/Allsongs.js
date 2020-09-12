@@ -16,6 +16,7 @@ function Allsongs() {
   return (
   <div className="App">
     <header className="App-header">
+      <p>All Songs</p>
       <div className={"all-songs-container"}>
         {songs.map((song, i) => (
             <Song

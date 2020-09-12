@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'fontsource-roboto';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -7,13 +7,15 @@ import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SearchIcon from '@material-ui/icons/Search';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
+import Search from './Search'
 
 
 function Sidebar() {
 
-    const [sideBarOpen, setSideBarOpen] = useState(false)
+    const [sideBarOpen, setSideBarOpen] = useState(true)
 
   return (
     <div>
@@ -44,6 +46,9 @@ function Sidebar() {
             <SubMenu title="My user" icon={<AccountCircleIcon/>}>
                 <MenuItem>settings</MenuItem>
                 <MenuItem>Admin <Link to="/Admin"/></MenuItem>
+            </SubMenu>
+            <SubMenu title="Search" icon={<SearchIcon/>}>
+            <Search></Search>
             </SubMenu>
             </Menu>
         </ProSidebar>

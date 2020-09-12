@@ -46,6 +46,7 @@ function Artists() {
   
   return (
     <header className="App-header">
+      <p  className="all-artists-header">All Artists</p>
         <div className={"all-artists-container"}>
             <div className={classes.root}>
                 <GridList cellHeight={150} spacing={2} className={classes.gridList}>
