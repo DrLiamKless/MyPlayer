@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { read } from "../wrappers/ajax"
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -38,9 +39,8 @@ function Artists() {
     const classes = useStyles();
 
     useEffect(() => {
-      axios.get("/artists").then((res) => {
-          setArtists(res.data)
-          console.log(res.data)
+      read("/artists").then((res) => {
+        setArtists(res)
       });
     }, []);
   

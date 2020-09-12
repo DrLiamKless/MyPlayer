@@ -18,9 +18,9 @@ function Home() {
   return (
   <div className="App">
     <header className="App-header">
-      <TopSongs></TopSongs>
-      <NewestSongs></NewestSongs>
-      <TopPlaylists></TopPlaylists>
+        <TopSongs></TopSongs>
+        <NewestSongs></NewestSongs>
+        <TopPlaylists></TopPlaylists>
     </header>
   </div>
   );

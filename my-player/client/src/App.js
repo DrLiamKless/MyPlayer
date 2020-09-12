@@ -22,7 +22,7 @@ function App() {
       <Topbar></Topbar>
       <Router>
       <Sidebar></Sidebar>
-        <Route path={"/Home"} exact component={Home}/>
+        <Route path={"/"} exact component={Home}/>
         <Route path="/Allsongs" exact component={Allsongs}/>
         <Route path="/Admin" exact component={Admin}/>
         <Route path="/Allartists" exact component={Artists}/>

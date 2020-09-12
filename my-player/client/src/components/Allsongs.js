@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { read } from "../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from './Song'
-import axios from 'axios'
 
 function Allsongs() {
 
     const [songs, setSongs] = useState([])
 
     useEffect(() => {
-      axios.get("/songs").then((res) => {
-          setSongs(res.data)
+      read("/songs").then((res) => {
+        setSongs(res)
       });
     }, []);
   

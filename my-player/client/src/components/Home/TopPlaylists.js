@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
 import Playlist from '../Playlist'
-import axios from 'axios'
 
 function TopPlaylists() {
 
     const [topPlaylists, setTopPlaylists] = useState([])
 
     useEffect(() => {
-      axios.get("/top_playlists").then((res) => {
-        setTopPlaylists(res.data)
+      read("/top_playlists").then((res) => {
+        setTopPlaylists(res)
       });
     }, []);
   

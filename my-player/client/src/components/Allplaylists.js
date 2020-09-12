@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { read } from "../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from './Song'
-import axios from 'axios'
 import Playlist from './Playlist';
 import { Container, Typography } from '@material-ui/core';
 
@@ -10,8 +10,8 @@ function Allplaylists() {
     const [playlists, setPlaylists] = useState([])
 
     useEffect(() => {
-      axios.get("/playlists").then((res) => {
-          setPlaylists(res.data)
+      read("/playlists").then((res) => {
+        setPlaylists(res)
       });
     }, []);
   

@@ -57,7 +57,7 @@ app.get('/newest_songs', (req,res) => {
 
 // Get top 20 songs
 app.get('/top_songs', (req,res) => {
-    const sql = 'SELECT * FROM songs INNER JOIN interactions ON songs.song_id = interactions.song_id WHERE is_liked = 1 LIMIT 20;'
+    const sql = 'SELECT * FROM songs INNER JOIN interactions ON songs.song_id = interactions.song_id WHERE is_liked = 1 AND user_id = 1 LIMIT 20;'
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
