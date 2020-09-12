@@ -55,7 +55,7 @@ function AddAlbum({ artists }) {
   } 
 
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}}>
+    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}} >
     <Container component="main" maxWidth="xs" >
     <CssBaseline />
     <div className={classes.paper}>

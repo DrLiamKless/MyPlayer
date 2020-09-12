@@ -21,7 +21,7 @@ function Admin() {
   }, []);
   
   return (
-    <div className="App" style={{marginLeft: "10vw"}}>
+    <div className="App" >
     <header className="App-header">
       <AddSong albums={albums} artists={artists}></AddSong>
       <AddAlbum artists={artists}></AddAlbum>
