@@ -1,13 +1,11 @@
 import React from 'react';
-import { create } from "../../wrappers/ajax"
+import { create } from "../../../wrappers/ajax"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
 import TextField from '@material-ui/core/TextField';
-import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
@@ -36,66 +34,50 @@ const useStyles = makeStyles((theme) => ({
 }));;
 
 
-function AddAlbum({ artists }) {
+function AddArtist() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const {register: newAlbum, errors: newAlbumErrors, handleSubmit: handleNewAlbum} = useForm()
+  const {register: newArtist, errors: newArtistErrors, handleSubmit: handleNewArtist} = useForm()
 
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const onSubmitAlbum = data => {
-    create("/album", data)
+  const onSubmitArtist = data => {
+    create("/artist", data)
   } 
 
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}} >
+    <div className={"home-section"} style={{backgroundColor: "rgba(43,19,21,0.9)"}}>
     <Container component="main" maxWidth="xs" >
-    <CssBaseline />
-    <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LibraryMusicIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Add a new Album
-      </Typography>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <RecordVoiceOverIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Add a new artist
+        </Typography>
         <form  
             className={classes.form}
-            noValidate onSubmit={handleNewAlbum(onSubmitAlbum)}>
-            <div>
-              <InputLabel id="label">Artist</InputLabel>
-              <Select fullWidth placeholder="artists" native inputRef={newAlbum} name="artist_id" variant="outlined">
-              {artists.map(artist => (<option key={artist.name} value={artist.artist_id}>{artist.name}</option>))}
-              </Select>
-            </div>
+            noValidate onSubmit={handleNewArtist(onSubmitArtist)}>
             <TextField
                 variant="outlined"
                 margin="normal"
-                inputRef={newAlbum}
+                inputRef={newArtist}
                 required
                 fullWidth
                 name="name"
                 label="Name"
             />
             <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={newAlbum}
-            required
-            fullWidth
-            name="created_at"
-            label="Created at: YY-MM-DD"
-          />
+                variant="outlined"
+                margin="normal"
+                inputRef={newArtist}
+                required
+                fullWidth
+                name="cover_img"
+                label="Cover image"
+            />
             <TextField
                 variant="outlined"
                 margin="normal"
-                inputRef={newAlbum}
+                inputRef={newArtist}
                 required
                 fullWidth
                 name="upload_at"
@@ -104,12 +86,11 @@ function AddAlbum({ artists }) {
             <Button
                 type="submit"
                 variant="contained"
-                fullWidth
                 color="primary"
                 className={classes.submit}
-                inputRef={newAlbum}
+                inputRef={newArtist}
             >
-                Add album
+                Add artist
             </Button>
             </form>
             </div>
@@ -118,4 +99,4 @@ function AddAlbum({ artists }) {
   );
 }
 
-export default AddAlbum;
+export default AddArtist;

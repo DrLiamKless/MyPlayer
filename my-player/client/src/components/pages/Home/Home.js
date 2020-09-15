@@ -3,7 +3,6 @@ import 'fontsource-roboto';
 import NewestSongs from './NewestSongs'
 import TopSongs from './TopSongs'
 import TopPlaylists from './TopPlaylists'
-import axios from 'axios'
 
 function Home() {
   

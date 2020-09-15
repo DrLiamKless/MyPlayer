@@ -1,5 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
+const router = express.Router()
 
 const app = express();
 app.use(express.json())
@@ -57,7 +58,7 @@ app.get('/albums', (req,res) => {
 
 // Get newest songs
 app.get('/newest_songs', (req,res) => {
-    const sql = 'Select * from songs INNER JOIN artists ON songs.artist_id = artists.artist_id ORDER BY created_at DESC LIMIT 10'
+    const sql = 'Select * from songs INNER JOIN artists ON songs.artist_id = artists.artist_id ORDER BY created_at DESC LIMIT 8'
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)

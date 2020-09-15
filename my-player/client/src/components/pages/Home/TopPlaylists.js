@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../../wrappers/ajax"
+import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
-import Playlist from '../Playlist'
+import Playlist from '../../Playlist'
 
 function TopPlaylists() {
 

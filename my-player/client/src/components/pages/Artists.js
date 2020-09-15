@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../wrappers/ajax"
+import { read } from "../../wrappers/ajax"
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';

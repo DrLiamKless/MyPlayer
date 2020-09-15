@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../wrappers/ajax"
+import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
-import Song from './Song'
+import Song from '../Song'
 import { useParams } from "react-router-dom";
 
 function SingleSong({ props, singleSong }) {
@@ -11,7 +11,6 @@ function SingleSong({ props, singleSong }) {
 
     useEffect(() => {
       read(`/song/${title}`).then((res) => {
-        console.log(res[0])
         setSingleSongObject(res[0])
       });
     },[singleSongObject]);

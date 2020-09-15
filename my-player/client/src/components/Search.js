@@ -40,7 +40,7 @@ function Search() {
                                     title={`by ${song.name}`}>
                                     <span>{song.title}</span>
                                 </Tooltip>
-                                <IconButton aria-label="delete">
+                                <IconButton>
                                     <Avatar alt="artist img" src={song.cover_img}/>
                                     <Link to={`/SingleSong/${song.title}`}/>
                                 </IconButton>
