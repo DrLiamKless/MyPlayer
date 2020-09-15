@@ -8,7 +8,7 @@ function TopPlaylists() {
     const [topPlaylists, setTopPlaylists] = useState([])
 
     useEffect(() => {
-      read("/top_playlists").then((res) => {
+      read("/playlists/top").then((res) => {
         setTopPlaylists(res)
       });
     }, []);

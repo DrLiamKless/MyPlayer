@@ -39,7 +39,7 @@ function AddArtist() {
   const {register: newArtist, errors: newArtistErrors, handleSubmit: handleNewArtist} = useForm()
 
   const onSubmitArtist = data => {
-    create("/artist", data)
+    create("/artists/add", data)
   } 
 
   return (

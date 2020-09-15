@@ -8,7 +8,7 @@ function TopSongs() {
     const [topSongs, setTopSongs] = useState([])
 
     useEffect(() => {
-      read("/top_songs").then((res) => {
+      read("/songs/top").then((res) => {
         setTopSongs(res)
       });
     }, []);

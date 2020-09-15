@@ -10,7 +10,7 @@ function SingleSong({ props, singleSong }) {
   const [singleSongObject, setSingleSongObject] = useState([])
 
     useEffect(() => {
-      read(`/song/${title}`).then((res) => {
+      read(`/songs/${title}`).then((res) => {
         setSingleSongObject(res[0])
       });
     },[singleSongObject]);

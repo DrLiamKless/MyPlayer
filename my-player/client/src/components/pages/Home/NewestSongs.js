@@ -8,7 +8,7 @@ function NewestSongs() {
     const [newestSongs, setnNewsetSongs] = useState([])
 
     useEffect(() => {
-      read("/newest_songs").then((res) => {
+      read("/songs/newest").then((res) => {
         setnNewsetSongs(res)
       });
     }, []);

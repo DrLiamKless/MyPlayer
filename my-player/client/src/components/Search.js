@@ -20,7 +20,7 @@ function Search() {
     const [serachOutputs, setSearchOutputs] = useState([])
 
     useEffect(() => {
-        read(`/song/${searchInput}`).then((res) => {
+        read(`/songs/search/${searchInput}`).then((res) => {
         setSearchOutputs(res)
         });
       }, [searchInput]);

@@ -51,7 +51,7 @@ function AddAlbum({ artists }) {
   };
 
   const onSubmitAlbum = data => {
-    create("/album", data)
+    create("/albums/add", data)
   } 
   
   return (
