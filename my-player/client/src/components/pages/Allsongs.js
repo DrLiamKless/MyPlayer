@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../wrappers/ajax"
-import 'fontsource-roboto';
-import Song from './Song'
+import { read } from "../../wrappers/ajax"
+import Song from '../Song'
 
 function Allsongs() {
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../../wrappers/ajax"
+import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
-import Playlist from '../Playlist'
+import Playlist from '../../Playlist'
 
 function TopPlaylists() {
 
     const [topPlaylists, setTopPlaylists] = useState([])
 
     useEffect(() => {
-      read("/top_playlists").then((res) => {
+      read("/playlists/top").then((res) => {
         setTopPlaylists(res)
       });
     }, []);

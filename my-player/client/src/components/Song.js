@@ -63,7 +63,7 @@ function Song(props) {
           title={props.title}
           // subheader="song's artist"
         />
-        <div className="auto-resizable-iframe" dangerouslySetInnerHTML={{ __html: props.youtubeLink }}/>
+        <iframe src={props.youtubeLink}></iframe>
         <CardContent>
         </CardContent>
         <CardActions disableSpacing>

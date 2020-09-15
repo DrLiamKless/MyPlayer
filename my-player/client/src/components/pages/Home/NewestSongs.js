@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../../wrappers/ajax"
+import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
-import Song from '../Song'
+import Song from '../../Song'
 
-function TopSongs() {
+function NewestSongs() {
 
-    const [topSongs, setTopSongs] = useState([])
+    const [newestSongs, setnNewsetSongs] = useState([])
 
     useEffect(() => {
-      read("/top_songs").then((res) => {
-        setTopSongs(res)
+      read("/songs/newest").then((res) => {
+        setnNewsetSongs(res)
       });
     }, []);
   
   return (
-    <div className={"first-home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
-        <p>Your Most Favorite Songs</p>
+    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
+        <p>New Music For You</p>
         <div className={"all-songs-container"}>
-            {topSongs.map((song, i) => (
+            {newestSongs.map((song, i) => (
                 <Song
                 key={song.song_id}
                 id={song.song_id}
@@ -38,4 +38,4 @@ function TopSongs() {
   );
 }
 
-export default TopSongs;
+export default NewestSongs;

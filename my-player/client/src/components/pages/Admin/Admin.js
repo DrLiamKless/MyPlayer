@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { read } from "../../wrappers/ajax"
+import { read } from "../../../wrappers/ajax"
 import AddSong from './AddSong';
 import AddArtist from './AddArtist';
 import AddAlbum from './AddAlbum';

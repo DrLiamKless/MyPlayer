@@ -20,7 +20,7 @@ function Search() {
     const [serachOutputs, setSearchOutputs] = useState([])
 
     useEffect(() => {
-        read(`/song/${searchInput}`).then((res) => {
+        read(`/songs/search/${searchInput}`).then((res) => {
         setSearchOutputs(res)
         });
       }, [searchInput]);
@@ -40,7 +40,7 @@ function Search() {
                                     title={`by ${song.name}`}>
                                     <span>{song.title}</span>
                                 </Tooltip>
-                                <IconButton aria-label="delete">
+                                <IconButton>
                                     <Avatar alt="artist img" src={song.cover_img}/>
                                     <Link to={`/SingleSong/${song.title}`}/>
                                 </IconButton>

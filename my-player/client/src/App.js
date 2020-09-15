@@ -2,14 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css';
 import 'fontsource-roboto';
-import Home from './components/Home/Home';
+import Home from './components/pages/Home/Home';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
-import Admin from './components/Admin/Admin';
-import Allsongs from './components/Allsongs';
-import Artists from './components/Artists';
-import Allplaylists from './components/Allplaylists';
-import SingleSong from './components/SingleSong';
+import Admin from './components/pages/Admin/Admin';
+import Allsongs from './components/pages/Allsongs';
+import Artists from './components/pages/Artists';
+import Allplaylists from './components/pages/Allplaylists';
+import SingleSong from './components/pages/SingleSong';
+import SinglePlaylist from './components/pages/SinglePlaylist';
+import Playlist from './components/Playlist';
+
 
 
 function App() {
@@ -23,6 +26,7 @@ function App() {
         <Route path="/Admin" exact component={Admin}/>
         <Route path="/Allartists" exact component={Artists}/>
         <Route path="/Allplaylists" exact component={Allplaylists}/>
+        <Route path="/singlePlaylist/:id" exact component={SinglePlaylist}/>
         <Route path="/singleSong/:title" exact component={SingleSong}/>
       </Router>
     </div>
