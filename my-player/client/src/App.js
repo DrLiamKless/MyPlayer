@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './App.css';
 import 'fontsource-roboto';
 import Home from './components/pages/Home/Home';
@@ -21,13 +21,15 @@ function App() {
       <Topbar></Topbar>
       <Router>
       <Sidebar></Sidebar>
+      <Switch>
         <Route path={"/"} exact component={Home}/>
         <Route path="/Allsongs" exact component={Allsongs}/>
         <Route path="/Admin" exact component={Admin}/>
         <Route path="/Allartists" exact component={Artists}/>
         <Route path="/Allplaylists" exact component={Allplaylists}/>
         <Route path="/singlePlaylist/:id" exact component={SinglePlaylist}/>
-        <Route path="/singleSong/:title" exact component={SingleSong}/>
+        <Route path="/singleSong/:id" exact component={SingleSong}/>
+      </Switch>
       </Router>
     </div>
   );

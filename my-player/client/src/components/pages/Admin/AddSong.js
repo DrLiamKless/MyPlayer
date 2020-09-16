@@ -95,7 +95,7 @@ function AddSong({ artists, albums }) {
             inputRef={newSong}
             required
             fullWidth
-            name="title"
+            name="song_name"
             label="Name"
           />
           <TextField

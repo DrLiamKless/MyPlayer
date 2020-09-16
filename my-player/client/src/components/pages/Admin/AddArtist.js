@@ -62,7 +62,7 @@ function AddArtist() {
                 inputRef={newArtist}
                 required
                 fullWidth
-                name="name"
+                name="artist_name"
                 label="Name"
             />
             <TextField
@@ -71,7 +71,7 @@ function AddArtist() {
                 inputRef={newArtist}
                 required
                 fullWidth
-                name="cover_img"
+                name="artist_cover_img"
                 label="Cover image"
             />
             <TextField

@@ -33,17 +33,19 @@ function Search() {
                 </IconButton>
                 <div className="search-ouput-container">
                     {serachOutputs.map(song =>(
-                        <div key={song.title} className="search-output" style={{width: "max-content"}}>
+                        <div key={song.song_name} className="search-output" style={{width: "max-content"}}>
                                 <Tooltip 
                                     TransitionComponent={Fade}
                                     TransitionProps={{ timeout: 600 }}
-                                    title={`by ${song.name}`}>
-                                    <span>{song.title}</span>
+                                    title={`by ${song.artist_name}`}>
+                                    <span>{song.song_name}</span>
                                 </Tooltip>
-                                <IconButton>
-                                    <Avatar alt="artist img" src={song.cover_img}/>
-                                    <Link to={`/SingleSong/${song.title}`}/>
-                                </IconButton>
+                                    <Link to={`/SingleSong/${song.artist_id}`}>
+                                        <IconButton>
+                                            <Avatar alt="artist img" src={song.artist_cover_img}/>
+                                        </IconButton>
+                                    </Link>
+
                         </div> 
                     ))}
                 </div>

@@ -52,9 +52,9 @@ function Artists() {
                 <GridList cellHeight={150} spacing={2} className={classes.gridList}>
                     {artists.map((artist) => (
                         <GridListTile key={artist.name} cols={1}>
-                            <img src={artist.cover_img} alt={artist.name} />
+                            <img src={artist.artist_cover_img} alt={artist.name} />
                             <GridListTileBar
-                                title={artist.name}
+                                title={artist.artist_name}
                                 titlePosition="top"
                                 actionIcon={
                                   <IconButton aria-label={`star ${artist.name}`} className={classes.icon}>

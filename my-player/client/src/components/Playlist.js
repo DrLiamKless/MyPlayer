@@ -18,8 +18,9 @@ import { CardMedia } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     media: {
-      height: 0,
+      height: 120,
       paddingTop: '56.25%', // 16:9
+    
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -55,24 +56,27 @@ const date = new Date(props.createdAt);
             <MoreVertIcon />
           </IconButton>
         }
-        title={props.name}
+        title={props.playlist_name}
         subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()}
       />
       <CardMedia
+        component="img"
         className={classes.media}
-        image="https://www.fusionsoundmix.com/image/catalog/pre-mixed-music-home.png"
         title="playlist image"
-      />
+        src="https://www.adobe.com/content/dam/cc/us/en/creativecloud/video/discover/how-to-mix-music/desktop/mix-music_P1_900x420.jpg.img.jpg"
+      ></CardMedia>
       <CardContent>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="Like">
           <FavoriteIcon />
         </IconButton>
+        <Link to={`/singlePlaylist/${props.id}`}>
         <IconButton>
           <PlayArrowIcon>
           </PlayArrowIcon>
         </IconButton>
+        </Link>
       </CardActions>
         <CardContent>
           <Typography paragraph>Songs:</Typography>

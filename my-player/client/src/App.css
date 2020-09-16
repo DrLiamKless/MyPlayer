@@ -2,6 +2,64 @@
   text-align: center;
 }
 
+.song-logo {
+  height: 13vh;
+  pointer-events: all;
+  cursor: pointer;
+ }
+
+.logo-container {
+  height: 13vh;
+}
+
+ .logo-container:hover .logo{
+height: 15vh;
+}
+
+.album-container {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 13vh;
+}
+
+.album-logo {
+  height: 13vh;
+  width: auto;
+  pointer-events: all;
+  cursor: pointer;
+  position: absolute;
+  left: 4vw;
+ }
+
+.back-logo{
+  height: 13vh;
+  pointer-events: all;
+  cursor: pointer;
+  margin-left: 5vw;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .song-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .back-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .App-header {
   background-color: rgb(82,65,44, 0.9);
   min-height: 100vh;
@@ -12,6 +70,14 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding-top: 20vh;
+}
+
+.carousel-item {
+  padding-left: 10px;
+}
+
+.carousel-container {
+  padding-left: 79px;
 }
 
 .all-songs-container {

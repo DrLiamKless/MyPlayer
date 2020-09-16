@@ -80,7 +80,7 @@ function AddAlbum({ artists }) {
                 inputRef={newAlbum}
                 required
                 fullWidth
-                name="name"
+                name="album_name"
                 label="Name"
             />
             <TextField

@@ -23,13 +23,13 @@ function Allsongs() {
               youtubeLink={song.youtube_link}
               albumId={song.album_id}
               artistId={song.artist_id}
-              title={song.title}
+              song_name={song.song_name}
               length={song.length}
               trackNumber={song.track_number}
               lyrics={song.lyrics}
               createdAt={song.created_at}
               uploadAt={song.upload_at}
-              coverImg={song.cover_img}
+              artistCoverImg={song.artist_cover_img}
             >
             </Song>
         ))}
