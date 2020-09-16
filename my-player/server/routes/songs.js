@@ -1,5 +1,5 @@
 const express = require("express");
-let router = express.Router();
+const router = express.Router();
 const db = require('../connection')
 
 // Get all songs
@@ -38,9 +38,9 @@ router.get('/search/:song_name', (req,res) => {
     })
 })
 
-// Get a specific song by title for the searching  zone
-router.get('/single/:id', (req,res) => {
-    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE song_id = ${req.params.id}`
+// Get a specific song by id for the searching  zone
+router.get('/song/:id', (req,res) => {
+    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE song_id = '${req.params.id}'`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

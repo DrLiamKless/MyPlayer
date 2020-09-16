@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import 'fontsource-roboto';
 import TopAlbums from './TopAlbums'
 import TopSongs from './TopSongs'
 import TopPlaylists from './TopPlaylists'
+import TopArtists from './TopArtists'
 
-function Home() {
+function Home({ setSongToPlay }) {
   
   return (
   <div className="App">
     <header className="App-header">
-        <TopSongs></TopSongs>
+        <TopSongs setSongToPlay={setSongToPlay}></TopSongs>
         <TopAlbums></TopAlbums>
+        <TopArtists></TopArtists>
         <TopPlaylists></TopPlaylists>
     </header>
   </div>

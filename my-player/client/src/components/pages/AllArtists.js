@@ -7,7 +7,6 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import 'fontsource-roboto';
-import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-function Artists() {
+function AllArtists() {
 
     const [artists, setArtists] = useState([])
     const classes = useStyles();
@@ -73,4 +72,4 @@ function Artists() {
   );
 }
 
-export default Artists;
+export default AllArtists;

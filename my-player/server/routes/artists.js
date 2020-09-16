@@ -1,5 +1,5 @@
 const express = require("express");
-let router = express.Router();
+const router = express.Router();
 const db = require('../connection')
 
 // Get all artists
@@ -13,7 +13,16 @@ router.get('/', (req,res) => {
 
 // Get top 20 artists - for now its 10
 router.get('/top', (req,res) => {
-    const sql = 'Select * from artists LIMIT 10'
+    const sql = 
+    `SELECT artists.artist_id,
+    artists.artist_name,
+    artists.artist_cover_img,
+    artists.upload_at, SUM(play_count) AS countSum 
+FROM songs
+JOIN interactions
+ON songs.song_id = interactions.song_id
+JOIN artists ON songs.artist_id = artists.artist_id
+GROUP BY artists.artist_id ORDER BY countSum DESC`
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -21,8 +30,35 @@ router.get('/top', (req,res) => {
 })
 
 // Get a specific artist by id
-router.get('/:id', (req,res) => {
-    const sql = `SELECT * FROM artists WHERE atist_id = ${req.params.id}`
+router.get('/artist/:id', (req,res) => {
+    const sql = `SELECT * FROM artists WHERE artist_id = '${req.params.id}'`
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    })
+})
+
+// get a all songs by artist (limit 5)
+router.get('/songsList/:id', (req,res) => {
+    const sql =
+    `SELECT a.artist_id, s.song_id, s.song_name 
+    FROM artists AS a 
+    JOIN songs_by_artists AS sba ON a.artist_id = sba.artist_id
+    JOIN songs AS s ON s.song_id = sba.song_id
+    WHERE a.artist_id = '${req.params.id}' LIMIT 5`
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    })
+})
+
+// get a all albums by artist (limit 5)
+router.get('/albumsList/:id', (req,res) => {
+    const sql =
+    `SELECT * FROM artists AS ar 
+    JOIN albums_by_artists AS aba ON ar.artist_id = aba.artist_id
+    JOIN albums AS al ON al.artist_id = aba.artist_id
+    WHERE ar.artist_id = '${req.params.id}' GROUP BY al.album_id LIMIT 5`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

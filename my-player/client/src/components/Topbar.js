@@ -1,5 +1,4 @@
 import React from 'react';
-import Carousle from './carousle';
 
 function Topbar() {
   return (

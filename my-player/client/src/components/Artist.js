@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   }));
  
 
-function Song({ song, setSongToPlay }) {
+function Song({ artist, setSongToPlay }) {
 
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -52,45 +52,14 @@ function Song({ song, setSongToPlay }) {
     <div className={"song"}>
       <Card className={classes.card}>
         <CardHeader
-          avatar={
-            <Avatar alt="artist img" src={song.artist_cover_img}>
-            </Avatar>
-          }
-          title={song.song_name}
           disableTypography={false}
-          // subheader="song's artist"
-        ></CardHeader>
+          title={artist.artist_name}
+          ></CardHeader>
         <CardContent className={"logo-container"}>
-        <Link to={`/song/${song.song_id}`}>
-        {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} className="logo" className="song-logo" alt="logo" />}
+        <Link to={`/artist/${artist.artist_id}`}>
+        {<img src={artist.artist_cover_img} className="logo" className="artist-logo" alt="logo" />}
         </Link>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="Like">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="play" onClick={()=>{setSongToPlay(song.youtube_link)}}>
-            <PlayArrowIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show Lyrics"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Lyrics:</Typography>
-            <Typography paragraph>
-              {song.lyrics}
-            </Typography>
-          </CardContent>
-        </Collapse>
       </Card>
     </div>
 
