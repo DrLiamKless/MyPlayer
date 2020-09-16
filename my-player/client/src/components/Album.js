@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }));
  
 
-function Song(props) {
+function Album(props) {
 
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -48,21 +48,25 @@ function Song(props) {
 
 
   return (
-    <div className={"song"}>
+    <div className={"Album"}>
       <Card className={classes.card}>
         <CardHeader
           avatar={
             <Avatar alt="artist img" src={props.artistCoverImg}>
             </Avatar>
           }
-          title={props.song_name}
+          title={props.album_name}
           disableTypography={false}
           // subheader="song's artist"
         ></CardHeader>
-        <CardContent className={"logo-container"}>
-        {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} className="logo" className="song-logo" alt="logo" />}
-        </CardContent>
         {/* <iframe src={props.youtubeLink}></iframe> */}
+        <CardContent>
+        <div className={"album-container"}>
+        {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} 
+        className="back-logo" alt="logo" />}
+        {<img src={props.albumCoverImg} className="album-logo" alt="logo" />}
+        </div>
+        </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="Like">
             <FavoriteIcon />
@@ -83,10 +87,6 @@ function Song(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Lyrics:</Typography>
-            <Typography paragraph>
-              {props.lyrics}
-            </Typography>
           </CardContent>
         </Collapse>
       </Card>
@@ -98,4 +98,4 @@ function Song(props) {
   )
 }
 
-export default Song;
+export default Album;

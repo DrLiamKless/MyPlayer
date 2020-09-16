@@ -21,7 +21,7 @@ function SinglePlaylist({ props, singleSong }) {
                   <Playlist
                     key={singlePlaylistObject.playlist_id}
                     id={singlePlaylistObject.playlist_id}
-                    name={singlePlaylistObject.name}
+                    name={singlePlaylistObject.playlist_name}
                     createdAt={singlePlaylistObject.created_at}
                     uploadAt={singlePlaylistObject.upload_at}
                     coverImg={singlePlaylistObject.cover_img}

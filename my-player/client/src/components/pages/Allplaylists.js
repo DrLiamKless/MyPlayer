@@ -6,6 +6,8 @@ import SinglePlaylist from './SinglePlaylist';
 
 
 
+
+
 function Allplaylists() {
 
     const [playlists, setPlaylists] = useState([])
@@ -16,6 +18,7 @@ function Allplaylists() {
       });
     }, []);
   
+
   return (
   <div className="App">
     <header className="App-header">
@@ -28,11 +31,12 @@ function Allplaylists() {
               name={playlist.name}
               createdAt={playlist.created_at}
               uploadAt={playlist.upload_at}
-              coverImg={playlist.cover_img}
+              playlistCoverImg={playlist.playlist_cover_img}
               songsList={playlist.list_of_songs}
             >
             </Playlist>
         ))}
+      
       </div>
     </header>
   </div>

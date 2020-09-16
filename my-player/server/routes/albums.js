@@ -13,7 +13,13 @@ router.get('/', (req,res) => {
 
 // Get top 20 albums - for now its 2
 router.get('/top', (req,res) => {
-    const sql = 'Select * from albums LIMIT 2'
+    const sql = 
+    `SELECT * from (albums INNER JOIN artists ON albums.artist_id = artists.artist_id)
+         INNER JOIN
+         (SELECT album_id, SUM(play_count) AS playsSum FROM myplayer.songs AS s 
+         INNER JOIN 
+         myplayer.interactions AS i ON s.song_id = i.song_id
+         GROUP BY album_id ORDER BY playsSum DESC) AS sumTable ON albums.album_id = sumTable.album_id`
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)

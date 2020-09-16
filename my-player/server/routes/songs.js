@@ -30,8 +30,17 @@ router.get('/top', (req,res) => {
 })
 
 // Get a specific song by title for the searching  zone
-router.get('/search/:title', (req,res) => {
-    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE title LIKE "${req.params.title}%" ORDER BY title ASC `
+router.get('/search/:song_name', (req,res) => {
+    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE song_name LIKE "${req.params.song_name}%" ORDER BY song_name ASC `
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    })
+})
+
+// Get a specific song by title for the searching  zone
+router.get('/single/:id', (req,res) => {
+    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE song_id = ${req.params.id}`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

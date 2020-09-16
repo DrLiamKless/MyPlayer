@@ -5,12 +5,12 @@ import Song from '../Song'
 import { useParams } from "react-router-dom";
 
 function SingleSong({ props, singleSong }) {
-  let { title } = useParams() 
+  let { id } = useParams() 
 
   const [singleSongObject, setSingleSongObject] = useState([])
 
     useEffect(() => {
-      read(`/songs/${title}`).then((res) => {
+      read(`/songs/single/${id}`).then((res) => {
         setSingleSongObject(res[0])
       });
     },[singleSongObject]);
@@ -23,13 +23,13 @@ function SingleSong({ props, singleSong }) {
               youtubeLink={singleSongObject.youtube_link}
               albumId={singleSongObject.album_id}
               artistId={singleSongObject.artist_id}
-              title={singleSongObject.title}
+              song_name={singleSongObject.song_name}
               length={singleSongObject.length}
               trackNumber={singleSongObject.track_number}
               lyrics={singleSongObject.lyrics}
               createdAt={singleSongObject.created_at}
               uploadAt={singleSongObject.upload_at}
-              coverImg={singleSongObject.cover_img}
+              artistCoverImg={singleSongObject.artist_cover_img}
             >
             </Song>
     </header>

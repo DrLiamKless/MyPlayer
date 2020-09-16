@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'fontsource-roboto';
-import NewestSongs from './NewestSongs'
+import TopAlbums from './TopAlbums'
 import TopSongs from './TopSongs'
 import TopPlaylists from './TopPlaylists'
 
@@ -10,7 +10,7 @@ function Home() {
   <div className="App">
     <header className="App-header">
         <TopSongs></TopSongs>
-        <NewestSongs></NewestSongs>
+        <TopAlbums></TopAlbums>
         <TopPlaylists></TopPlaylists>
     </header>
   </div>

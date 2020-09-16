@@ -13,7 +13,10 @@ router.get('/', (req,res) => {
 
 // Get top 20 playlists
 router.get('/top', (req,res) => {
-    const sql = 'Select * from playlists'
+    const sql = `
+    SELECT *, SUM(play_count) FROM songs_in_playlists INNER JOIN interactions 
+    WHERE songs_in_playlists.song_id = interactions.song_id
+    GROUP BY playlist_id ORDER BY play_count DESC`
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
