@@ -5,7 +5,7 @@ import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from '../../Song'
 
-function TopSongs() {
+function TopSongs({ setSongToPlay }) {
 
     const [topSongs, setTopSongs] = useState([])
 
@@ -43,17 +43,8 @@ function TopSongs() {
           {topSongs.map((song, i) => (
                 <Song
                 key={song.song_id}
-                id={song.song_id}
-                youtubeLink={song.youtube_link}
-                albumId={song.album_id}
-                artistId={song.artist_id}
-                song_name={song.song_name}
-                length={song.length}
-                trackNumber={song.track_number}
-                lyrics={song.lyrics}
-                createdAt={song.created_at}
-                uploadAt={song.upload_at}
-                artistCoverImg={song.artist_cover_img}
+                song={song}
+                setSongToPlay={setSongToPlay}
                 />
             ))}
             </Carousel>

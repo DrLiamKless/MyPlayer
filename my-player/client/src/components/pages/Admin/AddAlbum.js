@@ -38,17 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AddAlbum({ artists }) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const {register: newAlbum, errors: newAlbumErrors, handleSubmit: handleNewAlbum} = useForm()
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const onSubmitAlbum = data => {
     create("/albums/add", data)

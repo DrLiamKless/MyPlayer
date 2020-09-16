@@ -3,15 +3,15 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
-import Album from '../../Album'
+import Artist from '../../Artist'
 
 function TopAlbums() {
 
-    const [topAlbums, setTopAlbums] = useState([])
+    const [topArtists, setTopArtists] = useState([])
 
     useEffect(() => {
-      read("/albums/top").then((res) => {
-        setTopAlbums(res)
+      read("/artists/top").then((res) => {
+        setTopArtists(res)
       });
     }, []);
 
@@ -31,8 +31,8 @@ function TopAlbums() {
   }
   
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
-        <p>Your most favorite albums</p>
+    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+        <p>Your most favorite artists</p>
         <Carousel
               responsive={responsive}
               keyBoardControl={true}
@@ -40,11 +40,12 @@ function TopAlbums() {
               itemClass="carousel-item"
               infinite
               >
-            {topAlbums.map((album, i) => (
-                <Album
-                key={album.album_id}
-                album={album}
-                />
+            {topArtists.map((artist, i) => (
+                <Artist className={"song"}
+                key={artist.artist_id}
+                artist={artist}
+                >
+                </Artist>
             ))}
             </Carousel>
         </div>     

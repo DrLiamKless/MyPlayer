@@ -1,5 +1,5 @@
 const express = require("express");
-let router = express.Router();
+const router = express.Router();
 const db = require('../connection')
 
 // Get all playlists
@@ -14,9 +14,12 @@ router.get('/', (req,res) => {
 // Get top 20 playlists
 router.get('/top', (req,res) => {
     const sql = `
-    SELECT *, SUM(play_count) FROM songs_in_playlists INNER JOIN interactions 
+    SELECT * FROM playlists JOIN (SELECT playlist_id, SUM(play_count) AS sum 
+    FROM songs_in_playlists INNER JOIN interactions 
     WHERE songs_in_playlists.song_id = interactions.song_id
-    GROUP BY playlist_id ORDER BY play_count DESC`
+    GROUP BY playlist_id) AS SumTable 
+    ON playlists.playlist_id = SumTable.playlist_id
+    ORDER BY sum DESC`
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -26,6 +29,20 @@ router.get('/top', (req,res) => {
 // Get a specific playlist by id
 router.get('/:id', (req,res) => {
     const sql = `SELECT * FROM playlists WHERE playlist_id = ${req.params.id}`
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    });
+});
+
+// Get all songs from a playlist
+router.get('/songsList/:id', (req,res) => {
+    const sql = 
+    `SELECT p.playlist_id, s.song_id, s.song_name 
+    FROM playlists AS p 
+    JOIN songs_in_playlists AS sip ON p.playlist_id = sip.playlist_id
+    JOIN songs AS s ON s.song_id = sip.song_id
+    WHERE p.playlist_id = '${req.params.id}'`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

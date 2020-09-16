@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { read } from "../wrappers/ajax"
+
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
+import { brown } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { CardMedia } from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 
@@ -32,58 +34,70 @@ const useStyles = makeStyles((theme) => ({
     expandOpen: {
       transform: 'rotate(180deg)',
     },
-    avatar: {
-      backgroundColor: red[500],
+    card: {
+      backgroundColor: brown[500],
     },
   }));
  
 
-function Playlist(props) {
+function Playlist({ playlist }) {
 
     const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
+    const [songsList, setSongsList] = useState([]);
+  
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
 
-const date = new Date(props.createdAt);
+    useEffect(() => {
+      read(`/playlists/songsList/${playlist.playlist_id}`).then((res) => {
+        setSongsList(res)
+        // console.log(songsList)
+      });
+    }, []);
+
+const date = new Date(playlist.created_at);
   return (
-    <div className={"playlist"}>
-   <Card>
+    <div className={"playlist"} >
+   <Card className={classes.card}>
       <CardHeader
-        avatar={
-          <Avatar alt="playlist img" src={props.coverImg}>
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={props.playlist_name}
+        title={playlist.playlist_name}
         subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()}
       />
-      <CardMedia
-        component="img"
-        className={classes.media}
-        title="playlist image"
-        src="https://www.adobe.com/content/dam/cc/us/en/creativecloud/video/discover/how-to-mix-music/desktop/mix-music_P1_900x420.jpg.img.jpg"
-      ></CardMedia>
-      <CardContent>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Like">
-          <FavoriteIcon />
-        </IconButton>
-        <Link to={`/singlePlaylist/${props.id}`}>
-        <IconButton>
-          <PlayArrowIcon>
-          </PlayArrowIcon>
-        </IconButton>
-        </Link>
-      </CardActions>
-        <CardContent>
-          <Typography paragraph>Songs:</Typography>
-          <Typography paragraph>
-            {props.songsList}
-          </Typography>
+      <Link to={`/singlePlaylist/${playlist.playlist_id}`}>
+        <CardContent className={"logo-container"}>
+          <img src={playlist.playlist_cover_img} className="logo" className="artist-logo" alt="logo"></img>
         </CardContent>
+      </Link>
+      <CardActions disableSpacing>
+          <IconButton aria-label="Like">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="play">
+            <PlayArrowIcon />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show songs list"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>songs:</Typography>
+              {songsList.map((song, i) => (
+                <Link to={`/song/${song.song_id}?playlist=${song.playlist_id}`}>
+                  <p>{song.song_name}</p>
+                </Link>
+              ))}
+          </CardContent>
+        </Collapse>
     </Card>
     </div>
 

@@ -1,5 +1,5 @@
 const express = require("express");
-let router = express.Router();
+const router = express.Router();
 const db = require('../connection')
 
 // Get all albums
@@ -15,11 +15,11 @@ router.get('/', (req,res) => {
 router.get('/top', (req,res) => {
     const sql = 
     `SELECT * from (albums INNER JOIN artists ON albums.artist_id = artists.artist_id)
-         INNER JOIN
-         (SELECT album_id, SUM(play_count) AS playsSum FROM myplayer.songs AS s 
-         INNER JOIN 
-         myplayer.interactions AS i ON s.song_id = i.song_id
-         GROUP BY album_id ORDER BY playsSum DESC) AS sumTable ON albums.album_id = sumTable.album_id`
+    INNER JOIN
+    (SELECT album_id, SUM(play_count) AS playsSum FROM myplayer.songs AS s 
+    INNER JOIN 
+    myplayer.interactions AS i ON s.song_id = i.song_id
+    GROUP BY album_id) AS sumTable ON albums.album_id = sumTable.album_id ORDER BY playsSum DESC`
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -27,8 +27,17 @@ router.get('/top', (req,res) => {
 })
 
 // Get a specific album by id
-router.get('/:id', (req,res) => {
-    const sql = `SELECT * FROM albums WHERE album_id = ${req.params.id}`
+router.get('/album/:id', (req,res) => {
+    const sql = `SELECT * FROM albums INNER JOIN artists ON albums.artist_id = artists.artist_id WHERE albums.album_id = '${req.params.id}'`
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    })
+})
+
+// Get all songs from an album
+router.get('/songsList/:id', (req , res) => {
+    const sql = `SELECT * FROM songs WHERE songs.album_id = '${req.params.id}'`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

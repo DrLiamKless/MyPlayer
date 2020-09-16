@@ -11,9 +11,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
 
 
-
-
-
 function Search() {
 
     const [searchInput, setSearchInput] = useState([])
@@ -40,7 +37,7 @@ function Search() {
                                     title={`by ${song.artist_name}`}>
                                     <span>{song.song_name}</span>
                                 </Tooltip>
-                                    <Link to={`/SingleSong/${song.artist_id}`}>
+                                    <Link to={`/song/${song.song_id}`}>
                                         <IconButton>
                                             <Avatar alt="artist img" src={song.artist_cover_img}/>
                                         </IconButton>

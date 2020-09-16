@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
-import Playlist from '../Playlist'
+import Artist from '../Artist'
 import { useParams } from "react-router-dom";
 
 function SinglePlaylist({ props, singleSong }) {
   let { id } = useParams() 
 
-  const [singlePlaylistObject, setSinglePlaylistObject] = useState([])
+  const [singleArtist, setSingleArtist] = useState([])
 
     useEffect(() => {
-      read(`/playlists/${id}`).then((res) => {
-        setSinglePlaylistObject(res[0])
+      read(`/artists/artist/${id}`).then((res) => {
+        setSingleArtist(res[0])
       });
     },[]);
   
     return (
         <div className="App">
           <header className="App-header">
-                  <Playlist
-                    key={singlePlaylistObject.playlist_id}
-                    playlist={singlePlaylistObject}
+                  <Artist
+                    key={singleArtist.playlist_id}
+                    artist={singleArtist}
                   >
-                  </Playlist>
+                  </Artist>
           </header>
         </div>
         );

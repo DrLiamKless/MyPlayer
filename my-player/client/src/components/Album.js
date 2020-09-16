@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { read } from "../wrappers/ajax"
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -8,12 +10,10 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { brown, red, yellow } from '@material-ui/core/colors';
+import { brown } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,14 +37,21 @@ const useStyles = makeStyles((theme) => ({
   }));
  
 
-function Album(props) {
+function Album({ album }) {
 
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+    const [songsList, setSongsList] = useState([]);
   
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
+
+    useEffect(() => {
+      read(`/albums/songsList/${album.album_id}`).then((res) => {
+        setSongsList(res)
+      });
+    }, []);
 
 
   return (
@@ -52,20 +59,21 @@ function Album(props) {
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar alt="artist img" src={props.artistCoverImg}>
+            <Avatar alt="artist img" src={album.artist_cover_img}>
             </Avatar>
           }
-          title={props.album_name}
+          title={album.album_name}
           disableTypography={false}
           // subheader="song's artist"
         ></CardHeader>
-        {/* <iframe src={props.youtubeLink}></iframe> */}
         <CardContent>
+        <Link to={`/album/${album.album_id}`}>
         <div className={"album-container"}>
         {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} 
         className="back-logo" alt="logo" />}
-        {<img src={props.albumCoverImg} className="album-logo" alt="logo" />}
+        {<img src={album.album_cover_img} className="album-logo" alt="logo" />}
         </div>
+        </Link>
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="Like">
@@ -86,7 +94,12 @@ function Album(props) {
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
+          <CardContent>  
+            {songsList.map((song, i) => (
+              <Link to={`/song/${song.song_id}?album=${song.album_id}`}>
+                <p>{i + 1} {song.song_name}</p>
+              </Link>
+            ))}
           </CardContent>
         </Collapse>
       </Card>

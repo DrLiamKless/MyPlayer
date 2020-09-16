@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
-import Song from '../Song'
 import { useParams } from "react-router-dom";
+import Album from '../Album';
 
-function SingleSong({ setSongToPlay }) {
+function SingleAlbum({ setSongToPlay }) {
   
   let { id } = useParams() 
-  const [singleSongObject, setSingleSongObject] = useState([])
+  const [singleAlbum, setSingleAlbum] = useState([])
 
     useEffect(() => {
-      read(`/songs/song/${id}`).then((res) => {
-        setSingleSongObject(res[0])
+      read(`/albums/album/${id}`).then((res) => {
+        console.log(res)
+        setSingleAlbum(res[0])
       });
     }, []);
   
   return (
   <div className="App">
     <header className="App-header">
-            <Song
-              key={singleSongObject.song_id}
-              song={singleSongObject}
+            <Album
+              key={singleAlbum.album_id}
+              album={singleAlbum}
               setSongToPlay={setSongToPlay}
             >
-            </Song>
+            </Album>
     </header>
   </div>
   );
 }
 
-export default SingleSong;
+export default SingleAlbum;
