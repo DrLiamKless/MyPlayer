@@ -59,7 +59,7 @@ function Playlist({ playlist }) {
 
 const date = new Date(playlist.created_at);
   return (
-    <div className={"playlist"} >
+    <div className={"card"} >
    <Card className={classes.card}>
       <CardHeader
         title={playlist.playlist_name}

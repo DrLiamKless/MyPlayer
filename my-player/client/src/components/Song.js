@@ -49,7 +49,7 @@ function Song({ song, setSongToPlay }) {
 
 
   return (
-    <div className={"song"}>
+    <div className={"card"}>
       <Card className={classes.card}>
         <CardHeader
           avatar={
@@ -61,7 +61,7 @@ function Song({ song, setSongToPlay }) {
           // subheader="song's artist"
         ></CardHeader>
         <CardContent className={"logo-container"}>
-        <Link to={`/song/${song.song_id}`}>
+        <Link to={`/song/${song.song_id}?artist=${song.artist_id}`}>
         {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} className="logo" className="song-logo" alt="logo" />}
         </Link>
         </CardContent>
@@ -69,28 +69,10 @@ function Song({ song, setSongToPlay }) {
           <IconButton aria-label="Like">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="play" onClick={()=>{setSongToPlay(song.youtube_link)}}>
+          <IconButton aria-label="play" onClick={()=>{setSongToPlay(song)}}>
             <PlayArrowIcon />
           </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show Lyrics"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>Lyrics:</Typography>
-            <Typography paragraph>
-              {song.lyrics}
-            </Typography>
-          </CardContent>
-        </Collapse>
       </Card>
     </div>
 

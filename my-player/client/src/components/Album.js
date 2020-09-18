@@ -55,7 +55,7 @@ function Album({ album }) {
 
 
   return (
-    <div className={"Album"}>
+    <div className={"card"}>
       <Card className={classes.card}>
         <CardHeader
           avatar={
@@ -75,33 +75,6 @@ function Album({ album }) {
         </div>
         </Link>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="Like">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show Lyrics"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>  
-            {songsList.map((song, i) => (
-              <Link to={`/song/${song.song_id}?album=${song.album_id}`}>
-                <p>{i + 1} {song.song_name}</p>
-              </Link>
-            ))}
-          </CardContent>
-        </Collapse>
       </Card>
     </div>
 

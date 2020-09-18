@@ -14,6 +14,8 @@ import SingleAlbum from './components/pages/SingleAlbum';
 import SinglePlaylist from './components/pages/SinglePlaylist';
 import SingleArtist from './components/pages/SingleArtist';
 import Player from './components/pages/Player';
+import NoMatch from './components/pages/NoMatch';
+
 
 
 
@@ -37,6 +39,7 @@ function App() {
         <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
         <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
         <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>
+        <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
       </Switch>
       </Router>
     </div>

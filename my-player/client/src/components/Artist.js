@@ -13,7 +13,7 @@ import { brown } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 
 
@@ -42,6 +42,7 @@ function Song({ artist, setSongToPlay }) {
 
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
+
   
     const handleExpandClick = () => {
       setExpanded(!expanded);
@@ -49,7 +50,7 @@ function Song({ artist, setSongToPlay }) {
 
 
   return (
-    <div className={"song"}>
+    <div className={"card"}>
       <Card className={classes.card}>
         <CardHeader
           disableTypography={false}
@@ -58,7 +59,7 @@ function Song({ artist, setSongToPlay }) {
         <CardContent className={"logo-container"}>
         <Link to={`/artist/${artist.artist_id}`}>
         {<img src={artist.artist_cover_img} className="logo" className="artist-logo" alt="logo" />}
-        </Link>
+        </Link> 
         </CardContent>
       </Card>
     </div>

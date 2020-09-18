@@ -13,14 +13,16 @@ import Fade from '@material-ui/core/Fade';
 
 function Search() {
 
-    const [searchInput, setSearchInput] = useState([])
+    const [searchInput, setSearchInput] = useState()
     const [serachOutputs, setSearchOutputs] = useState([])
 
     useEffect(() => {
-        read(`/songs/search/${searchInput}`).then((res) => {
-        setSearchOutputs(res)
-        });
-      }, [searchInput]);
+        if(searchInput) {
+            read(`/songs/search/${searchInput}`).then((res) => {
+            setSearchOutputs(res)
+            });
+         }
+    }, [searchInput]);
 
   return (  
             <div>
@@ -29,11 +31,11 @@ function Search() {
                 <SearchIcon></SearchIcon>
                 </IconButton>
                 <div className="search-ouput-container">
-                    {serachOutputs.map(song =>(
+                    {searchInput && serachOutputs.map(song =>(
                         <div key={song.song_name} className="search-output" style={{width: "max-content"}}>
                                 <Tooltip 
                                     TransitionComponent={Fade}
-                                    TransitionProps={{ timeout: 600 }}
+                                       TransitionProps={{ timeout: 600 }}
                                     title={`by ${song.artist_name}`}>
                                     <span>{song.song_name}</span>
                                 </Tooltip>
