@@ -7,7 +7,6 @@ import { brown } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -45,7 +44,7 @@ function SingleAlbum({ setSongToPlay }) {
       read(`/albums/songsList/${id}`).then((res) => {
         setSongsList(res)
       }); 
-    }, [likeState]);
+    }, [likeState, id]);
   
   return (
   <div className="App">
@@ -75,7 +74,7 @@ function SingleAlbum({ setSongToPlay }) {
                         edge="end"
                         aria-label="like"
                         onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
-                        <FavoriteIcon color={song.is_liked == 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
+                        <FavoriteIcon color={song.is_liked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>

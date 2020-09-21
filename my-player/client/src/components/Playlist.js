@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { read } from "../wrappers/ajax"
-
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -11,8 +10,6 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { brown } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -51,14 +48,13 @@ function Playlist({ playlist }) {
       read(`/playlists/songsList/${playlist.playlist_id}`).then((res) => {
         setSongsList(res)
       });
-    }, []);
+    });
 
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
 
     const handleRemoveFromPlaylist = (id) => {
-      console.log(id)
       read(`/playlists/removeSong/${id}`);
       read(`/playlists/songsList/${playlist.playlist_id}`).then((res) => {
         setSongsList(res)
@@ -75,8 +71,8 @@ const date = new Date(playlist.created_at);
         subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()}
       />
       <Link to={`/singlePlaylist/${playlist.playlist_id}`}>
-        <CardContent className={"logo-container"}>
-          <img src={playlist.playlist_cover_img} className="logo" className="artist-logo" alt="logo"></img>
+        <CardContent>
+          <img src={playlist.playlist_cover_img} className="artist-logo" alt="logo"></img>
         </CardContent>
       </Link>
       <CardActions disableSpacing>
@@ -95,7 +91,9 @@ const date = new Date(playlist.created_at);
           <CardContent>
             <Typography paragraph>songs:</Typography>
               {songsList.map((song, i) => (
-                <div className={"playlist-list-item"}>
+                <div 
+                key={i}
+                className={"playlist-list-item"}>
                 <Link 
                 to={`/song/${song.song_id}?playlist=${song.playlist_id}`}
                 style={{color: 'black'}}>

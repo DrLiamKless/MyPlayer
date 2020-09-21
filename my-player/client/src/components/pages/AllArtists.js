@@ -6,6 +6,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { Link } from "react-router-dom";
 import 'fontsource-roboto';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,19 +51,21 @@ function AllArtists() {
             <div className={classes.root}>
                 <GridList cellHeight={150} spacing={2} className={classes.gridList}>
                     {artists.map((artist) => (
-                        <GridListTile key={artist.name} cols={1}>
+                      <GridListTile key={artist.artist_name} cols={1}>
                             <img src={artist.artist_cover_img} alt={artist.name} />
+                              <Link to={`/artist/${artist.artist_id}`}>
                             <GridListTileBar
                                 title={artist.artist_name}
                                 titlePosition="top"
                                 actionIcon={
                                   <IconButton aria-label={`star ${artist.name}`} className={classes.icon}>
-                                  <StarBorderIcon />
+                                  <StarBorderIcon></StarBorderIcon>
                                   </IconButton>
                                 }
                                 actionPosition="left"
                                 className={classes.titleBar}
-                            />
+                                />
+                                </Link>
                         </GridListTile>
                     ))}
                 </GridList>

@@ -23,8 +23,8 @@ function Player({ songToPlay }) {
 
   return (
     <div className={"player"} style={{backgroundColor: "rgb(43,19,21)"}}>
-        <div className={"iframe"}>
-        <iframe  src={songToPlay ?
+        <div className={"iframe"} >
+        <iframe title={"player"} src={songToPlay ?
          `${songToPlay.youtube_link}?autoplay=1` : 
          "https://img.icons8.com/cotton/2x/no-record.png"} 
           className={"video"}

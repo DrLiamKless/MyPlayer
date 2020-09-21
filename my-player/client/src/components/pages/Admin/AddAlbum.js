@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AddAlbum({ artists }) {
   const classes = useStyles();
-  const {register: newAlbum, errors: newAlbumErrors, handleSubmit: handleNewAlbum} = useForm()
+  const {register: newAlbum, handleSubmit: handleNewAlbum} = useForm()
 
   const onSubmitAlbum = data => {
     create("/albums/add", data)
@@ -61,7 +61,7 @@ function AddAlbum({ artists }) {
             <div>
               <InputLabel id="label">Artist</InputLabel>
               <Select fullWidth placeholder="artists" native inputRef={newAlbum} name="artist_id" variant="outlined">
-              {artists.map(artist => (<option key={artist.name} value={artist.artist_id}>{artist.name}</option>))}
+              {artists.map(artist => (<option key={artist.artist_name} value={artist.artist_id}>{artist.artist_name}</option>))}
               </Select>
             </div>
             <TextField

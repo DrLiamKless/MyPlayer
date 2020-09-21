@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 function AddSong({ artists, albums }) {
   const classes = useStyles();
 
-  const {register: newSong, errors: newSongErrors, handleSubmit: handleNewSong} = useForm()
+  const {register: newSong, handleSubmit: handleNewSong} = useForm()
 
  
 
@@ -73,7 +73,7 @@ function AddSong({ artists, albums }) {
             <div>
               <InputLabel id="label">album</InputLabel>
               <Select placeholder="albums" native inputRef={newSong} name="album_id" variant="outlined">
-              {albums.map(album => (<option key={album.name} value={album.album_id}>{album.name}</option>))}
+              {albums.map(album => (<option key={album.album_name} value={album.album_id}>{album.name}</option>))}
               </Select>
             </div>
             <div className="add-artist-modal">
@@ -83,7 +83,7 @@ function AddSong({ artists, albums }) {
             <div>
               <InputLabel id="label">Artist</InputLabel>
               <Select placeholder="artists" native inputRef={newSong} name="artist_id" variant="outlined">
-              {artists.map(artist => (<option key={artist.name} value={artist.artist_id}>{artist.name}</option>))}
+              {artists.map(artist => (<option key={artist.artist_name} value={artist.artist_id}>{artist.artist_name}</option>))}
               </Select>
             </div>
             <div className="add-artist-modal">

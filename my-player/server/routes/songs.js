@@ -85,23 +85,18 @@ router.put('/update', (req,res) => {
 router.post('/likeButton', (req,res) => {
     const newInteraction = req.body;
     if(newInteraction.is_liked == null) {
-        console.log('starting to create interaction')
         newInteraction.is_liked = 1;
-        console.log("creating interaction")
         const sql = 'INSERT INTO interactions SET ?';
         db.query(sql, newInteraction, (err, result) => {
             if (err) throw (err);
             res.json(result)
-            console.log('created')
         })    
     } else {
-        console.log('starting to update interaction')
         const sql = `UPDATE interactions SET is_liked = ${newInteraction.is_liked}
         WHERE song_id = '${newInteraction.song_id}'`;
         db.query(sql, (err, result) => {
             if (err) throw (err);
             res.json(result)
-            console.log('...updated...')
         })    
     }
 })

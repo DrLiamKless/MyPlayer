@@ -54,7 +54,13 @@ router.get('/songsList/:id', (req,res) => {
 
 // Insert playlist to playlists:
 router.post('/add', (req,res) => {
+    const date = new Date(Date.now());
+    const dateToShow = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
     const newPlaylist = req.body;
+    newPlaylist.created_at = dateToShow;
+    newPlaylist.upload_at = dateToShow;
+    console.log(newPlaylist)
     const sql = 'INSERT INTO playlists SET ?';
     db.query(sql, newPlaylist, (err, result) => {
         if (err) throw (err);
@@ -65,8 +71,7 @@ router.post('/add', (req,res) => {
 // Insert song into playlist:
 router.post('/addSong', (req,res) => {
     const newSong = req.body;
-    console.log(newSong)
-    const sql = `INSERT INTO songs_in_playlists SET ?`;
+    const sql = `INSERT INTO songs_in_playlists SET ?`
     db.query(sql, newSong, (err, result) => {
         if (err) throw (err);
         res.json(result)

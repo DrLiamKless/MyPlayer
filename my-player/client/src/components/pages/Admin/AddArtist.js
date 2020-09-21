@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AddArtist() {
   const classes = useStyles();
-  const {register: newArtist, errors: newArtistErrors, handleSubmit: handleNewArtist} = useForm()
+  const {register: newArtist, handleSubmit: handleNewArtist} = useForm()
 
   const onSubmitArtist = data => {
     create("/artists/add", data)

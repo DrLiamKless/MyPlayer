@@ -13,7 +13,7 @@ function SinglePlaylist({ props, singleSong }) {
       read(`/playlists/${id}`).then((res) => {
         setSinglePlaylistObject(res[0])
       });
-    },[]);
+    }, [id]);
   
     return (
         <div className="App">

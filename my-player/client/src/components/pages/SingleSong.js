@@ -6,7 +6,6 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -91,8 +90,8 @@ function SingleSong({ setSongToPlay }) {
                     {' ' + singleSongObject.artist_name}
                   </ListSubheader>
                 }>
-                {songsFromQuery.map((song) => (
-                  <ListItem key={song.song_id} role={undefined} dense>
+                {songsFromQuery.map((song, i) => (
+                  <ListItem key={i} role={undefined} dense>
                     <Link 
                     to={`/song/${song.song_id}?${queryKey}=${queryValue}`}
                     style={{color: 'black'}}>
@@ -106,7 +105,7 @@ function SingleSong({ setSongToPlay }) {
                           edge="end"
                           aria-label="like"
                           onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
-                          <FavoriteIcon color={song.is_liked == 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
+                          <FavoriteIcon color={song.is_liked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
                         </IconButton>
                       </Tooltip>
                     </ListItemSecondaryAction>

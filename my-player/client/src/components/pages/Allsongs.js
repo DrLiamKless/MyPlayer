@@ -11,7 +11,6 @@ function Allsongs({ setSongToPlay }) {
     useEffect(() => {
       read("/songs").then((res) => {
         setSongs(res)
-        console.log(res)
       });
     }, [likeState]);
   
