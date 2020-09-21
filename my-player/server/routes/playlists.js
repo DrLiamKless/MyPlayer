@@ -40,7 +40,7 @@ router.get('/songsList/:id', (req,res) => {
     const sql = 
     `SELECT p.playlist_id, playlist_name, playlist_cover_img, p.created_at,
     p.upload_at, list_of_songs, s.song_id, youtube_link, album_id, artist_id,
-    song_name, length, track_number, lyrics, user_id, is_liked, play_count
+    song_name, length, track_number, lyrics, user_id, is_liked, play_count, sip.songs_in_playlists_id
     FROM playlists AS p 
     JOIN songs_in_playlists AS sip ON p.playlist_id = sip.playlist_id
     JOIN songs AS s ON s.song_id = sip.song_id
@@ -62,11 +62,32 @@ router.post('/add', (req,res) => {
     });
 });
 
+// Insert song into playlist:
+router.post('/addSong', (req,res) => {
+    const newSong = req.body;
+    console.log(newSong)
+    const sql = `INSERT INTO songs_in_playlists SET ?`;
+    db.query(sql, newSong, (err, result) => {
+        if (err) throw (err);
+        res.json(result)
+    });
+});
+
 // update a playlist from playlists
 router.put('/update/:id', (req,res) => {
     const update = req.body
     const sql = 'UPDATE playlists SET name = ?, cover_img = ? WHERE id = ?';
     db.query(sql, [update.name, update.cover_img, req.params.id], (err, result) => {
+        if (err) throw (err);
+        res.json(result)
+    });
+});
+
+// remove song from playlist:
+router.get('/removeSong/:id', (req,res) => {
+    const sql = `DELETE FROM songs_in_playlists WHERE (songs_in_playlists_id = '${req.params.id}');
+    `;
+    db.query(sql, (err, result) => {
         if (err) throw (err);
         res.json(result)
     });

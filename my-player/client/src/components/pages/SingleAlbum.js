@@ -65,7 +65,9 @@ function SingleAlbum({ setSongToPlay }) {
                 }>
                 {songsList.map((song) => (
                   <ListItem key={song.song_id} role={undefined} dense button>
-                    <Link to={`/song/${song.song_id}?album=${song.album_id}`}>
+                    <Link 
+                    to={`/song/${song.song_id}?album=${song.album_id}`}
+                    style={{color: 'black'}}>
                       <ListItemText primary={`${song.song_name}`} />
                     </Link>
                     <ListItemSecondaryAction>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -16,8 +16,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { Link } from 'react-router-dom';
 import Fade from '@material-ui/core/Fade';
-import { read } from '../wrappers/ajax';
+import { read, create } from '../wrappers/ajax';
 import likeFunction from "../wrappers/likeFunction"
+import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Select from '@material-ui/core/Select';
+import {useForm} from 'react-hook-form'
+
 
 
 
@@ -48,11 +59,29 @@ const useStyles = makeStyles((theme) => ({
 function Song({ song, setSongToPlay, setLikeState, likeState}) {
 
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
+    const [open, setOpen] = useState(false);
+    const [playlists, setPlaylists] = useState([]);
+    const {register: addToPlaylist, errors: addToPlaylistErrors, handleSubmit: handleAddToPlaylist} = useForm()
+
+
+    useEffect(() => {
+      read("/playlists").then((res) => {
+        setPlaylists(res)
+      });
+    }, [open]);
+
+    const handleClickOpen = () => {
+      setOpen(true);
     };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const onAddToPlaylist = data => {
+      create("/playlists/addSong", data);
+      handleClose()
+    } 
 
   return (
     <div className={"card"}>
@@ -89,6 +118,47 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
               <PlayArrowIcon />
             </IconButton>
           </Tooltip>
+          <Tooltip 
+          title="add to playlist" placement={"bottom"}
+          TransitionProps={{ timeout: 600 }}>
+            <IconButton aria-label="add" variant="outlined" onClick={handleClickOpen}>
+              <AddIcon/>
+            </IconButton>
+          </Tooltip>
+          <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Add to Playlist</DialogTitle>
+        <DialogContent>
+        </DialogContent>
+          <form  
+            noValidate onSubmit={handleAddToPlaylist(onAddToPlaylist)}>
+            <div>
+              <Select fullWidth native inputRef={addToPlaylist} name="song_id" variant="outlined">
+              <option value={song.song_id}>{song.song_name}</option>
+              </Select>
+              <Select fullWidth placeholder="playlists" native inputRef={addToPlaylist} name="playlist_id" variant="outlined">
+              {playlists.map(playlist => (<option key={playlist.playlist_name} value={playlist.playlist_id}>{playlist.playlist_name}</option>))}
+              </Select>
+            </div>
+          <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          style={{marginBottom:"5px"}}
+          inputRef={addToPlaylist}>
+            Add
+          </Button>
+          <Button onClick={handleClose}
+          color="primary"
+          fullWidth
+          variant="contained"
+          >
+            Cancel
+          </Button>
+          </form>
+        <DialogActions>
+        </DialogActions>
+      </Dialog>
         </CardActions>
       </Card>
     </div>

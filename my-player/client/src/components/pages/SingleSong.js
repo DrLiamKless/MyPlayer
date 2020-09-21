@@ -87,18 +87,20 @@ function SingleSong({ setSongToPlay }) {
               <List className={classes.root}
                 subheader={
                   <ListSubheader component="div">
-                    related songs from this
-                    {' ' + queryKey}
+                    related songs from
+                    {' ' + singleSongObject.artist_name}
                   </ListSubheader>
                 }>
                 {songsFromQuery.map((song) => (
                   <ListItem key={song.song_id} role={undefined} dense>
-                    <Link to={`/song/${song.song_id}?${queryKey}=${queryValue}`}>
+                    <Link 
+                    to={`/song/${song.song_id}?${queryKey}=${queryValue}`}
+                    style={{color: 'black'}}>
                       <ListItemText primary={`${song.song_name}`} />
                     </Link>
                     <ListItemSecondaryAction>
                       <Tooltip 
-                        title={"add/remove from favorites"} placement={"bottom"}
+                        title={"add/remove from favorites"} placement={"right"}
                         TransitionComponent={Fade} TransitionProps={{ timeout: 600 }}>
                         <IconButton
                           edge="end"

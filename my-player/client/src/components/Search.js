@@ -30,9 +30,9 @@ function Search() {
                 <IconButton aria-label="delete">
                 <SearchIcon></SearchIcon>
                 </IconButton>
-                <div className="search-output-container">
+                <div>
                     {searchInput && serachOutputs.map(song =>(
-                        <div key={song.song_name} className="search-output" style={{width: "max-content"}}>
+                        <div key={song.song_name}  style={{width: "max-content", fontSize: "12px"}}>
                                 <Tooltip 
                                     placement={"bottom"}
                                     TransitionComponent={Fade}

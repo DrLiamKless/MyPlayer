@@ -25,7 +25,7 @@ function Allplaylists() {
         {playlists.map(playlist => (
             <Playlist
               key={playlist.playlist_id}
-              playlist={playlist  }
+              playlist={playlist}
             >
             </Playlist>
         ))}

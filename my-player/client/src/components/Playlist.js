@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 
 
@@ -46,16 +47,24 @@ function Playlist({ playlist }) {
     const [expanded, setExpanded] = React.useState(false);
     const [songsList, setSongsList] = useState([]);
   
+    useEffect(() => {
+      read(`/playlists/songsList/${playlist.playlist_id}`).then((res) => {
+        setSongsList(res)
+      });
+    }, []);
+
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
 
-    useEffect(() => {
+    const handleRemoveFromPlaylist = (id) => {
+      console.log(id)
+      read(`/playlists/removeSong/${id}`);
       read(`/playlists/songsList/${playlist.playlist_id}`).then((res) => {
         setSongsList(res)
-        // console.log(songsList)
       });
-    }, []);
+    }
+
 
 const date = new Date(playlist.created_at);
   return (
@@ -86,9 +95,19 @@ const date = new Date(playlist.created_at);
           <CardContent>
             <Typography paragraph>songs:</Typography>
               {songsList.map((song, i) => (
-                <Link to={`/song/${song.song_id}?playlist=${song.playlist_id}`}>
+                <div className={"playlist-list-item"}>
+                <Link 
+                to={`/song/${song.song_id}?playlist=${song.playlist_id}`}
+                style={{color: 'black'}}>
                   <p>{song.song_name}</p>
-                </Link>
+                  </Link>
+                  <IconButton
+            aria-label="remove from playlist"
+            onClick={()=>{handleRemoveFromPlaylist(song.songs_in_playlists_id)}}
+            >
+            <RemoveIcon/>
+          </IconButton>
+            </div>
               ))}
           </CardContent>
         </Collapse>

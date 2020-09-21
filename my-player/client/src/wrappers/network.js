@@ -27,9 +27,3 @@ export default function network(url ,body, {...customConfig} = {}) {
         }
       })
   }
-  
-  // network.get = (url, options) => network(url, {method: "GET", ...options});
-  // network.put = (url, body, options) => network(url,  body, {method: "PUT", ...options});
-  // network.post = (url, body, options) => network(url, body, {method: "POST", ...options});
-  // network.delete = (url, options) => network(url, {method: "DELETE", ...options});
-  

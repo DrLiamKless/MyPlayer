@@ -63,7 +63,9 @@ function SinglePlaylist({ props, singleSong }) {
                 }>
                 {songsList.map((song) => (
                   <ListItem key={song.song_id} role={undefined} dense>
-                      <Link to={`/song/${song.song_id}?artist=${singleArtist.artist_id}`}>
+                      <Link 
+                      to={`/song/${song.song_id}?artist=${singleArtist.artist_id}`}
+                      style={{color: 'black'}}>
                     <ListItemText primary={`${song.song_name}`} />
                     </Link>
                     <ListItemSecondaryAction>
