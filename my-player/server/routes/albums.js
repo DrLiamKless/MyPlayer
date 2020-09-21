@@ -35,6 +35,18 @@ router.get('/album/:id', (req,res) => {
     })
 })
 
+// Get a specific album by name for the searching  zone
+router.get('/search/:album_name', (req,res) => {
+    const sql = `
+    SELECT * FROM albums 
+    INNER JOIN artists ON albums.artist_id = artists.artist_id 
+    WHERE album_name LIKE "${req.params.album_name}%" ORDER BY album_name ASC`
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    })
+})
+
 // Get all songs from an album
 router.get('/songsList/:id', (req , res) => {
     const sql = `

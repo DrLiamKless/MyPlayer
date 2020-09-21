@@ -38,6 +38,17 @@ router.get('/artist/:id', (req,res) => {
     })
 })
 
+// Get a specific artist by name for the searching  zone
+router.get('/search/:artist_name', (req,res) => {
+    const sql = `
+    SELECT * FROM artists 
+    WHERE artist_name LIKE "%${req.params.artist_name}%" ORDER BY artist_name ASC`
+    db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result)
+    })
+})
+
 // get a all songs by artist (limit 5)
 router.get('/songsList/:id', (req,res) => {
     const sql =
