@@ -4,13 +4,16 @@ import Song from '../Song'
 
 function Allsongs({ setSongToPlay }) {
 
-    const [songs, setSongs] = useState([])
+    const [songs, setSongs] = useState([]);
+    const [likeState, setLikeState] = useState(false);
+
 
     useEffect(() => {
       read("/songs").then((res) => {
         setSongs(res)
+        console.log(res)
       });
-    }, []);
+    }, [likeState]);
   
   return (
   <div className="App">
@@ -22,6 +25,8 @@ function Allsongs({ setSongToPlay }) {
               key={song.song_id}
               song={song}
               setSongToPlay={setSongToPlay}
+              likeState={likeState}
+              setLikeState={setLikeState}
             >
             </Song>
         ))}

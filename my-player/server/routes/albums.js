@@ -37,7 +37,12 @@ router.get('/album/:id', (req,res) => {
 
 // Get all songs from an album
 router.get('/songsList/:id', (req , res) => {
-    const sql = `SELECT * FROM songs WHERE songs.album_id = '${req.params.id}'`
+    const sql = `
+    SELECT songs.song_id, youtube_link, album_id, artist_id,
+    song_name, length, track_number, lyrics, songs.created_at,
+    upload_at, interactions_id, user_id, is_liked, play_count
+    FROM songs LEFT JOIN interactions ON interactions.song_id = songs.song_id
+    WHERE songs.album_id = '${req.params.id}'`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

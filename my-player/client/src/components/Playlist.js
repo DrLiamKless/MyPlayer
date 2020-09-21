@@ -71,12 +71,6 @@ const date = new Date(playlist.created_at);
         </CardContent>
       </Link>
       <CardActions disableSpacing>
-          <IconButton aria-label="Like">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="play">
-            <PlayArrowIcon />
-          </IconButton>
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,

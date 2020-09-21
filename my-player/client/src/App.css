@@ -68,7 +68,7 @@ height: 15vh;
 
 .App-header {
   background-color: rgb(82,65,44, 0.9);
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -100,18 +100,18 @@ height: 15vh;
 
 .first-home-section{
   padding-bottom: 20vh;
-  width: 100vw;
+  width: 100%;
 }
 
 .home-section{
   padding-top: 12vh;
   padding-bottom: 20vh;
-  width: 100vw;
+  width: 100%;
 }
 
 .player {
   padding-bottom: 50px;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -211,3 +211,7 @@ height: 15vh;
   color: white;
   padding-top: 20vh;
 }
+
+/* .search-output-container{
+  width: 50vw;
+} */

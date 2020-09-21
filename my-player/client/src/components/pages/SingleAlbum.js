@@ -13,6 +13,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
+import likeFunction from "../../wrappers/likeFunction"
+
 
 
 
@@ -28,21 +30,22 @@ const useStyles = makeStyles((theme) => ({
 function SingleAlbum({ setSongToPlay }) {
   
   let { id } = useParams() 
-  const [singleAlbum, setSingleAlbum] = useState([])
+  const [singleAlbum, setSingleAlbum] = useState([]);
   const [songsList, setSongsList] = useState([]);
+  const [likeState, setLikeState] = useState(false)
   const classes = useStyles();
 
     useEffect(() => {
       read(`/albums/album/${id}`).then((res) => {
         setSingleAlbum(res[0])
       });
-    }, [id]);
+    }, [id, likeState]);
 
     useEffect(() => {
       read(`/albums/songsList/${id}`).then((res) => {
         setSongsList(res)
-      });
-    }, []);
+      }); 
+    }, [likeState]);
   
   return (
   <div className="App">
@@ -66,8 +69,11 @@ function SingleAlbum({ setSongToPlay }) {
                       <ListItemText primary={`${song.song_name}`} />
                     </Link>
                     <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="comments">
-                        <FavoriteIcon />
+                      <IconButton
+                        edge="end"
+                        aria-label="like"
+                        onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
+                        <FavoriteIcon color={song.is_liked == 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>

@@ -38,10 +38,13 @@ router.get('/:id', (req,res) => {
 // Get all songs from a playlist
 router.get('/songsList/:id', (req,res) => {
     const sql = 
-    `SELECT p.playlist_id, s.song_id, s.song_name 
+    `SELECT p.playlist_id, playlist_name, playlist_cover_img, p.created_at,
+    p.upload_at, list_of_songs, s.song_id, youtube_link, album_id, artist_id,
+    song_name, length, track_number, lyrics, user_id, is_liked, play_count
     FROM playlists AS p 
     JOIN songs_in_playlists AS sip ON p.playlist_id = sip.playlist_id
     JOIN songs AS s ON s.song_id = sip.song_id
+    LEFT JOIN interactions ON s.song_id = interactions.song_id
     WHERE p.playlist_id = '${req.params.id}'`
     db.query(sql, (err, result) => {
         if (err) throw err;

@@ -30,20 +30,20 @@ function Search() {
                 <IconButton aria-label="delete">
                 <SearchIcon></SearchIcon>
                 </IconButton>
-                <div className="search-ouput-container">
+                <div className="search-output-container">
                     {searchInput && serachOutputs.map(song =>(
                         <div key={song.song_name} className="search-output" style={{width: "max-content"}}>
                                 <Tooltip 
+                                    placement={"bottom"}
                                     TransitionComponent={Fade}
                                        TransitionProps={{ timeout: 600 }}
-                                    title={`by ${song.artist_name}`}>
+                                       title={`by ${song.artist_name}`}>
                                     <span>{song.song_name}</span>
                                 </Tooltip>
-                                    <Link to={`/song/${song.song_id}`}>
                                         <IconButton>
-                                            <Avatar alt="artist img" src={song.artist_cover_img}/>
+                                    <Link to={`/song/${song.song_id}?artist=${song.artist_id}`}>
+                                            <Avatar alt="artist img" src={song.artist_cover_img}/>                                    </Link>
                                         </IconButton>
-                                    </Link>
 
                         </div> 
                     ))}

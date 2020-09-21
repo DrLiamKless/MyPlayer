@@ -41,11 +41,14 @@ router.get('/artist/:id', (req,res) => {
 // get a all songs by artist (limit 5)
 router.get('/songsList/:id', (req,res) => {
     const sql =
-    `SELECT a.artist_id, s.song_id, s.song_name 
+    `SELECT s.artist_id, artist_name, artist_cover_img,
+    s.song_id, youtube_link, album_id, song_name, length,
+    track_number, lyrics, user_id, is_liked, play_count
     FROM artists AS a 
     JOIN songs_by_artists AS sba ON a.artist_id = sba.artist_id
     JOIN songs AS s ON s.song_id = sba.song_id
-    WHERE a.artist_id = '${req.params.id}' LIMIT 5`
+    LEFT JOIN interactions ON sba.song_id = interactions.song_id
+    WHERE a.artist_id = ${req.params.id} LIMIT 5`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)

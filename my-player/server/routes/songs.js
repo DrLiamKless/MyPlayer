@@ -4,7 +4,14 @@ const db = require('../connection')
 
 // Get all songs
 router.get('/', (req,res) => {
-    const sql = 'Select * from songs INNER JOIN artists ON songs.artist_id = artists.artist_id'
+    const sql = 
+    `Select songs.song_id, youtube_link, album_id, songs.artist_id, song_name,
+    length, track_number, lyrics, songs.created_at, songs.upload_at, artist_name,
+    artist_cover_img, interactions_id, user_id, is_liked, play_count
+    from songs INNER JOIN artists ON songs.artist_id = artists.artist_id 
+    LEFT JOIN interactions ON interactions.song_id = songs.song_id
+
+    `
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
@@ -31,7 +38,10 @@ router.get('/top', (req,res) => {
 
 // Get a specific song by title for the searching  zone
 router.get('/search/:song_name', (req,res) => {
-    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE song_name LIKE "${req.params.song_name}%" ORDER BY song_name ASC `
+    const sql = `
+    SELECT * FROM songs 
+    INNER JOIN artists ON songs.artist_id = artists.artist_id 
+    WHERE song_name LIKE "${req.params.song_name}%" ORDER BY song_name ASC `
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)
@@ -40,7 +50,11 @@ router.get('/search/:song_name', (req,res) => {
 
 // Get a specific song by id for the searching  zone
 router.get('/song/:id', (req,res) => {
-    const sql = `SELECT * FROM songs INNER JOIN artists ON songs.artist_id = artists.artist_id WHERE song_id = '${req.params.id}'`
+    const sql = `
+    SELECT * FROM songs 
+    INNER JOIN artists ON songs.artist_id = artists.artist_id 
+    LEFT JOIN interactions ON interactions.song_id = songs.song_id 
+    WHERE songs.song_id = '${req.params.id}'`
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.json(result)
@@ -65,6 +79,31 @@ router.put('/update', (req,res) => {
         if (err) throw (err);
         res.json(result)
     })
+})
+
+// new interaction - like/unlike:
+router.post('/likeButton', (req,res) => {
+    const newInteraction = req.body;
+    if(newInteraction.is_liked == null) {
+        console.log('starting to create interaction')
+        newInteraction.is_liked = 1;
+        console.log("creating interaction")
+        const sql = 'INSERT INTO interactions SET ?';
+        db.query(sql, newInteraction, (err, result) => {
+            if (err) throw (err);
+            res.json(result)
+            console.log('created')
+        })    
+    } else {
+        console.log('starting to update interaction')
+        const sql = `UPDATE interactions SET is_liked = ${newInteraction.is_liked}
+        WHERE song_id = '${newInteraction.song_id}'`;
+        db.query(sql, (err, result) => {
+            if (err) throw (err);
+            res.json(result)
+            console.log('...updated...')
+        })    
+    }
 })
 
 // Delete a song from songs

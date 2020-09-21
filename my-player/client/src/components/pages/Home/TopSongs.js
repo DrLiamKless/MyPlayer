@@ -7,13 +7,15 @@ import Song from '../../Song'
 
 function TopSongs({ setSongToPlay }) {
 
-    const [topSongs, setTopSongs] = useState([])
+    const [topSongs, setTopSongs] = useState([]);
+    const [likeState, setLikeState] = useState(false);
+
 
     useEffect(() => {
       read("/songs/top").then((res) => {
         setTopSongs(res)
       });
-    }, []);
+    }, [likeState]);
   
     const responsive = {
       desktop: {
@@ -45,6 +47,8 @@ function TopSongs({ setSongToPlay }) {
                 key={song.song_id}
                 song={song}
                 setSongToPlay={setSongToPlay}
+                likeState={likeState}
+                setLikeState={setLikeState}
                 />
             ))}
             </Carousel>
