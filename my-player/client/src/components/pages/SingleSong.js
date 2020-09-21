@@ -90,7 +90,7 @@ function SingleSong({ setSongToPlay }) {
                     {' ' + singleSongObject.artist_name}
                   </ListSubheader>
                 }>
-                {songsFromQuery.map((song, i) => (
+                {songsFromQuery.filter(song => song.song_name !== singleSongObject.song_name).map((song, i) => (
                   <ListItem key={i} role={undefined} dense>
                     <Link 
                     to={`/song/${song.song_id}?${queryKey}=${queryValue}`}
