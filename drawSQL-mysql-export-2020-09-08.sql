@@ -33,7 +33,6 @@ CREATE TABLE `Playlists`(
     `Cover_img` TEXT NOT NULL,
     `Created_at` DATETIME NOT NULL,
     `Upload_at` DATETIME NOT NULL,
-    `List_of_songs` TEXT NOT NULL,
 	PRIMARY KEY (`id`)
 );
 CREATE TABLE `Users`(

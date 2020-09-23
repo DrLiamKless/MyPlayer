@@ -39,7 +39,7 @@ router.get('/:id', (req,res) => {
 router.get('/songsList/:id', (req,res) => {
     const sql = 
     `SELECT p.playlist_id, playlist_name, playlist_cover_img, p.created_at,
-    p.upload_at, list_of_songs, s.song_id, youtube_link, album_id, artist_id,
+    p.upload_at, s.song_id, youtube_link, album_id, artist_id,
     song_name, length, track_number, lyrics, user_id, is_liked, play_count, sip.songs_in_playlists_id
     FROM playlists AS p 
     JOIN songs_in_playlists AS sip ON p.playlist_id = sip.playlist_id
