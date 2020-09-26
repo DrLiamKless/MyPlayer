@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../connection')
-const { Artist, Album, Song } = require('../models');
+const { Artist, Album, Song, Interaction} = require('../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -56,7 +56,7 @@ router.get('/top', (req,res) => {
 // Get a specific album by id
 router.get('/:id', async (req,res) => {
     const album = await Album.findByPk(req.params.id, {
-        include: [Song, Artist]
+        include: [{model: Song, include: Interaction}, {model: Artist}]
     });
         res.json(album);   
 })

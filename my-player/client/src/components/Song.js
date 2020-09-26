@@ -105,7 +105,8 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
               aria-label="Like"
               onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
               <FavoriteIcon 
-              color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}></FavoriteIcon>
+              color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
+              </FavoriteIcon>
             </IconButton>
           </Tooltip>
           <Tooltip 

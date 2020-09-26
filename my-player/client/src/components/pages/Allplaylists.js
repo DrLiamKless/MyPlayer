@@ -27,6 +27,7 @@ function Allplaylists() {
     const {register: addNewPlaylist, handleSubmit: handleAddNewPlaylist} = useForm()
 
 
+
     useEffect(() => {
       read("/playlists").then((res) => {
         setPlaylists(res)
@@ -43,9 +44,7 @@ function Allplaylists() {
     };
 
     const onAddNewPlaylist = data => {
-      console.log('function from client started')
       create("/playlists/add", data);
-      console.log('function from client ended')
       handleClose()
     } 
 

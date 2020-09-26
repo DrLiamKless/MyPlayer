@@ -44,7 +44,7 @@ router.get('/:id', async (req,res) => {
         res.json(song);   
 })
 
-// Insert song to songs:
+// Insert song to songs:    
 router.post('/add', async (req,res) => {
     const newSong = await Playlist.create(req.body)
          res.json(newSong)
@@ -57,24 +57,15 @@ router.patch('/update/:id', async (req, res) => {
     res.json(song)
   })
 
-
 // new interaction - like/unlike:
-router.post('/likeButton', (req,res) => {
-    const newInteraction = req.body;
-    if(newInteraction.is_liked == null) {
-        newInteraction.is_liked = 1;
-        const sql = 'INSERT INTO interactions SET ?';
-        db.query(sql, newInteraction, (err, result) => {
-            if (err) throw (err);
-            res.json(result)
-        })    
+router.post('/like/:id', async (req,res) => {
+    const interaction = req.body;
+    if(interaction.songId) {
+        const newInteraction = await Interaction.create(interaction)
+            res.json(newInteraction)
     } else {
-        const sql = `UPDATE interactions SET is_liked = ${newInteraction.is_liked}
-        WHERE songId = '${newInteraction.songId}'`;
-        db.query(sql, (err, result) => {
-            if (err) throw (err);
-            res.json(result)
-        })    
+        const updatedInteraction = await Interaction.update(interaction,{where: {songId: req.params.id}})
+            res.json(updatedInteraction)
     }
 })
 

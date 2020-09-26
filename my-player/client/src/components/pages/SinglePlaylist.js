@@ -10,6 +10,7 @@ function SinglePlaylist({ props, singleSong }) {
 
   const [singlePlaylistObject, setSinglePlaylistObject] = useState([])
 
+
     useEffect(() => {
       read(`/playlists/${id}`).then((res) => {
         setSinglePlaylistObject(res)

@@ -42,7 +42,7 @@ function SingleAlbum({ setSongToPlay }) {
     }, [id, likeState]);
   
   return (
-    singleAlbum != null ?
+    singleAlbum ?
   <div className="App">
     <header className="single-song-page">
             <Album
@@ -70,7 +70,8 @@ function SingleAlbum({ setSongToPlay }) {
                         edge="end"
                         aria-label="like"
                         onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
-                        <FavoriteIcon color={song.isLiked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
+                        <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
+                        </FavoriteIcon>
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>
