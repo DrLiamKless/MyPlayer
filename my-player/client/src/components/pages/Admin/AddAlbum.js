@@ -11,6 +11,7 @@ import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
+import Loader from '../../Loader'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,6 +46,7 @@ function AddAlbum({ artists }) {
   } 
   
   return (
+    artists != null ?
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}} >
     <Container component="main" maxWidth="xs" >
     <CssBaseline />
@@ -61,7 +63,7 @@ function AddAlbum({ artists }) {
             <div>
               <InputLabel id="label">Artist</InputLabel>
               <Select fullWidth placeholder="artists" native inputRef={newAlbum} name="artist_id" variant="outlined">
-              {artists.map(artist => (<option key={artist.artist_name} value={artist.artist_id}>{artist.artist_name}</option>))}
+              {artists.map(artist => (<option key={artist.artistName} value={artist.id}>{artist.artistName}</option>))}
               </Select>
             </div>
             <TextField
@@ -70,7 +72,7 @@ function AddAlbum({ artists }) {
                 inputRef={newAlbum}
                 required
                 fullWidth
-                name="album_name"
+                name="albumName"
                 label="Name"
             />
             <TextField
@@ -79,7 +81,16 @@ function AddAlbum({ artists }) {
             inputRef={newAlbum}
             required
             fullWidth
-            name="created_at"
+            name="albumCoverImg"
+            label="album cover image"
+            />
+            <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={newAlbum}
+            required
+            fullWidth
+            name="createdAt"
             label="Created at: YY-MM-DD"
           />
             <TextField
@@ -88,7 +99,7 @@ function AddAlbum({ artists }) {
                 inputRef={newAlbum}
                 required
                 fullWidth
-                name="upload_at"
+                name="uploadAt"
                 label="Upload at: YY-MM-DD HH:MM:SS"
             />
             <Button
@@ -105,6 +116,7 @@ function AddAlbum({ artists }) {
             </div>
     </Container>
     </div>
+    : <Loader/>
   );
 }
 

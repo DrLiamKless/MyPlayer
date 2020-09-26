@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { Link } from "react-router-dom";
 import 'fontsource-roboto';
+import Loader from '../Loader'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AllArtists() {
 
-    const [artists, setArtists] = useState([])
+    const [artists, setArtists] = useState()
     const classes = useStyles();
 
     useEffect(() => {
@@ -45,20 +46,21 @@ function AllArtists() {
     }, []);
   
   return (
+    artists != null ?
     <header className="App-header">
       <p  className="all-artists-header">All Artists</p>
         <div className={"all-artists-container"}>
             <div className={classes.root}>
                 <GridList cellHeight={150} spacing={2} className={classes.gridList}>
                     {artists.map((artist) => (
-                      <GridListTile key={artist.artist_name} cols={1}>
-                            <img src={artist.artist_cover_img} alt={artist.name} />
-                              <Link to={`/artist/${artist.artist_id}`}>
+                      <GridListTile key={artist.artisName} cols={1}>
+                            <img src={artist.artistCoverImg} alt={artist.artistName} />
+                              <Link to={`/artist/${artist.id}`}>
                             <GridListTileBar
-                                title={artist.artist_name}
+                                title={artist.artistName}
                                 titlePosition="top"
                                 actionIcon={
-                                  <IconButton aria-label={`star ${artist.name}`} className={classes.icon}>
+                                  <IconButton aria-label={`star ${artist.artistName}`} className={classes.icon}>
                                   <StarBorderIcon></StarBorderIcon>
                                   </IconButton>
                                 }
@@ -72,6 +74,7 @@ function AllArtists() {
             </div>
         </div>
     </header>
+    : <Loader/>
   );
 }
 

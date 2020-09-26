@@ -3,6 +3,7 @@ import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
 import Playlist from '../Playlist'
 import { useParams } from "react-router-dom";
+import Loader from '../Loader'
 
 function SinglePlaylist({ props, singleSong }) {
   let { id } = useParams() 
@@ -11,7 +12,7 @@ function SinglePlaylist({ props, singleSong }) {
 
     useEffect(() => {
       read(`/playlists/${id}`).then((res) => {
-        setSinglePlaylistObject(res[0])
+        setSinglePlaylistObject(res)
       });
     }, [id]);
   
@@ -19,7 +20,7 @@ function SinglePlaylist({ props, singleSong }) {
         <div className="App">
           <header className="App-header">
                   <Playlist
-                    key={singlePlaylistObject.playlist_id}
+                    key={singlePlaylistObject.id}
                     playlist={singlePlaylistObject}
                   >
                   </Playlist>

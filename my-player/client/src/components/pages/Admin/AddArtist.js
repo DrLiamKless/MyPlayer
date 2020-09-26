@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
+import Loader from '../../Loader'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,7 +64,7 @@ function AddArtist() {
                 inputRef={newArtist}
                 required
                 fullWidth
-                name="artist_name"
+                name="artistName"
                 label="Name"
             />
             <TextField
@@ -71,7 +73,7 @@ function AddArtist() {
                 inputRef={newArtist}
                 required
                 fullWidth
-                name="artist_cover_img"
+                name="artistCoverImg"
                 label="Cover image"
             />
             <TextField
@@ -80,7 +82,7 @@ function AddArtist() {
                 inputRef={newArtist}
                 required
                 fullWidth
-                name="upload_at"
+                name="uploadAt"
                 label="Upload at: YY-MM-DD HH:MM:SS"
             />
             <Button

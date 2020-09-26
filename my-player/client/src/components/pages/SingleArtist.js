@@ -13,6 +13,7 @@ import { brown } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import likeFunction from "../../wrappers/likeFunction"
+import Loader from '../Loader'
 
 
 
@@ -27,29 +28,23 @@ const useStyles = makeStyles((theme) => ({
 
 function SinglePlaylist({ props, singleSong }) {
   let { id } = useParams() 
-  const [singleArtist, setSingleArtist] = useState([])
-  const [songsList, setSongsList] = useState([]);
+  const [singleArtist, setSingleArtist] = useState({})
   const [likeState, setLikeState] = useState(false); 
   const classes = useStyles();
 
 
     useEffect(() => {
-      read(`/artists/songsList/${id}`).then((res) => {
-        setSongsList(res)
-      });
-    }, [id, likeState]);
-
-    useEffect(() => {
-      read(`/artists/artist/${id}`).then((res) => {
-        setSingleArtist(res[0])
+      read(`/artists/${id}`).then((res) => {
+        setSingleArtist(res)
       });
     },[likeState]);
   
     return (
+      singleArtist.artistName ? 
         <div className="App">
           <header className="single-song-page">
             <Artist
-              key={singleArtist.playlist_id}
+              key={singleArtist.id}
               artist={singleArtist}
             >
             </Artist>
@@ -57,30 +52,32 @@ function SinglePlaylist({ props, singleSong }) {
               <List className={classes.root}
                 subheader={
                   <ListSubheader component="div">
-                    more songs of {singleArtist.artist_name}
+                    more songs of {singleArtist.artistName}
                   </ListSubheader>
                 }>
-                {songsList.map((song) => (
-                  <ListItem key={song.song_id} role={undefined} dense>
+                {singleArtist.Songs.map((song) => {
+                  console.log(song)
+                  return <ListItem key={song.id} role={undefined} dense>
                       <Link 
-                      to={`/song/${song.song_id}?artist=${singleArtist.artist_id}`}
+                      to={`/song/${song.id}?artist=${singleArtist.id}`}
                       style={{color: 'black'}}>
-                    <ListItemText primary={`${song.song_name}`} />
+                    <ListItemText primary={`${song.songName}`} />
                     </Link>
                     <ListItemSecondaryAction>
                       <IconButton
                         edge="end"
                         aria-label="like"
                         onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
-                        <FavoriteIcon color={song.is_liked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
+                        <FavoriteIcon color={song.Interactions[0] && song.Interactions[0].isLiked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>
-                ))}
+              })}
               </List>
             </div>
           </header>
         </div>
+        : <Loader/>
         );
 }
 

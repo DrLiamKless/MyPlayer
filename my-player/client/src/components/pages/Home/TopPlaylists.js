@@ -3,10 +3,12 @@ import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Playlist from '../../Playlist'
 import Carousel from 'react-multi-carousel';
+import Loader from '../../Loader'
+
 
 function TopPlaylists() {
 
-    const [topPlaylists, setTopPlaylists] = useState([])
+    const [topPlaylists, setTopPlaylists] = useState()
 
     useEffect(() => {
       read("/playlists/top").then((res) => {
@@ -31,6 +33,7 @@ function TopPlaylists() {
 
   
   return (
+    topPlaylists != null ?
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
         <p>Your Most Favorite Playlists</p>
         <Carousel
@@ -49,6 +52,7 @@ function TopPlaylists() {
             ))}
         </Carousel>
     </div>     
+    : <Loader/>
   );
 }
 

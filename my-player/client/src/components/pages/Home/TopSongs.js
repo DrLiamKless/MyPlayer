@@ -4,10 +4,12 @@ import 'react-multi-carousel/lib/styles.css';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from '../../Song'
+import Loader from '../../Loader'
+
 
 function TopSongs({ setSongToPlay }) {
 
-    const [topSongs, setTopSongs] = useState([]);
+    const [topSongs, setTopSongs] = useState();
     const [likeState, setLikeState] = useState(false);
 
 
@@ -33,6 +35,7 @@ function TopSongs({ setSongToPlay }) {
   }
 
   return (
+    topSongs != null ?
     <div className={"first-home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
         <p>Your Most Favorite Songs</p>
             <Carousel
@@ -53,6 +56,7 @@ function TopSongs({ setSongToPlay }) {
             ))}
             </Carousel>
     </div>     
+    : <Loader/>
   );
 }
 

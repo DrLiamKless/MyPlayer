@@ -8,3 +8,6 @@ export function read(url) {
   return network(url)
 }
 
+export function destroy(url, body) {
+  return network(url, body, {method: 'DELETE'})
+}

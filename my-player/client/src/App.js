@@ -35,7 +35,7 @@ function App() {
         <Route path="/Admin" exact> <Admin/> </Route>
         <Route path="/Allartists" exact> <AllArtists/> </Route>
         <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
-        <Route path="/singlePlaylist/:id" exact> <SinglePlaylist/> </Route>
+        <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
         <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
         <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
         <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>

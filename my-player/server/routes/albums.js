@@ -1,92 +1,84 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../connection')
+const { Artist, Album, Song } = require('../models');
+const { Sequelize } = require('sequelize');
+const Op = Sequelize.Op;
 
-// Get all albums
-router.get('/', (req,res) => {
-    const sql = 'Select * from albums'
-    db.query(sql, (err, results) => {
-        if (err) throw err;
-        res.json(results)
+
+// Get all albums + search query
+router.get('/', async (req,res) => {
+    const albumName = req.query.albumName;
+    const firstWordCondition = albumName ? {albumName: { [Op.like]: `${albumName}%`} } : null;
+    const otherWordsCondition = albumName ? {albumName: { [Op.like]: `% ${albumName}%`} } : null;
+    const condition = firstWordCondition ||  firstWordCondition ? 
+    { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
+
+
+    const allAlbums = await Album.findAll({ 
+        include: [Artist],
+        where: condition
     })
+        res.json(allAlbums);   
 })
 
 // Get top 20 albums - for now its 2
 router.get('/top', (req,res) => {
-    const sql = 
-    `SELECT * from (albums INNER JOIN artists ON albums.artist_id = artists.artist_id)
-    INNER JOIN
+    const sql = `
+    SELECT albums.id AS id, albums.artist_id AS artistId, album_name AS albumName,
+    album_cover_img AS albumCoverImg,  artist_cover_img AS artistCoverImg, playsSum 
+    from 
+    (albums INNER JOIN artists ON albums.artist_id = artists.id)
+	LEFT JOIN
     (SELECT album_id, SUM(play_count) AS playsSum FROM myplayer.songs AS s 
-    INNER JOIN 
-    myplayer.interactions AS i ON s.song_id = i.song_id
-    GROUP BY album_id) AS sumTable ON albums.album_id = sumTable.album_id ORDER BY playsSum DESC`
-    db.query(sql, (err, results) => {
+    LEFT JOIN 
+    myplayer.interactions AS i ON s.song_id = i.song_id 
+    GROUP BY album_id) 
+    AS sumTable ON albums.id = sumTable.album_id ORDER BY playsSum DESC LIMIT 20`
+    db.query(sql, async (err, results) => {
         if (err) throw err;
-        res.json(results)
+
+        const idysCondition = []
+        for (let i = 0; i < results.length; i++) {
+            idysCondition.push({id: results[i].id });
+        }
+
+        const condition = { [Op.or]: idysCondition }
+
+        const topAlbums = await Album.findAll({
+        include: [Song, Artist],
+        where: condition
+    });
+        res.json(topAlbums);  
     })
 })
 
 // Get a specific album by id
-router.get('/album/:id', (req,res) => {
-    const sql = `SELECT * FROM albums INNER JOIN artists ON albums.artist_id = artists.artist_id WHERE albums.album_id = '${req.params.id}'`
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.json(result)
-    })
-})
-
-// Get a specific album by name for the searching  zone
-router.get('/search/:album_name', (req,res) => {
-    const sql = `
-    SELECT * FROM albums 
-    INNER JOIN artists ON albums.artist_id = artists.artist_id 
-    WHERE album_name LIKE "${req.params.album_name}%" ORDER BY album_name ASC`
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.json(result)
-    })
-})
-
-// Get all songs from an album
-router.get('/songsList/:id', (req , res) => {
-    const sql = `
-    SELECT songs.song_id, youtube_link, album_id, artist_id,
-    song_name, length, track_number, lyrics, songs.created_at,
-    upload_at, interactions_id, user_id, is_liked, play_count
-    FROM songs LEFT JOIN interactions ON interactions.song_id = songs.song_id
-    WHERE songs.album_id = '${req.params.id}'`
-    db.query(sql, (err, result) => {
-        if (err) throw err;
-        res.json(result)
-    })
+router.get('/:id', async (req,res) => {
+    const album = await Album.findByPk(req.params.id, {
+        include: [Song, Artist]
+    });
+        res.json(album);   
 })
 
 // Insert album to albums:
-router.post('/add', (req,res) => {
-    const newAlbum = req.body;
-    const sql = 'INSERT INTO albums SET ?';
-    db.query(sql, newAlbum, (err, result) => {
-        if (err) throw (err);
-        res.json(result)
-    })
-})
+router.post('/add', async (req,res) => {
+    const newAlbum = await Album.create (req.body)
+         res.json(newAlbum)
+ })
 
-// update an album from albums
-router.put('/update/:id', (req,res) => {
-    const update = req.body
-    const sql = 'UPDATE albums SET name = ? WHERE id = ?';
-    db.query(sql, [update.name, req.params.id], (err, result) => {
-        if (err) throw (err);
-        res.json(result) 
-    })
-})
+ //update an album from albums
+router.patch('/update/:id', async (req, res) => {
+    const album = await Album.findByPk(req.params.id);
+    await album.update(req.body);
+    res.json(album)
+  })
 
 // Delete a album from albums
-router.delete('/delete/:id', (req,res) => {
-    const sql = 'DELETE FROM albums WHERE id = ?';
-    db.query(sql, [req.params.id], (err, result) => {
-        if (err) throw (err);
-        res.json(result)
-    })
-})
+router.delete('/delete/:id', async (req,res) => {
+    const album = await Album.findByPk(req.params.id)
+    await album.destroy()
+    res.json({deleted: true})
+ })
+
 module.exports = router;

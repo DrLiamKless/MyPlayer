@@ -21,7 +21,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
-import {useForm} from 'react-hook-form'
+import {useForm} from 'react-hook-form';
+import Loader from './Loader';
+
 
 
 
@@ -78,19 +80,20 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
     } 
 
   return (
+    song ?
     <div className={"card"}>
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar alt="artist img" src={song.artist_cover_img}>
+            <Avatar alt="artist img" src={song.Artists[0] && song.Artists[0].artistCoverImg}>
             </Avatar>
           }
-          title={song.song_name}
+          title={song.songName}
           disableTypography={false}
           // subheader="song's artist"
         ></CardHeader>
         <CardContent className={"logo-container"}>
-        <Link to={`/song/${song.song_id}?artist=${song.artist_id}`}>
+        <Link to={`/song/${song.id}?artist=${song.artistId}`}>
         {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} className="song-logo" alt="logo" />}
         </Link>
         </CardContent>
@@ -102,7 +105,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
               aria-label="Like"
               onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
               <FavoriteIcon 
-              color={song.is_liked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
+              color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}></FavoriteIcon>
             </IconButton>
           </Tooltip>
           <Tooltip 
@@ -126,11 +129,11 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
           <form  
             noValidate onSubmit={handleAddToPlaylist(onAddToPlaylist)}>
             <div>
-              <Select fullWidth native inputRef={addToPlaylist} name="song_id" variant="outlined">
-              <option value={song.song_id}>{song.song_name}</option>
+              <Select fullWidth native inputRef={addToPlaylist} name="songId" variant="outlined">
+              <option value={song.id}>{song.songName}</option>
               </Select>
-              <Select fullWidth placeholder="playlists" native inputRef={addToPlaylist} name="playlist_id" variant="outlined">
-              {playlists.map(playlist => (<option key={playlist.playlist_name} value={playlist.playlist_id}>{playlist.playlist_name}</option>))}
+              <Select fullWidth placeholder="playlists" native inputRef={addToPlaylist} name="playlistId" variant="outlined">
+              {playlists.map(playlist => (<option key={playlist.playlistName} value={playlist.id}>{playlist.playlistName}</option>))}
               </Select>
             </div>
           <Button
@@ -156,10 +159,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
         </CardActions>
       </Card>
     </div>
-
-
-
-
+    : <Loader/>
   )
 }
 

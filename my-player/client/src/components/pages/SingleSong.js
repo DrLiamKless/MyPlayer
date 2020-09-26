@@ -15,8 +15,7 @@ import { brown } from '@material-ui/core/colors';
 import Fade from '@material-ui/core/Fade';
 import Tooltip from '@material-ui/core/Tooltip';
 import likeFunction from "../../wrappers/likeFunction"
-
-
+import Loader from '../Loader'
 
 
 
@@ -41,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 function SingleSong({ setSongToPlay }) {
   
   let { id } = useParams(); 
-  const [singleSongObject, setSingleSongObject] = useState("");
-  const [songsFromQuery, setSongsFromQuery] = useState([1,2,3]);
+  const [singleSongObject, setSingleSongObject] = useState();
+  const [songsFromQuery, setSongsFromQuery] = useState();
   const [likeState, setLikeState] = useState(false);
   const classes = useStyles();
 
@@ -56,25 +55,28 @@ function SingleSong({ setSongToPlay }) {
   const playlistQuery = query.get("playlist");
   const queryKey = albumQuery !== null ? `album` : artistQuery !== null ? 'artist' : 'playlist';
   const queryValue = albumQuery !== null ? albumQuery : artistQuery !== null ? artistQuery : playlistQuery;
+  let title;
 
     useEffect(() => {
-      read(`/songs/song/${id}`).then((res) => {
-        setSingleSongObject(res[0])
+      read(`/songs/${id}`).then((res) => {
+        setSingleSongObject(res)
       });
     }, [id, likeState]);
 
     useEffect(() => {
-        read(`/${queryKey}s/songsList/${queryValue}`).then((res) => {
+        read(`/${queryKey}s/${queryValue}`).then((res) => {
           setSongsFromQuery(res);
+          console.log(res)
         })
       }, [likeState]);
 
 
   
   return (
+  singleSongObject != null && songsFromQuery != null ?
   <div className="App">
     <div className="single-song-page">
-            <Song
+             <Song
               key={singleSongObject.song_id}
               song={singleSongObject}
               setSongToPlay={setSongToPlay}
@@ -85,17 +87,25 @@ function SingleSong({ setSongToPlay }) {
             <div className="suggested-songs">
               <List className={classes.root}
                 subheader={
-                  <ListSubheader component="div">
-                    related songs from
-                    {' ' + singleSongObject.artist_name}
+                      <Link to={`/${queryKey}/${queryValue}`}>
+                  <ListSubheader component="h5">
+                    {  songsFromQuery.Songs.length > 1 ? <h5>related songs from 
+                      {albumQuery ? 
+                      ' ' + songsFromQuery.albumName :
+                      artistQuery ? 
+                      ' ' + songsFromQuery.artistName :
+                      playlistQuery &&
+                      ' ' + songsFromQuery.playlistName + ' playlist'}</h5>
+                      : <h5>this is the only song from this {queryKey}</h5>}
                   </ListSubheader>
+                  </Link>
                 }>
-                {songsFromQuery.filter(song => song.song_name !== singleSongObject.song_name).map((song, i) => (
+                {songsFromQuery.Songs.filter(song => song.songName !== singleSongObject.songName).map((song, i) => (
                   <ListItem key={i} role={undefined} dense>
                     <Link 
-                    to={`/song/${song.song_id}?${queryKey}=${queryValue}`}
+                    to={`/song/${song.id}?${queryKey}=${queryValue}`}
                     style={{color: 'black'}}>
-                      <ListItemText primary={`${song.song_name}`} />
+                      <ListItemText primary={`${song.songName}`} />
                     </Link>
                     <ListItemSecondaryAction>
                       <Tooltip 
@@ -105,7 +115,7 @@ function SingleSong({ setSongToPlay }) {
                           edge="end"
                           aria-label="like"
                           onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
-                          <FavoriteIcon color={song.is_liked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
+                          <FavoriteIcon color={song.isLiked === 1 ? 'secondary' : 'inherit'}></FavoriteIcon>
                         </IconButton>
                       </Tooltip>
                     </ListItemSecondaryAction>
@@ -115,6 +125,7 @@ function SingleSong({ setSongToPlay }) {
             </div>
     </div>
   </div>
+  : <Loader/>
   );
 }
 
