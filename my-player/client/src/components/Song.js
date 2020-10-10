@@ -61,7 +61,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
 
 
     useEffect(() => {
-      read("/playlists").then((res) => {
+      read("api/v1/playlists").then((res) => {
         setPlaylists(res)
       });
     }, [open]);

@@ -43,7 +43,7 @@ function AddSong({ artists, albums }) {
  
 
   const onSubmitSong = data => {
-    create("/songs/add", data)
+    create("api/v1/songs/add", data)
   } 
 
   

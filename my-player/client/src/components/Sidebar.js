@@ -29,7 +29,7 @@ function Sidebar() {
             <br></br>
             <MenuItem icon={<HomeIcon/>}>
                 Home
-            <Link to="/" />
+            <Link to="/Home" />
             </MenuItem>
             <MenuItem icon={<AudiotrackIcon/>}>
                 All songs 

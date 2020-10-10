@@ -12,7 +12,7 @@ function TopAlbums() {
     const [topAlbums, setTopAlbums] = useState()
 
     useEffect(() => {
-      read("/albums/top").then((res) => {
+      read("api/v1/albums/top").then((res) => {
         setTopAlbums(res)
       });
     }, []);

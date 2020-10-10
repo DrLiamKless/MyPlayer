@@ -40,7 +40,7 @@ function AllArtists() {
     const classes = useStyles();
 
     useEffect(() => {
-      read("/artists").then((res) => {
+      read("api/v1/artists").then((res) => {
         setArtists(res)
       });
     }, []);

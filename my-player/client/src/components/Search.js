@@ -22,13 +22,13 @@ function Search() {
 
     useEffect(() => {
         if(searchInput) {
-            read(`/songs/?songName=${searchInput}`).then((res) => {
+            read(`api/v1/songs/?songName=${searchInput}`).then((res) => {
             setSearchSongsOutputs(res)
             });
-            read(`/artists/?artistName=${searchInput}`).then((res) => {
+            read(`api/v1/artists/?artistName=${searchInput}`).then((res) => {
                 setSearchArtistsOutputs(res)
             });
-            read(`/albums/?albumName=${searchInput}`).then((res) => {
+            read(`api/v1/albums/?albumName=${searchInput}`).then((res) => {
                 setSearchAlbumsOutputs(res)
             });
          }

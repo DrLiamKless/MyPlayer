@@ -36,7 +36,7 @@ function SingleAlbum({ setSongToPlay }) {
   const classes = useStyles();
 
     useEffect(() => {
-      read(`/albums/${id}`).then((res) => {
+      read(`api/v1/albums/${id}`).then((res) => {
         setSingleAlbum(res)
       });
     }, [id, likeState]);

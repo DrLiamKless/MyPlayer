@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const db = require('../connection')
-const { Song, Artist, Interaction } = require('../models');
+const db = require('../../connection')
+const { Song, Artist, Interaction } = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 

@@ -58,13 +58,13 @@ function SingleSong({ setSongToPlay }) {
   let title;
 
     useEffect(() => {
-      read(`/songs/${id}`).then((res) => {
+      read(`api/v1/songs/${id}`).then((res) => {
         setSingleSongObject(res)
       });
     }, [id, likeState]);
 
     useEffect(() => {
-        read(`/${queryKey}s/${queryValue}`).then((res) => {
+        read(`api/v1/${queryKey}s/${queryValue}`).then((res) => {
           setSongsFromQuery(res);
           console.log(res)
         })

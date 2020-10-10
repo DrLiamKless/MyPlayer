@@ -16,17 +16,16 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(models.Playlist, {
         through: 'user_playlists',
         foreignKey: 'userId'
-      });
+      }); 
     }
   };
   User.init({
     userName: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN,
+    isAdmin: {type: DataTypes.BOOLEAN, defaultValue: false},
     preferneces: DataTypes.STRING,
     rememberToken: DataTypes.BOOLEAN,
-    uploadAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'User',

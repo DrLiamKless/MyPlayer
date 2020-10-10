@@ -9,13 +9,13 @@ function Admin() {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    read("/artists").then((res) => {
+    read("api/v1/artists").then((res) => {
       setArtists(res)
     });
   }, []);
 
   useEffect(() => {
-    read("/albums").then((res) => {
+    read("api/v1/albums").then((res) => {
       setAlbums(res)
     });
   }, []);
