@@ -39,11 +39,11 @@ function Login({ setUser }) {
   const {register: Login, handleSubmit: handleLogin} = useForm()
 
   const onLogin = data => {
-    create("users/login", data).then(res => {
+    create("/api/v1/auth/login", data).then(res => {
       if (res.success && res.accessToken) {
         localStorage.setItem('token', res.accessToken);
         localStorage.setItem('user', res.userName);
-        window.location = '/Home';
+        window.location = '/';
       } else {
       console.log(res)
       }

@@ -75,7 +75,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
     };
 
     const onAddToPlaylist = data => {
-      create("/playlists/addSong", data);
+      create("api/v1/playlists/addSong", data);
       handleClose()
     } 
 

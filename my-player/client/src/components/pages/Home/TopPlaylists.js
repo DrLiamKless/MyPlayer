@@ -11,7 +11,7 @@ function TopPlaylists() {
     const [topPlaylists, setTopPlaylists] = useState()
 
     useEffect(() => {
-      read("api/v1/playlists/top").then((res) => {
+      read("/api/v1/playlists/top").then((res) => {
         setTopPlaylists(res)
       });
     }, []);
@@ -35,7 +35,6 @@ function TopPlaylists() {
   return (
     topPlaylists != null ?
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
-      {console.log(topPlaylists)}
         <p>Your Most Favorite Playlists</p>
         <Carousel
               responsive={responsive}

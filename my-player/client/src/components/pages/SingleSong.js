@@ -55,25 +55,24 @@ function SingleSong({ setSongToPlay }) {
   const playlistQuery = query.get("playlist");
   const queryKey = albumQuery !== null ? `album` : artistQuery !== null ? 'artist' : 'playlist';
   const queryValue = albumQuery !== null ? albumQuery : artistQuery !== null ? artistQuery : playlistQuery;
-  let title;
 
     useEffect(() => {
-      read(`api/v1/songs/${id}`).then((res) => {
+      read(`/api/v1/songs/${id}`).then((res) => {
+        console.log(res)
         setSingleSongObject(res)
       });
     }, [id, likeState]);
 
     useEffect(() => {
-        read(`api/v1/${queryKey}s/${queryValue}`).then((res) => {
+        read(`/api/v1/${queryKey}s/${queryValue}`).then((res) => {
           setSongsFromQuery(res);
-          console.log(res)
         })
       }, [likeState]);
 
 
   
   return (
-  singleSongObject != null && songsFromQuery != null ?
+  singleSongObject && songsFromQuery ?
   <div className="App">
     <div className="single-song-page">
              <Song

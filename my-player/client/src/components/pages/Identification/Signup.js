@@ -40,8 +40,8 @@ function SignUp() {
   const {register: signUp, handleSubmit: handleSignUp} = useForm()
 
   const onSignUp = data => {
-    create("users/add", data);
-    window.location = '/Login';
+    create("/api/v1/users/add", data);
+    window.location = '/';
   } 
   
   return (

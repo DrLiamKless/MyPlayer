@@ -34,7 +34,7 @@ function SinglePlaylist({ props, singleSong }) {
 
 
     useEffect(() => {
-      read(`api/v1/artists/${id}`).then((res) => {
+      read(`/api/v1/artists/${id}`).then((res) => {
         setSingleArtist(res)
       });
     },[likeState]);

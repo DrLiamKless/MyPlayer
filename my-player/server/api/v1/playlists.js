@@ -19,7 +19,6 @@ router.get('/', async (req,res) => {
         include: [{model: Song, include: Interaction}],
         where: condition
     });
-    console.log(condition)
         res.json(allPlaylists);   
 })
 

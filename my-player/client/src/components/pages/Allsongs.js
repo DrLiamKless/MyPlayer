@@ -11,7 +11,7 @@ function Allsongs({ setSongToPlay }) {
 
 
     useEffect(() => {
-      read("api/v1/songs").then((res) => {
+      read("/api/v1/songs").then((res) => {
         setSongs(res)
       });
     }, [likeState]);

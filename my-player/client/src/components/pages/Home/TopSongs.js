@@ -14,7 +14,7 @@ function TopSongs({ setSongToPlay }) {
 
 
     useEffect(() => {
-      read("api/v1/songs/top").then((res) => {
+      read("/api/v1/songs/top").then((res) => {
         setTopSongs(res)
       });
     }, [likeState]);

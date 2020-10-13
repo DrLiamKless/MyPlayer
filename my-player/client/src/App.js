@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import './App.css';
 import 'fontsource-roboto';
@@ -17,7 +17,7 @@ import Player from './components/pages/Player';
 import NoMatch from './components/pages/NoMatch';
 import Login from './components/pages/Identification/Login';
 import Signup from './components/pages/Identification/Signup';
-
+import { read } from "./wrappers/ajax"
 
 
 
@@ -25,19 +25,40 @@ import Signup from './components/pages/Identification/Signup';
 function App() {
 
   const [songToPlay, setSongToPlay] = useState();
+  const [logged, setLogged] = useState(false);
+
+  useEffect(() => {// auth
+    (async () => {
+      if (localStorage.getItem("token")) {
+        try {
+          const data = await read("/api/v1/auth/validateToken");
+          setLogged(data);
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        console.log('cant get token')
+      }
+    })();
+  }, []);
+  
 
   return (
+      !logged ?
+      <Router>
+      <Switch>
+      <Route path={'/'} exact> <Login></Login></Route>
+      <Route path={'/signUp'} exact> <Signup/> </Route>
+      </Switch> 
+      </Router>
+    : 
     <div>
       <Topbar></Topbar>
       <Router>
       <Sidebar></Sidebar>
       <Player songToPlay={songToPlay}></Player>
         <Switch>
-          <Route path={'/'} exact> <Login></Login> 
-          {/* {user && <Redirect to="/Home" />} */}
-          </Route>
-          <Route path={'/signUp'} exact> <Signup/> </Route>
-          <Route path={"/Home"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
+          <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
           <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
           <Route path="/Admin" exact> <Admin/> </Route>
           <Route path="/Allartists" exact> <AllArtists/> </Route>
