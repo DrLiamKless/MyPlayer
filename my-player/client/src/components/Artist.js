@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { brown } from '@material-ui/core/colors';
 import { Link } from 'react-router-dom';
 import Loader from './Loader'
+import CardActions from '@material-ui/core/CardActions';
 
 
 
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
       backgroundColor: brown[500],
+      height: '180px',
     },
   }));
  

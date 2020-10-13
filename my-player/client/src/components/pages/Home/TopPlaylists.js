@@ -8,13 +8,15 @@ import Loader from '../../Loader'
 
 function TopPlaylists() {
 
-    const [topPlaylists, setTopPlaylists] = useState()
+    const [topPlaylists, setTopPlaylists] = useState("")
+    const user = localStorage.getItem('user')
 
     useEffect(() => {
-      read("/api/v1/playlists/top").then((res) => {
+      read(`/api/v1/playlists/top/${user}`).then((res) => {
         setTopPlaylists(res)
+        console.log(res)
       });
-    }, []);
+    }, [user]);
 
     const responsive = {
       desktop: {
@@ -33,9 +35,9 @@ function TopPlaylists() {
 
   
   return (
-    topPlaylists != null ?
+    topPlaylists[0] ?
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
-        <p>Your Most Favorite Playlists</p>
+        <p>{user}, those are your Most Favorite Playlists</p>
         <Carousel
               responsive={responsive}
               keyBoardControl={true}
@@ -43,7 +45,7 @@ function TopPlaylists() {
               itemClass="carousel-item"
               infinite
               >
-            {topPlaylists.map((playlist, i) => (
+            {topPlaylists[0].Playlists.map((playlist, i) => (
           <Playlist
           key={playlist.playlist_id}
           playlist={playlist}

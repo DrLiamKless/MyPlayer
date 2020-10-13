@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../../connection')
-const { Artist, Album, Playlist, songs_in_playlists, Interaction, Song } = require('../../models');
+const { Artist, User, Playlist, songs_in_playlists, Interaction, Song } = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
-
 
 // Get all playlists + search query
 router.get('/', async (req,res) => {
@@ -16,14 +15,14 @@ router.get('/', async (req,res) => {
 
 
     const allPlaylists = await Playlist.findAll({
-        include: [{model: Song, include: Interaction}],
+        include: [{model: Song, include: Interaction}, {model: User}],
         where: condition
     });
         res.json(allPlaylists);   
 })
 
-// Get top 20 playlists
-router.get('/top', (req,res) => {
+// Get top 20 playlists of user
+router.get('/top/:userName', (req,res) => {
     const sql = `
     SELECT playlists.id, playlist_name AS playlistName,
     playlist_cover_img AS playlistCoverImg, created_at AS createdAt, playsSum
@@ -31,7 +30,7 @@ router.get('/top', (req,res) => {
     FROM songs_in_playlists INNER JOIN interactions 
     ON songs_in_playlists.song_id = interactions.song_id
     GROUP BY songs_in_playlists.playlist_id) AS SumTable 
-    ON playlists.id = SumTable.playlist_id LIMIT 20`
+    ON playlists.id = SumTable.playlist_id ORDER BY playsSum DESC LIMIT 5`
     db.query(sql, async (err, results) => {
         if (err) throw err;
 
@@ -42,9 +41,9 @@ router.get('/top', (req,res) => {
 
         const condition = { [Op.or]: idysCondition }
 
-        const topPlaylists = await Playlist.findAll({
-        include: [{model: Song, include: Interaction}],
-        where: condition
+        const topPlaylists = await User.findAll({
+        include: [{model: Playlist, include: [{model: Song, include: Interaction}, {model: User}], where: condition}],
+        where: {userName: req.params.userName}
     });
         res.json(topPlaylists);   
     });

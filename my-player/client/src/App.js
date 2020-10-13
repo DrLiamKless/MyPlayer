@@ -26,6 +26,7 @@ function App() {
 
   const [songToPlay, setSongToPlay] = useState();
   const [logged, setLogged] = useState(false);
+  let user = localStorage.getItem('user')
 
   useEffect(() => {// auth
     (async () => {
@@ -56,9 +57,9 @@ function App() {
       <Topbar></Topbar>
       <Router>
       <Sidebar></Sidebar>
-      <Player songToPlay={songToPlay}></Player>
+      <Player songToPlay={songToPlay} user={user}></Player>
         <Switch>
-          <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
+          <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay} user={user}> </Home> </Route>
           <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
           <Route path="/Admin" exact> <Admin/> </Route>
           <Route path="/Allartists" exact> <AllArtists/> </Route>

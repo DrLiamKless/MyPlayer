@@ -62,7 +62,7 @@ const date = new Date(playlist.createdAt);
    <Card className={classes.card}>
       <CardHeader
         title={playlist.playlistName}
-        subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()}
+        subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() + ' by ' + playlist['Users'][0].userName}
       />
       <Link to={`/playlist/${playlist.id}`}>
         <CardContent>

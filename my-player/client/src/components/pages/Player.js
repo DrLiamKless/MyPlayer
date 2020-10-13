@@ -17,10 +17,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Player({ songToPlay }) {
+function Player({ songToPlay, user }) {
   
   const classes = useStyles();
-  const user = localStorage.getItem('user')
 
   return (
     <div className={"player"} style={{backgroundColor: "rgb(43,19,21)"}}>
