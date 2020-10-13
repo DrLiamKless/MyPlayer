@@ -8,7 +8,7 @@ import Loader from '../Loader'
 function SinglePlaylist({ props, singleSong }) {
   let { id } = useParams() 
 
-  const [singlePlaylistObject, setSinglePlaylistObject] = useState([])
+  const [singlePlaylistObject, setSinglePlaylistObject] = useState()
 
 
     useEffect(() => {
@@ -18,6 +18,7 @@ function SinglePlaylist({ props, singleSong }) {
     }, [id]);
   
     return (
+      singlePlaylistObject ?
         <div className="App">
           <header className="App-header">
                   <Playlist
@@ -27,6 +28,7 @@ function SinglePlaylist({ props, singleSong }) {
                   </Playlist>
           </header>
         </div>
+        : <Loader/>
         );
 }
 

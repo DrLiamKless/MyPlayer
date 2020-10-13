@@ -15,8 +15,8 @@ export default function likeFunction (song) {
         isLiked: 1,
         playCount: 1,
       }
-      create(`/songs/like/${song.id}`, interaction)
+      create(`/api/v1/songs/like/${song.id}`, interaction)
     } else {
-      create(`/songs/like/${song.id}`, {isLiked: song.Interactions[0].isLiked === true ? false : true})
+      create(`/api/v1/songs/like/${song.id}`, {isLiked: song.Interactions[0].isLiked === true ? false : true})
     }
   }

@@ -52,7 +52,7 @@ router.get('/top/:userName', (req,res) => {
 // get playlist by id
 router.get('/:id', async (req,res) => {
     const playlist = await Playlist.findByPk(req.params.id, {
-        include: [{model: Song, include: Interaction}],
+        include: [{model: Song, include: Interaction}, {model: User}],
     });
         res.json(playlist);   
 })
