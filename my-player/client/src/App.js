@@ -54,8 +54,8 @@ function App() {
       </Router>
     : 
     <div>
+    <Router>
       <Topbar></Topbar>
-      <Router>
       <Sidebar></Sidebar>
       <Player songToPlay={songToPlay} user={user}></Player>
         <Switch>
