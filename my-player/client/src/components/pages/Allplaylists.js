@@ -11,6 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
+import Loader from '../Loader'
+
 
 
 
@@ -25,8 +27,9 @@ function Allplaylists() {
     const {register: addNewPlaylist, handleSubmit: handleAddNewPlaylist} = useForm()
 
 
+
     useEffect(() => {
-      read("/playlists").then((res) => {
+      read("/api/v1/playlists").then((res) => {
         setPlaylists(res)
       });
     }, []);
@@ -41,9 +44,7 @@ function Allplaylists() {
     };
 
     const onAddNewPlaylist = data => {
-      console.log('function from client started')
       create("/playlists/add", data);
-      console.log('function from client ended')
       handleClose()
     } 
 
@@ -51,6 +52,7 @@ function Allplaylists() {
   
 
   return (
+  playlists != null ?
   <div className="App">
     <header className="App-header">
       <p>All Playlists</p>
@@ -71,7 +73,7 @@ function Allplaylists() {
             <TextField
             autoFocus
             margin="dense"
-            name="playlist_name"
+            name="playlistName"
             label="playlist name"
             inputRef={addNewPlaylist}
             fullWidth
@@ -79,7 +81,7 @@ function Allplaylists() {
           <TextField
             autoFocus
             margin="dense"
-            name="playlist_cover_img"
+            name="playlistCoverImg"
             label="playlist cover image (URL)"
             inputRef={addNewPlaylist}
             fullWidth
@@ -108,15 +110,15 @@ function Allplaylists() {
       <div className={"all-songs-container"}>
         {playlists.map(playlist => (
             <Playlist
-              key={playlist.playlist_id}
+              key={playlist.id}
               playlist={playlist}
             >
             </Playlist>
         ))}
-      
       </div>
     </header>
   </div>
+  : <Loader/>
   );
 }
 

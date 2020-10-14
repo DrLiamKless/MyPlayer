@@ -5,6 +5,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { brown } from '@material-ui/core/colors';
 import { Link } from 'react-router-dom';
+import Loader from './Loader'
+import CardActions from '@material-ui/core/CardActions';
 
 
 
@@ -25,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
       backgroundColor: brown[500],
+      height: '180px',
     },
   }));
  
@@ -35,23 +38,21 @@ function Song({ artist, setSongToPlay }) {
 
 
   return (
+    artist.id ?
     <div className={"card"}>
       <Card className={classes.card}>
         <CardHeader
           disableTypography={false}
-          title={artist.artist_name}
+          title={artist.artistName}
           ></CardHeader>
         <CardContent className={"logo-container"}>
-        <Link to={`/artist/${artist.artist_id}`}>
-        {<img src={artist.artist_cover_img} className="artist-logo" alt="logo" />}
+        <Link to={`/artist/${artist.id}`}>
+        {<img src={artist.artistCoverImg} className="artist-logo" alt="logo" />}
         </Link> 
         </CardContent>
       </Card>
     </div>
-
-
-
-
+    : <Loader/>
   )
 }
 

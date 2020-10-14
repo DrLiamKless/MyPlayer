@@ -11,6 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
+import Loader from '../../Loader'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,11 +43,12 @@ function AddSong({ artists, albums }) {
  
 
   const onSubmitSong = data => {
-    create("/songs/add", data)
+    create("api/v1/songs/add", data)
   } 
 
   
   return (
+    artists & albums ?
     <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -73,7 +76,7 @@ function AddSong({ artists, albums }) {
             <div>
               <InputLabel id="label">album</InputLabel>
               <Select placeholder="albums" native inputRef={newSong} name="album_id" variant="outlined">
-              {albums.map(album => (<option key={album.album_name} value={album.album_id}>{album.name}</option>))}
+              {albums.map(album => (<option key={album.albumName} value={album.id}>{album.albumName}</option>))}
               </Select>
             </div>
             <div className="add-artist-modal">
@@ -83,7 +86,7 @@ function AddSong({ artists, albums }) {
             <div>
               <InputLabel id="label">Artist</InputLabel>
               <Select placeholder="artists" native inputRef={newSong} name="artist_id" variant="outlined">
-              {artists.map(artist => (<option key={artist.artist_name} value={artist.artist_id}>{artist.artist_name}</option>))}
+              {artists.map(artist => (<option key={artist.artistName} value={artist.id}>{artist.artistName}</option>))}
               </Select>
             </div>
             <div className="add-artist-modal">
@@ -95,7 +98,7 @@ function AddSong({ artists, albums }) {
             inputRef={newSong}
             required
             fullWidth
-            name="song_name"
+            name="songeName"
             label="Name"
           />
           <TextField
@@ -113,7 +116,7 @@ function AddSong({ artists, albums }) {
             inputRef={newSong}
             required
             fullWidth
-            name="track_number"
+            name="trackNumber"
             label="Track number (in album)"
           />
             <TextField
@@ -133,7 +136,7 @@ function AddSong({ artists, albums }) {
             inputRef={newSong}
             required
             fullWidth
-            name="created_at"
+            name="createdAt"
             label="Created at: YY-MM-DD"
           />
           <TextField
@@ -142,7 +145,7 @@ function AddSong({ artists, albums }) {
             inputRef={newSong}
             required
             fullWidth
-            name="upload_at"
+            name="uploadAt"
             label="Upload at: YY-MM-DD HH:MM:SS"
           />
           <Button
@@ -158,6 +161,7 @@ function AddSong({ artists, albums }) {
       </div>
     </Container>
     </div>
+    : <Loader/>
   );
 }
 

@@ -17,21 +17,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Player({ songToPlay }) {
+function Player({ songToPlay, user }) {
   
   const classes = useStyles();
 
   return (
     <div className={"player"} style={{backgroundColor: "rgb(43,19,21)"}}>
         <div className={"iframe"} >
-        <iframe title={"player"} src={songToPlay ?
-         `${songToPlay.youtube_link}?autoplay=1` : 
-         "https://img.icons8.com/cotton/2x/no-record.png"} 
+        {songToPlay ?
+        <iframe title={"player"} src={
+          `${songToPlay.youtubeLink}?autoplay=1`}
           className={"video"}
           allow={"autoplay"}
           frameBorder={0}
           height={260}></iframe>
-          </div>
+        : <h1>{user ? `Welcome Back ${user}` : "Please Login. dont have a user!? Sign Up!"}</h1>
+        }
+         </div>
           {songToPlay && 
             <Paper className={classes.paper}>
               <Typography paragraph>

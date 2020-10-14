@@ -4,14 +4,15 @@ import 'react-multi-carousel/lib/styles.css';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Album from '../../Album'
+import Loader from '../../Loader'
 
 
 function TopAlbums() {
 
-    const [topAlbums, setTopAlbums] = useState([])
+    const [topAlbums, setTopAlbums] = useState()
 
     useEffect(() => {
-      read("/albums/top").then((res) => {
+      read("/api/v1/albums/top").then((res) => {
         setTopAlbums(res)
       });
     }, []);
@@ -32,6 +33,7 @@ function TopAlbums() {
   }
   
   return (
+    topAlbums != null ?
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
         <p>Your most favorite albums</p>
         <Carousel
@@ -43,13 +45,14 @@ function TopAlbums() {
               >
             {topAlbums.map((album, i) => (
                 <Album
-                key={album.album_id}
+                key={album.albumId}
                 album={album}
                 />
             ))}
             </Carousel>
         </div>     
-  );
+    : <Loader/>
+  ) 
 }
 
 export default TopAlbums;

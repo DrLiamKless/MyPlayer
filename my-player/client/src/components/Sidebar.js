@@ -8,6 +8,8 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import IconButton from '@material-ui/core/IconButton';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import Search from './Search'
@@ -16,6 +18,16 @@ import Search from './Search'
 function Sidebar() {
 
     const [sideBarOpen, setSideBarOpen] = useState(true)
+
+    const logOut = async () => {
+        try {
+          localStorage.removeItem("token")
+          localStorage.removeItem("user")
+          window.location = '/';
+        } catch (error) {
+          console.error(error)
+        }
+      }
 
   return (
     <div>
@@ -31,6 +43,13 @@ function Sidebar() {
                 Home
             <Link to="/" />
             </MenuItem>
+            <SubMenu title="Search" icon={<SearchIcon/>}>
+                <Search></Search>
+            </SubMenu>
+            <SubMenu title="My user" icon={<AccountCircleIcon/>}>
+                <MenuItem>settings</MenuItem>
+                <MenuItem>Admin <Link to="/Admin"/></MenuItem>
+            </SubMenu>
             <MenuItem icon={<AudiotrackIcon/>}>
                 All songs 
             <Link to="/Allsongs" />
@@ -43,13 +62,9 @@ function Sidebar() {
                 All Playlists 
             <Link to="/Allplaylists"/>
             </MenuItem>
-            <SubMenu title="My user" icon={<AccountCircleIcon/>}>
-                <MenuItem>settings</MenuItem>
-                <MenuItem>Admin <Link to="/Admin"/></MenuItem>
-            </SubMenu>
-            <SubMenu title="Search" icon={<SearchIcon/>}>
-            <Search></Search>
-            </SubMenu>
+                <MenuItem icon={<ExitToAppIcon/>} onClick={logOut}>
+                    log out
+                </MenuItem>
             </Menu>
         </ProSidebar>
     </div>

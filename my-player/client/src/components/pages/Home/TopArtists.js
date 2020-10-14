@@ -10,7 +10,7 @@ function TopAlbums() {
     const [topArtists, setTopArtists] = useState([])
 
     useEffect(() => {
-      read("/artists/top").then((res) => {
+      read("/api/v1/artists/top").then((res) => {
         setTopArtists(res)
       });
     }, []);
