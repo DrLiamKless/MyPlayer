@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import { read, create } from "../../wrappers/ajax"
 import Playlist from '../Playlist';
 import Button from '@material-ui/core/Button';
@@ -12,12 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import Loader from '../Loader'
-
-
-
-
-
-
+import { mixpanelTrackUrlChanged } from '../../analytics/analyticsManager'
 
 
 function Allplaylists() {
@@ -25,7 +21,11 @@ function Allplaylists() {
     const [playlists, setPlaylists] = useState([])
     const [open, setOpen] = useState(false);
     const {register: addNewPlaylist, handleSubmit: handleAddNewPlaylist} = useForm()
-
+    const location = useLocation();
+  
+    useEffect(() => {
+      mixpanelTrackUrlChanged(location.pathname)
+    },[])
 
 
     useEffect(() => {

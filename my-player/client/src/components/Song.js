@@ -23,6 +23,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
 import {useForm} from 'react-hook-form';
 import Loader from './Loader';
+import { mixpanelTrackSongPlayed, mixpanelTrackSongLiked, mixpanelTrackSongUnliked } from '../analytics/analyticsManager'
 
 
 
@@ -79,6 +80,14 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
       handleClose()
     } 
 
+    const handleLike = () => {
+      likeFunction(song); 
+      setLikeState(!likeState); 
+      likeState ? 
+      mixpanelTrackSongUnliked(song.songName)
+      : mixpanelTrackSongLiked(song.songName) 
+    }
+
   return (
     song ?
     <div className={"card"}>
@@ -103,7 +112,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
           TransitionComponent={Fade} TransitionProps={{ timeout: 600 }}>
             <IconButton
               aria-label="Like"
-              onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
+              onClick={handleLike}>
               <FavoriteIcon 
               color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
               </FavoriteIcon>
@@ -112,7 +121,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
           <Tooltip 
           title="play" placement={"bottom"}
           TransitionProps={{ timeout: 600 }}>
-            <IconButton aria-label="play" onClick={()=>{setSongToPlay(song)}}>
+            <IconButton aria-label="play" onClick={()=>{setSongToPlay(song); mixpanelTrackSongPlayed(song.songName)}}>
               <PlayArrowIcon />
             </IconButton>
           </Tooltip>

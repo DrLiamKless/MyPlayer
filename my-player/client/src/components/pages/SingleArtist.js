@@ -3,7 +3,7 @@ import { read } from "../../wrappers/ajax"
 import { makeStyles } from '@material-ui/core/styles';
 import 'fontsource-roboto';
 import Artist from '../Artist'
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -14,7 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import likeFunction from "../../wrappers/likeFunction"
 import Loader from '../Loader'
-
+import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnliked  } from '../../analytics/analyticsManager'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +31,11 @@ function SinglePlaylist({ props, singleSong }) {
   const [singleArtist, setSingleArtist] = useState({})
   const [likeState, setLikeState] = useState(false); 
   const classes = useStyles();
+  const location = useLocation();
+  
+  useEffect(() => {
+    mixpanelTrackUrlChanged(location.pathname)
+  },[])
 
 
     useEffect(() => {
@@ -38,6 +43,14 @@ function SinglePlaylist({ props, singleSong }) {
         setSingleArtist(res)
       });
     },[likeState]);
+
+    const handleLike = (song) => {
+      likeFunction(song); 
+      setLikeState(!likeState); 
+      likeState ? 
+      mixpanelTrackSongUnliked(song.songName)
+      : mixpanelTrackSongLiked(song.songName) 
+    }
   
     return (
       singleArtist.artistName ? 
@@ -66,7 +79,7 @@ function SinglePlaylist({ props, singleSong }) {
                       <IconButton
                         edge="end"
                         aria-label="like"
-                        onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
+                        onClick={()=> {handleLike(song)}}>
                         <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
                         </FavoriteIcon>
                       </IconButton>

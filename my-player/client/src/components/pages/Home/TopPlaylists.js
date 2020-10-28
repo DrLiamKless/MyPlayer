@@ -14,7 +14,6 @@ function TopPlaylists() {
     useEffect(() => {
       read(`/api/v1/playlists/top/${user}`).then((res) => {
         setTopPlaylists(res)
-        console.log(res)
       });
     }, [user]);
 
