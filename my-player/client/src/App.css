@@ -110,7 +110,7 @@ height: 15vh;
   width: 100%;
 }
 
-.player {
+.header {
   padding-bottom: 50px;
   width: 100%;
   display: flex;
@@ -119,8 +119,20 @@ height: 15vh;
   align-items: center;
 }
 
+.player {
+  position: relative;
+  bottom: 0;
+  float: right;
+}
+
 .iframe {
   padding-top: 100px;
+}
+
+.lyrics-container{
+  min-height: 15vh;
+  max-height: 15vh;
+  overflow: scroll;
 }
 
 .all-artists-container{

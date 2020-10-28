@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { brown } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import Loader from '../Loader'
+import Loader from '../../Loader'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,30 +20,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Player({ songToPlay, user }) {
+function Header({ songToPlay, user }) {
   
   const classes = useStyles();
 
   return (
-    songToPlay ?    
-      <Draggable allowAnyClick={false} defaultPosition={{x: 100, y: 1000}}>
-      <Paper className={classes.paper}>
-        <h1>Drag Me!</h1>
-          <iframe title={"player"} src={
-            `${songToPlay.youtubeLink}?autoplay=1`}
-            allow={"autoplay"}
-            frameBorder={0}
-            height={260}>
-          </iframe>
-          <div className={'lyrics-container'}>
-          <p>
-            {songToPlay.lyrics}
-          </p>
-          </div>
-      </Paper>
-    </Draggable>
-    : <Loader/>
+    user ?
+    <div className={"header"} style={{backgroundColor: "rgb(43,19,21)"}}>
+        <h1>{`Welcome Back ${user}`}</h1>
+    </div>
+    : <Loader/>     
   );
 }
 
-export default Player;
+export default Header;

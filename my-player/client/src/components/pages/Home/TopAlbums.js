@@ -45,7 +45,7 @@ function TopAlbums() {
               >
             {topAlbums.map((album, i) => (
                 <Album
-                key={album.albumId}
+                key={album.id}
                 album={album}
                 />
             ))}

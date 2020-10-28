@@ -13,6 +13,7 @@
     "fontsource-roboto": "^3.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-draggable": "^4.4.3",
     "react-hook-form": "^6.8.1",
     "react-multi-carousel": "^2.5.5",
     "react-pro-sidebar": "^0.4.4",

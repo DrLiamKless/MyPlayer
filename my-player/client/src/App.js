@@ -57,7 +57,9 @@ function App() {
     <Router>
       <Topbar></Topbar>
       <Sidebar></Sidebar>
+      {songToPlay &&
       <Player songToPlay={songToPlay} user={user}></Player>
+      }
         <Switch>
           <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay} user={user}> </Home> </Route>
           <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
