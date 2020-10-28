@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from '../Song'
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useLocation } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -16,6 +16,8 @@ import Fade from '@material-ui/core/Fade';
 import Tooltip from '@material-ui/core/Tooltip';
 import likeFunction from "../../wrappers/likeFunction"
 import Loader from '../Loader'
+import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnliked  } from '../../analytics/analyticsManager'
+
 
 
 
@@ -43,7 +45,13 @@ function SingleSong({ setSongToPlay }) {
   const [singleSongObject, setSingleSongObject] = useState();
   const [songsFromQuery, setSongsFromQuery] = useState();
   const [likeState, setLikeState] = useState(false);
+  const [singlePlaylistObject, setSinglePlaylistObject] = useState()
   const classes = useStyles();
+  const location = useLocation();
+
+  useEffect(() => {
+    mixpanelTrackUrlChanged(location.pathname)
+  },[])
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -58,7 +66,6 @@ function SingleSong({ setSongToPlay }) {
 
     useEffect(() => {
       read(`/api/v1/songs/${id}`).then((res) => {
-        console.log(res)
         setSingleSongObject(res)
       });
     }, [id, likeState]);
@@ -69,7 +76,13 @@ function SingleSong({ setSongToPlay }) {
         })
       }, [likeState]);
 
-
+      const handleLike = (song) => {
+        likeFunction(song); 
+        setLikeState(!likeState); 
+        likeState ? 
+        mixpanelTrackSongUnliked(song.songName)
+        : mixpanelTrackSongLiked(song.songName) 
+      }
   
   return (
   singleSongObject && songsFromQuery ?
@@ -113,7 +126,7 @@ function SingleSong({ setSongToPlay }) {
                         <IconButton
                           edge="end"
                           aria-label="like"
-                          onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
+                          onClick={() => {handleLike(song)}}>
                           <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
                           </FavoriteIcon>
                         </IconButton>

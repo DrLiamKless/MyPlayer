@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import { read } from "../../wrappers/ajax"
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -9,6 +10,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import { Link } from "react-router-dom";
 import 'fontsource-roboto';
 import Loader from '../Loader'
+import { mixpanelTrackUrlChanged } from '../../analytics/analyticsManager'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,6 +40,11 @@ function AllArtists() {
 
     const [artists, setArtists] = useState()
     const classes = useStyles();
+    const location = useLocation();
+  
+    useEffect(() => {
+      mixpanelTrackUrlChanged(location.pathname)
+    },[])
 
     useEffect(() => {
       read("api/v1/artists").then((res) => {

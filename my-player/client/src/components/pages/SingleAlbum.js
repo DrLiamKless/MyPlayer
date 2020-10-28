@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import Album from '../Album';
 import { brown } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import likeFunction from "../../wrappers/likeFunction"
 import Loader from '../Loader'
+import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnliked  } from '../../analytics/analyticsManager'
 
 
 
@@ -29,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SingleAlbum({ setSongToPlay }) {
+  const location = useLocation();
+  
+  useEffect(() => {
+    mixpanelTrackUrlChanged(location.pathname)
+  },[])
   
   let { id } = useParams() 
   const [singleAlbum, setSingleAlbum] = useState();
@@ -40,6 +46,14 @@ function SingleAlbum({ setSongToPlay }) {
         setSingleAlbum(res)
       });
     }, [id, likeState]);
+
+    const handleLike = (song) => {
+      likeFunction(song); 
+      setLikeState(!likeState); 
+      likeState ? 
+      mixpanelTrackSongUnliked(song.songName)
+      : mixpanelTrackSongLiked(song.songName) 
+    }
   
   return (
     singleAlbum ?
@@ -69,7 +83,7 @@ function SingleAlbum({ setSongToPlay }) {
                       <IconButton
                         edge="end"
                         aria-label="like"
-                        onClick={()=>{likeFunction(song); setLikeState(!likeState)}}>
+                        onClick={() => {handleLike(song)}}>
                         <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
                         </FavoriteIcon>
                       </IconButton>

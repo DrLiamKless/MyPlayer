@@ -12,7 +12,6 @@ describe('testing artists endpoints', () => {
   it('get all artist', async (done) => {
     await Artist.bulkCreate(artistMock)
     const { body } = await request(app).get('/artists');
-    console.log('all artists:', body);
     expect(body.length).toBe(3)
     done()
   })

@@ -18,6 +18,7 @@ import NoMatch from './components/pages/NoMatch';
 import Login from './components/pages/Identification/Login';
 import Signup from './components/pages/Identification/Signup';
 import { read } from "./wrappers/ajax"
+import { mixpanelTrackLoggedIn, mixpanelTrackEnteredLoginPage } from "./analytics/analyticsManager";
 
 
 
@@ -34,15 +35,16 @@ function App() {
         try {
           const data = await read("/api/v1/auth/validateToken");
           setLogged(data);
+          mixpanelTrackLoggedIn()
         } catch (e) {
           console.error(e);
         }
       } else {
+        mixpanelTrackEnteredLoginPage()
         console.log('cant get token')
       }
     })();
   }, []);
-  
 
   return (
       !logged ?
