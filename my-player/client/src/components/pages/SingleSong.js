@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from '../Song'
-import { useParams, useLocation, Link, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

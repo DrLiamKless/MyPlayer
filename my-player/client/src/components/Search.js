@@ -18,8 +18,6 @@ function Search() {
     const [searchArtistsOutputs, setSearchArtistsOutputs] = useState([]);
     const [searchAlbumsOutputs, setSearchAlbumsOutputs] = useState([]);
 
-
-
     useEffect(() => {
         if(searchInput) {
             read(`api/v1/songs/?songName=${searchInput}`).then((res) => {
