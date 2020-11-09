@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
-import { Link } from 'react-router-dom';
 
 
 
@@ -36,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 function Login({ setUser }) {
   const classes = useStyles();
 
-  const {register: Login, handleSubmit: handleLogin} = useForm()
+  const {register: Login, errors, handleSubmit: handleLogin} = useForm()
 
   const onLogin = data => {
     create("/api/v1/auth/login", data).then(res => {
@@ -68,25 +67,27 @@ function Login({ setUser }) {
           <TextField
             variant="outlined"
             margin="normal" 
-            inputRef={Login}
-            required
+            inputRef={Login({required: true, minLength: 10})}
             fullWidth
             label="email"
             name="email"
             autoFocus
           />
+          {errors.email?.type === "required" && <p>Please Enter mail</p>}
+          {errors.email?.type === "minLength" && <p>Please Enter valid mail</p>}
         <div className={"add-artist-container"}>
         </div>
           <TextField
             variant="outlined"
             margin="normal"
-            inputRef={Login}
+            inputRef={Login({minLength: 1})}
             required
             fullWidth
             name="password"
             label="password"
             type="password"
           />
+          {errors.email?.type === "required" && <p>Please Enter mail</p>}
           <Button
             type="submit"
             fullWidth
@@ -102,7 +103,7 @@ function Login({ setUser }) {
             variant="contained"
             color="secondary"
             className={classes.submit}
-            >
+          >
             SignUp
           </Button>
         </form>
