@@ -36,7 +36,6 @@ router.get('/songs', async (req, res) => {
 
     const { body: bulkResponse } = await client.bulk({refresh: true, body});
     if(bulkResponse.errors) {
-        console.log("errrooroorororr")
         return res.json(bulkResponse.errors)
     };
     const { body: count } = await client.count({index: "songs"});

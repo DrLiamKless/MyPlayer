@@ -5,6 +5,18 @@ const { Song, Artist, Interaction } = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+    cloud: {
+        id: process.env.ELASTIC_ID
+    },
+    auth: {
+        username: process.env.ELASTIC_USERNAME,
+        password: process.env.ELASTIC_PASSWORD,
+    }
+})
+
 // Get all songs + search query
 router.get('/', async (req,res) => {
     const songName = req.query.songName;
@@ -46,8 +58,36 @@ router.get('/:id', async (req,res) => {
 
 // Insert song to songs:    
 router.post('/add', async (req,res) => {
-    const newSong = await Playlist.create(req.body)
-         res.json(newSong)
+    try {
+        const newSong = await Song.create(req.body)
+
+        const song = await Song.findOne({
+            where: {id: newSong.id},
+            include: [
+                {
+                    model: Artist,
+                    attributes: ['artistName', 'artistCoverImg', 'id']
+                },
+                {
+                    model: Album,
+                    attributes: ['albumName']
+                },
+            ],
+            attributes: ["songName", "id", "youtubeLink"]
+        });
+    
+        const body = song.flatMap((doc) => {
+            return [{ index: {_index: "songs", _type: "song"} }, doc]});
+    
+        const { body: bulkResponse } = await client.bulk({refresh: true, body});
+        if(bulkResponse.errors) {
+            return res.json(bulkResponse.errors)
+        };
+        const { body: count } = await client.count({index: "songs"});
+        res.send('added song! now you have that many songs', count);    
+    } catch (err) {
+        res.send('error has occured')
+    }
  })
 
 // update a song from songs
