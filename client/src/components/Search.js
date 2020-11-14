@@ -64,12 +64,12 @@ function Search() {
                                     placement={"bottom"}
                                     TransitionComponent={Fade}
                                     TransitionProps={{ timeout: 600 }}
-                                    title={`by ${song.Artists[0].artistName}`}>
+                                    title={`by ${song.Artists[0]?.artistName}`}>
                                     <span>{song.songName}</span>
                                 </Tooltip>
                                     <IconButton>
-                                <Link to={`/song/${song.id}?artist=${song.Artists[0].id}`}>
-                                        <Avatar alt="artist img" src={song.Artists[0].artistCoverImg}/>                                    </Link>
+                                <Link to={`/song/${song.id}?artist=${song.Artists[0]?.id}`}>
+                                        <Avatar alt="artist img" src={song.Artists[0]?.artistCoverImg}/>                                    </Link>
                                     </IconButton>
                             </div> 
                         ))}
@@ -90,7 +90,7 @@ function Search() {
                                     placement={"bottom"}
                                     TransitionComponent={Fade}
                                     TransitionProps={{ timeout: 600 }}
-                                    title={album.Artists[0] && `by ${album.Artists[0].artistName}`}>
+                                    title={album.Artists[0] && `by ${album.Artists[0]?.artistName}`}>
                                     <span>{album.albumName}</span>
                                 </Tooltip>
                                     <IconButton>
