@@ -64,11 +64,15 @@ router.post('/add', async (req,res) => {
         const albumId = song.albumId;
         const artistId = song.artistId;
 
-        const newSong = await Song.create(song);
-        const newSongByArtist = songs_by_artists.create({artistId, songId: newSong.id});
-        const newAlbumByArtist = albums_by_artists.create({artistId, albumId});
-
-        const songAdded = await Song.findOne({
+        const artist = await Artist.findOne({where: {id: artistId}})
+        const album = await Album.findOne({where: {id: albumId}})
+            
+        if (artist && album) {
+            const newSong = await Song.create(song);
+            const newSongByArtist = await songs_by_artists.create({artistId, songId: newSong.id});
+            const newAlbumByArtist = await albums_by_artists.create({artistId, albumId});
+            
+            const songAdded = await Song.findOne({
             where: {id: newSong.id},
             include: [
                 {
@@ -88,10 +92,13 @@ router.post('/add', async (req,res) => {
     
         const { body: bulkResponse } = await client.bulk({refresh: true, body});
         if(bulkResponse.errors) {
-            return res.json(bulkResponse.errors)
+            res.json(bulkResponse.errors)
         };
         const { body: count } = await client.count({index: "songs"});
         res.json('added song!') 
+        } else {
+            res.json('artist or album dosent exists');
+        }
     } catch (err) {
         console.log(err)
         res.send('error has occured')
