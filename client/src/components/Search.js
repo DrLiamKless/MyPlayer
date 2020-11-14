@@ -27,15 +27,12 @@ function Search() {
             try {
                 read(`api/v1/search/songs/${searchInput}`).then((res) => {
                     setSearchSongsOutputs(res);
-                    console.log('songs........',res)
                 });
                 read(`api/v1/search/artists/${searchInput}`).then((res) => {
                     setSearchArtistsOutputs(res);
-                    console.log('artists........',res)
                 });
                 read(`api/v1/search/albums/${searchInput}`).then((res) => {
                     setSearchAlbumsOutputs(res);
-                    console.log('albums........',res)
                     setIsSearching(false);
                 });
             } catch (err) {
