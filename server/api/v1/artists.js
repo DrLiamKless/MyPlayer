@@ -87,18 +87,11 @@ router.post('/add', async (req,res) => {
         if(!artistExists) {
             const newArtist = await Artist.create(artist)
 
-            const artistAdded = await Artist.findOne(
-                {
-                    where: {artistName: artistName},
-                    attributes: ["artistName", "id", "artistCoverImg"]
-                })
-
-            const body = [artistAdded].flatMap((doc) => {
+            const body = [newArtist].flatMap((doc) => {
                 return [{ index: {_index: "artists", _type: "artist"} }, doc]});
         
             const { body: bulkResponse } = await client.bulk({refresh: true, body});
             if(bulkResponse.errors) {
-                console.log(bulkResponse)
                 return res.json(bulkResponse.errors)
             };
             res.json("artist added");

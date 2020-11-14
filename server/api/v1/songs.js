@@ -94,7 +94,6 @@ router.post('/add', async (req,res) => {
         if(bulkResponse.errors) {
             res.json(bulkResponse.errors)
         };
-        const { body: count } = await client.count({index: "songs"});
         res.json('added song!') 
         } else {
             res.json('artist or album dosent exists');

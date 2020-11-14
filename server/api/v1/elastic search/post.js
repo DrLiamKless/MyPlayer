@@ -120,4 +120,16 @@ router.get('/deleteArtists', (req, res) => {
     }
 })
 
+router.get('/deleteAlbums', (req, res) => {
+    try {
+        client.indices.delete({
+            index: 'albums',
+        }).then(response => {
+            res.send('deleted')
+        })
+    } catch (err) {
+        res.json('not deleted');
+    }
+})
+
 module.exports = router;
