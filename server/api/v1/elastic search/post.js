@@ -21,7 +21,7 @@ router.get('/songs', async (req, res) => {
         include: [
             {
                 model: Artist,
-                attributes: ['artistName']
+                attributes: ['artistName', 'artistCoverImg', 'id']
             },
             {
                 model: Album,
@@ -96,5 +96,17 @@ router.get('/playlists', async (req, res) => {
     const { body: count } = await client.count({index: "playlists"});
     res.send(count);    
 });
+
+router.get('/deleteSongs', (req, res) => {
+    try {
+        client.indices.delete({
+            index: 'songs',
+        }).then(response => {
+            res.send('deleted')
+        })
+    } catch (err) {
+        res.json('not deleted');
+    }
+})
 
 module.exports = router;

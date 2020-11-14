@@ -18,7 +18,7 @@ router.get('/:albumName', async (req, res) => {
 
     try {
         const { body } = await client.search({
-            index: 'songs',
+            index: 'albums',
             body: {
                 query: {
                     wildcard: { albumName: `*${albumName}*`}
@@ -26,7 +26,7 @@ router.get('/:albumName', async (req, res) => {
             }
         })
          
-        const results = body.hits.hits;
+        const results = body.hits.hits.map(playlist => playlist._source);
 
         res.json(results)
     } catch (err) {

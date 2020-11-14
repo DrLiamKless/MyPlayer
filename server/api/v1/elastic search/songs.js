@@ -26,7 +26,7 @@ router.get('/:songName', async (req, res) => {
             }
         })
          
-        const results = body.hits.hits;
+        const results = body.hits.hits.map(playlist => playlist._source);
 
         res.json(results)
     } catch (err) {

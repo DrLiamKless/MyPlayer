@@ -43,9 +43,6 @@ function Sidebar() {
                 Home
             <Link to="/" />
             </MenuItem>
-            <SubMenu title="Search" icon={<SearchIcon/>}>
-                <Search></Search>
-            </SubMenu>
             <SubMenu title="My user" icon={<AccountCircleIcon/>}>
                 <MenuItem>settings</MenuItem>
                 <MenuItem>Admin <Link to="/Admin"/></MenuItem>
@@ -62,6 +59,9 @@ function Sidebar() {
                 All Playlists 
             <Link to="/Allplaylists"/>
             </MenuItem>
+            <SubMenu title="Search" icon={<SearchIcon/>}>
+                <Search></Search>
+            </SubMenu>
                 <MenuItem icon={<ExitToAppIcon/>} onClick={logOut}>
                     log out
                 </MenuItem>
