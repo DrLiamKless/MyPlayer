@@ -70,7 +70,7 @@ router.get('/artists', async (req, res) => {
     });
 
     const body = artists.flatMap((doc) => {
-        return [{ index: {_index: "artists", _type: "albums"} }, doc]});
+        return [{ index: {_index: "artists", _type: "artist"} }, doc]});
 
     const { body: bulkResponse } = await client.bulk({refresh: true, body});
     if(bulkResponse.errors) {
@@ -100,6 +100,18 @@ router.get('/deleteSongs', (req, res) => {
     try {
         client.indices.delete({
             index: 'songs',
+        }).then(response => {
+            res.send('deleted')
+        })
+    } catch (err) {
+        res.json('not deleted');
+    }
+})
+
+router.get('/deleteArtists', (req, res) => {
+    try {
+        client.indices.delete({
+            index: 'artists',
         }).then(response => {
             res.send('deleted')
         })
