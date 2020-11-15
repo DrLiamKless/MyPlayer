@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
             user = user.toJSON();
         // jwt:
 
-        // const expiresIn = loginData.rememberMe
+        const expiresIn = loginData.rememberMe ? "365 days" : "24h"
         const infoForCookie = {
             userId: user.id,
             email: user.email,
@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
         const refreshToken = jwt.sign(
             infoForCookie,
             process.env.REFRESH_TOKEN_SECRET,
-            {expiresIn: '24h'} //todo: change expiresIn by RememberMe Button
+            {expiresIn: expiresIn}
         );
 
         const existingRefreshToken = await RefreshToken.findOne({ where: {userId: user.id} });

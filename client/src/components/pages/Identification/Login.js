@@ -85,7 +85,14 @@ function Login({ setUser }) {
             label="password"
             type="password"
           />
-          {errors.email?.type === "required" && <p>Please Enter mail</p>}
+          <TextField
+            inputRef={Login}
+            fullWidth
+            name="rememberMe"
+            type="checkbox"
+            label="remember me"
+          />
+          {errors.email?.type === "required" && <p>Please Enter password</p>}
           <Button
             type="submit"
             fullWidth
