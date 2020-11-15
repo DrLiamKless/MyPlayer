@@ -39,9 +39,7 @@ function Login({ setUser }) {
 
   const onLogin = data => {
     create("/api/v1/auth/login", data).then(res => {
-      if (res.success && res.accessToken) {
-        localStorage.setItem('token', res.accessToken);
-        localStorage.setItem('user', res.userName);
+      if (res.success) {
         window.location = '/';
       } else {
       console.log(res)
@@ -87,7 +85,14 @@ function Login({ setUser }) {
             label="password"
             type="password"
           />
-          {errors.email?.type === "required" && <p>Please Enter mail</p>}
+          <TextField
+            inputRef={Login}
+            fullWidth
+            name="rememberMe"
+            type="checkbox"
+            label="remember me"
+          />
+          {errors.email?.type === "required" && <p>Please Enter password</p>}
           <Button
             type="submit"
             fullWidth

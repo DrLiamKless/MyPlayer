@@ -1,8 +1,9 @@
+import Cookies from 'js-cookie';
+
 export default function network(url ,body, {...customConfig} = {}) {
   
-  const getToken = () => {
-    return localStorage.getItem('token');
-  }
+  const getToken = () => Cookies.get('accessToken');
+
 
   const headers = {
     "Content-Type": "application/json; charrset=utf-8",

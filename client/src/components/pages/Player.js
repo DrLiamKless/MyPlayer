@@ -31,7 +31,7 @@ function Player({ songToPlay, user }) {
           allow={"autoplay"}
           frameBorder={0}
           height={260}></iframe>
-        : <h1>{user ? `Welcome Back ${user}` : "Please Login. dont have a user!? Sign Up!"}</h1>
+        : <h1>{user ? `Welcome Back ${user.userName}` : "Please Login. dont have a user!? Sign Up!"}</h1>
         }
          </div>
           {songToPlay && 
