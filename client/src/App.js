@@ -38,14 +38,16 @@ function App() {
           const data = await read("/api/v1/auth/validateToken");
           setLogged(data);
           const userId = Cookies.get('id');
-          const user = await read(`api/v1/users/id/${userId}`);
-          setUser(user);
+          const userLogged = await read(`api/v1/users/id/${userId}`);
+          setUser(userLogged);
+          console.log(userLogged);
           setLoading(false);
           mixpanelTrackLoggedIn()
         } catch (e) {
           console.error(e);
         }
       } else {
+        setLoading(false);
         mixpanelTrackEnteredLoginPage()
         console.log('cant get token')
       }

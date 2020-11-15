@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasOne(models.User, {
-        foreignKey: 'userId'
+        foreignKey: 'id'
       });
     }
   };
   RefreshToken.init({
     userId: DataTypes.INTEGER,
-    RefreshToken: DataTypes.STRING
+    refreshToken: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'RefreshToken',

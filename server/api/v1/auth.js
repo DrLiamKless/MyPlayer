@@ -35,17 +35,17 @@ router.post('/login', async (req, res) => {
             {expiresIn: '24h'} //todo: change expiresIn by RememberMe Button
         );
 
-        const existingRefreshToken = await RefreshToken.findOneAndUpdate(
-            {email: loginData.email},
-            {token: refreshToken}
-        )
+        const existingRefreshToken = await RefreshToken.findOne({ where: {userId: user.id} });
 
-        if(!existingRefreshToken) {
-            const newRefreshToken = RefreshToken.create({
+        if (existingRefreshToken) {
+            await existingRefreshToken.update({refreshToken: refreshToken})
+        } else {
+            const newRefreshToken = await RefreshToken.create({
                 userId: user.id,
                 token: refreshToken,
             })    
         }
+
 
         const accessToken = await generateToken(infoForCookie);
         res.cookie('accessToken', accessToken);
@@ -55,8 +55,8 @@ router.post('/login', async (req, res) => {
         } else {
             res.status(403).send("User or password is incorrect");
         }
-    } catch {
-        console.log('something went wrong');
+    } catch (err) {
+        console.log('something went wrong', err);
         res.status(500).send()
     }
 })

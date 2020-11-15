@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 export default function network(url ,body, {...customConfig} = {}) {
   
   const getToken = () => Cookies.get('accessToken');

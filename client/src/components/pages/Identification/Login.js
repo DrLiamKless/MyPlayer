@@ -39,9 +39,7 @@ function Login({ setUser }) {
 
   const onLogin = data => {
     create("/api/v1/auth/login", data).then(res => {
-      if (res.success && res.accessToken) {
-        localStorage.setItem('token', res.accessToken);
-        localStorage.setItem('user', res.userName);
+      if (res.success) {
         window.location = '/';
       } else {
       console.log(res)
