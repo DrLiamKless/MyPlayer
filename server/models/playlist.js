@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   Playlist.init({
     playlistName: DataTypes.STRING,
     playlistCoverImg: DataTypes.TEXT,
+    public: {type: DataTypes.BOOLEAN, defaultValue: false}
     }, {
     sequelize,
     underscored: true,

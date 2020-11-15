@@ -33,25 +33,32 @@ function TopAlbums() {
   }
   
   return (
-    topAlbums != null ?
+  topAlbums != null ?
+  <>
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
-        <p>Your most favorite albums</p>
-        <Carousel
-              responsive={responsive}
-              keyBoardControl={true}
-              containerClass="carousel-container"
-              itemClass="carousel-item"
-              infinite
-              >
-            {topAlbums.map((album, i) => (
+      {topAlbums.length > 0 ?
+        <>
+          <p>Your most favorite albums</p>
+          <Carousel
+          responsive={responsive}
+          keyBoardControl={true}
+          containerClass="carousel-container"
+          itemClass="carousel-item"
+          infinite
+          >
+              {topAlbums.map((album, i) => (
                 <Album
                 key={album.albumId}
                 album={album}
                 />
-            ))}
-            </Carousel>
-        </div>     
-    : <Loader/>
+                ))}
+              </Carousel>
+        </>
+        : <p> you didnt selcted you top songs yet</p>
+      }
+    </div>     
+  </>
+  : <Loader/>
   ) 
 }
 

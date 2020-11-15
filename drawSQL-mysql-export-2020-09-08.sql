@@ -1,11 +1,11 @@
-CREATE TABLE `Artists`(
+CREATE TABLE `artists`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Name` VARCHAR(255) NOT NULL,
     `Cover_img` TEXT NOT NULL,
     `Upload_at` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 );
-CREATE TABLE `Albums`(
+CREATE TABLE `albums`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Artist_id` INT NOT NULL,
     `Name` VARCHAR(255) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `Albums`(
     `Upload_at` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 );
-CREATE TABLE `Songs`(
+CREATE TABLE `songs`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Youtube_link` TEXT NOT NULL,
     `Album_id` INT NOT NULL,
@@ -25,9 +25,9 @@ CREATE TABLE `Songs`(
     `Created_at` DATE NOT NULL,
     `Upload_at` DATETIME NOT NULL,
 	PRIMARY KEY (`id`),
-    FOREIGN KEY (`Album_id`) REFERENCES Albums (`id`)
+    FOREIGN KEY (`Album_id`) REFERENCES albums (`id`)
     );
-CREATE TABLE `Playlists`(
+CREATE TABLE `playlists`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `Cover_img` TEXT NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `Playlists`(
     `Upload_at` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 );
-CREATE TABLE `Users`(
+CREATE TABLE `users`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Name` TEXT NOT NULL,
     `Email` TEXT NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `Users`(
     `Remember_token` TINYINT(1) NOT NULL,
     PRIMARY KEY (`id`)
 );
-CREATE TABLE `Songs_in_playlists`(
+CREATE TABLE `songs_in_playlists`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Playlist_id` INT NOT NULL,
     `Song_id` INT NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `Songs_in_playlists`(
     FOREIGN KEY (`Song_id`) REFERENCES songs (`id`)
 );
 
-CREATE TABLE `Intereactions`(
+CREATE TABLE `intereactions`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `User_id` INT NOT NULL,
     `Song_id` INT NOT NULL,
@@ -63,28 +63,28 @@ CREATE TABLE `Intereactions`(
     `Play_count` INT NOT NULL,
     `Created_at` DATETIME NOT NULL,	
     PRIMARY KEY (`id`),
-	FOREIGN KEY (`User_id`) REFERENCES Users (`id`),
-    FOREIGN KEY (`Song_id`) REFERENCES Songs (`id`)
+	FOREIGN KEY (`User_id`) REFERENCES users (`id`),
+    FOREIGN KEY (`Song_id`) REFERENCES songs (`id`)
 );
 
-CREATE TABLE `Songs_by_artists`(
+CREATE TABLE `songs_by_artists`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Artist_id` INT NOT NULL,
     `Song_id` INT NOT NULL,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`Artist_id`) REFERENCES Artists (`id`),
+	FOREIGN KEY (`Artist_id`) REFERENCES artists (`id`),
     FOREIGN KEY (`Song_id`) REFERENCES songs (`id`)
 );
-CREATE TABLE `User_playlists`(
+CREATE TABLE `user_playlists`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Playlist_id` INT NOT NULL,
     `User_id` INT NOT NULL,
     PRIMARY KEY (`id`),
-	FOREIGN KEY (`User_id`) REFERENCES Users (`id`),
+	FOREIGN KEY (`User_id`) REFERENCES users (`id`),
     FOREIGN KEY (`Playlist_id`) REFERENCES playlists (`id`)
 );
 
-CREATE TABLE `Albums_by_artists`(
+CREATE TABLE `albums_by_artists`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `Artist_id` INT NOT NULL,
     `Albums_id` INT NOT NULL,

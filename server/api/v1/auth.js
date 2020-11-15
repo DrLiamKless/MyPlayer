@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { User, RefreshToken } = require('../../models');
+const { User, refresh_token } = require('../../models');
 const jwt = require('jsonwebtoken')
 const authenticateToken = require('../../middlewares/auth')
 
@@ -35,21 +35,21 @@ router.post('/login', async (req, res) => {
             {expiresIn: expiresIn}
         );
 
-        const existingRefreshToken = await RefreshToken.findOne({ where: {userId: user.id} });
+        const existingRefreshToken = await refresh_token.findOne({ where: {userId: user.id} });
 
         if (existingRefreshToken) {
             await existingRefreshToken.update({refreshToken: refreshToken})
         } else {
-            const newRefreshToken = await RefreshToken.create({
+            const newRefreshToken = await refresh_token.create({
                 userId: user.id,
-                token: refreshToken,
+                token: refresh_token,
             })    
         }
 
 
         const accessToken = await generateToken(infoForCookie);
         res.cookie('accessToken', accessToken);
-        res.cookie('refreshToken', refreshToken);
+        res.cookie('refresh_token', refresh_token);
         res.cookie('id', user.id);
         res.status(200).send({success: true, userName: user.userName, accessToken: accessToken}); 
         } else {

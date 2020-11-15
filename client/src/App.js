@@ -40,11 +40,10 @@ function App() {
           const userId = Cookies.get('id');
           const userLogged = await read(`api/v1/users/id/${userId}`);
           setUser(userLogged);
-          console.log(userLogged);
           setLoading(false);
           mixpanelTrackLoggedIn()
         } catch (e) {
-          console.error(e);
+          setLoading(false)
         }
       } else {
         setLoading(false);

@@ -33,6 +33,16 @@ router.get('/', async (req,res) => {
         res.json(allAlbums);   
 })
 
+router.get('/all', async (req, res) => {
+    const allAlbums = await Album.findAll({ })
+        res.json(allAlbums);   
+})
+
+router.get('/albumsByArtists', async (req, res) => {
+    const all = await albums_by_artists.findAll({});
+    res.json(all);   
+})
+
 // Get top 20 albums - for now its 2
 router.get('/top', (req,res) => {
     const sql = `

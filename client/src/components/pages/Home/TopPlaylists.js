@@ -8,7 +8,7 @@ import Loader from '../../Loader'
 
 function TopPlaylists() {
 
-    const [topPlaylists, setTopPlaylists] = useState("")
+    const [topPlaylists, setTopPlaylists] = useState([])
     const user = localStorage.getItem('user')
 
     useEffect(() => {
@@ -34,8 +34,11 @@ function TopPlaylists() {
 
   
   return (
-    topPlaylists[0] ?
+  topPlaylists === [] ?
+  <>
+    <p>you still dont have favorite playlists</p>
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
+      : 
         <p>{user}, those are your Most Favorite Playlists</p>
         <Carousel
               responsive={responsive}
@@ -53,8 +56,9 @@ function TopPlaylists() {
             ))}
         </Carousel>
     </div>     
-    : <Loader/>
-  );
+  </>
+    : <Loader/> 
+    );
 }
 
 export default TopPlaylists;
