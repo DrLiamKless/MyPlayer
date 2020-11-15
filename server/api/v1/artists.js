@@ -6,6 +6,17 @@ const { Artist, Album, Song, Interaction } = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+    cloud: {
+        id: process.env.ELASTIC_ID
+    },
+    auth: {
+        username: process.env.ELASTIC_USERNAME,
+        password: process.env.ELASTIC_PASSWORD,
+    }
+})
 
 // Get all artists
 router.get('/', async (req,res) => {
@@ -63,8 +74,34 @@ router.get('/:id', async (req,res) => {
 
 // Insert artist to artists:
 router.post('/add', async (req,res) => {
-   const newArtist = await Artist.create (req.body)
-        res.json(newArtist)
+    try {
+        const artist = req.body;
+        const artistId = artist.id;
+        const artistName = artist.artistName;
+        const artistCoverImg = artist.artistCoverImg;
+    
+        const artistExists = await Artist.findOne({
+            where: {artistName},
+        });
+    
+        if(!artistExists) {
+            const newArtist = await Artist.create(artist)
+
+            const body = [newArtist].flatMap((doc) => {
+                return [{ index: {_index: "artists", _type: "artist"} }, doc]});
+        
+            const { body: bulkResponse } = await client.bulk({refresh: true, body});
+            if(bulkResponse.errors) {
+                return res.json(bulkResponse.errors)
+            };
+            res.json("artist added");
+        } else {
+            res.json('artist with that name already exists')
+        }
+    } catch (err) {
+        console.error(err);
+        res.send('error occured whilt posting an artist');
+    }
 })
 
 // update an artist from artists

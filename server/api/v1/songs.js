@@ -1,9 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../../connection')
-const { Song, Artist, Interaction } = require('../../models');
+const { Song, Artist, Interaction, Album, songs_by_artists, albums_by_artists } = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
+
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+    cloud: {
+        id: process.env.ELASTIC_ID
+    },
+    auth: {
+        username: process.env.ELASTIC_USERNAME,
+        password: process.env.ELASTIC_PASSWORD,
+    }
+})
 
 // Get all songs + search query
 router.get('/', async (req,res) => {
@@ -46,8 +58,50 @@ router.get('/:id', async (req,res) => {
 
 // Insert song to songs:    
 router.post('/add', async (req,res) => {
-    const newSong = await Playlist.create(req.body)
-         res.json(newSong)
+    try {
+
+        const song = req.body;
+        const albumId = song.albumId;
+        const artistId = song.artistId;
+
+        const artist = await Artist.findOne({where: {id: artistId}})
+        const album = await Album.findOne({where: {id: albumId}})
+            
+        if (artist && album) {
+            const newSong = await Song.create(song);
+            const newSongByArtist = await songs_by_artists.create({artistId, songId: newSong.id});
+            const newAlbumByArtist = await albums_by_artists.create({artistId, albumId});
+            
+            const songAdded = await Song.findOne({
+            where: {id: newSong.id},
+            include: [
+                {
+                    model: Artist,
+                    attributes: ['artistName', 'artistCoverImg', 'id']
+                },
+                {
+                    model: Album,
+                    attributes: ['albumName']
+                },
+            ],
+            attributes: ["songName", "id", "youtubeLink"]
+        });
+
+        const body = [songAdded].flatMap((doc) => {
+            return [{ index: {_index: "songs", _type: "song"} }, doc]});
+    
+        const { body: bulkResponse } = await client.bulk({refresh: true, body});
+        if(bulkResponse.errors) {
+            res.json(bulkResponse.errors)
+        };
+        res.json('added song!') 
+        } else {
+            res.json('artist or album dosent exists');
+        }
+    } catch (err) {
+        console.log(err)
+        res.send('error has occured')
+    }
  })
 
 // update a song from songs

@@ -5,6 +5,18 @@ const { Artist, User, Playlist, songs_in_playlists, Interaction, Song } = requir
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
+const { Client } = require('@elastic/elasticsearch')
+
+const client = new Client({
+    cloud: {
+        id: process.env.ELASTIC_ID
+    },
+    auth: {
+        username: process.env.ELASTIC_USERNAME,
+        password: process.env.ELASTIC_PASSWORD,
+    }
+})
+
 // Get all playlists + search query
 router.get('/', async (req,res) => {
     const playlistName = req.query.playlistName;
@@ -68,14 +80,28 @@ router.get('/songInPlaylist/:songId/:playlistId', async (req,res) => {
 
 // // Insert playlist to playlists:
 router.post('/add', async (req,res) => {
-    const newPlaylist = await Playlist.create (req.body)
-         res.json(newPlaylist)
- })
+    const playlist = req.body;
+    playlistId = playlist.id;
+    try {
+        const newPlaylist = await Playlist.create (playlist)
+        
+        const body = [newPlaylist].flatMap((doc) => {
+            return [{ index: {_index: "playlists", _type: "playlist"} }, doc]});
+            
+            const { body: bulkResponse } = await client.bulk({refresh: true, body});
+            if(bulkResponse.errors) {
+                return res.json(bulkResponse.errors)
+            };
+            res.json("playlist added");
+    } catch (err) {
+        res.json('error occured while posting playlist');
+    }
+})
 
 // Insert song into playlist:
 router.post('/addSong', async (req,res) => {
     const newSong = await songs_in_playlists.create(req.body)
-         res.json(newSong)
+    res.json(newSong)
  })
 
 // update a playlist from playlists

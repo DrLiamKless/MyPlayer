@@ -9,6 +9,7 @@ import { read } from '../wrappers/ajax';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
+import useDebounce from '../hooks/debounce'
 
 
 function Search() {
@@ -17,20 +18,34 @@ function Search() {
     const [searchSongsOutputs, setSearchSongsOutputs] = useState([]);
     const [searchArtistsOutputs, setSearchArtistsOutputs] = useState([]);
     const [searchAlbumsOutputs, setSearchAlbumsOutputs] = useState([]);
+    const [isSearching, setIsSearching] = useState(false)
+    const debouncedSearchInput = useDebounce(searchInput, 500);
 
     useEffect(() => {
-        if(searchInput) {
-            read(`api/v1/songs/?songName=${searchInput}`).then((res) => {
-            setSearchSongsOutputs(res)
-            });
-            read(`api/v1/artists/?artistName=${searchInput}`).then((res) => {
-                setSearchArtistsOutputs(res)
-            });
-            read(`api/v1/albums/?albumName=${searchInput}`).then((res) => {
-                setSearchAlbumsOutputs(res)
-            });
+        if(debouncedSearchInput) {
+            setIsSearching(true);
+            try {
+                read(`api/v1/search/songs/${searchInput}`).then((res) => {
+                    setSearchSongsOutputs(res);
+                });
+                read(`api/v1/search/artists/${searchInput}`).then((res) => {
+                    setSearchArtistsOutputs(res);
+                });
+                read(`api/v1/search/albums/${searchInput}`).then((res) => {
+                    setSearchAlbumsOutputs(res);
+                    setIsSearching(false);
+                });
+            } catch (err) {
+                console.error(err);
+            } 
          }
-    }, [searchInput]);
+    }, [debouncedSearchInput]);
+
+    useEffect(() => {
+        setSearchSongsOutputs([])
+        setSearchArtistsOutputs([])
+        setSearchAlbumsOutputs([])
+    },[searchInput])
 
   return (  
             <div>
@@ -46,12 +61,12 @@ function Search() {
                                     placement={"bottom"}
                                     TransitionComponent={Fade}
                                     TransitionProps={{ timeout: 600 }}
-                                    title={`by ${song.Artists[0].artistName}`}>
+                                    title={`by ${song.Artists[0]?.artistName}`}>
                                     <span>{song.songName}</span>
                                 </Tooltip>
                                     <IconButton>
-                                <Link to={`/song/${song.id}?artist=${song.Artists[0].id}`}>
-                                        <Avatar alt="artist img" src={song.Artists[0].artistCoverImg}/>                                    </Link>
+                                <Link to={`/song/${song.id}?artist=${song.Artists[0]?.id}`}>
+                                        <Avatar alt="artist img" src={song.Artists[0]?.artistCoverImg}/>                                    </Link>
                                     </IconButton>
                             </div> 
                         ))}
@@ -72,7 +87,7 @@ function Search() {
                                     placement={"bottom"}
                                     TransitionComponent={Fade}
                                     TransitionProps={{ timeout: 600 }}
-                                    title={album.Artists[0] && `by ${album.Artists[0].artistName}`}>
+                                    title={album.Artists[0] && `by ${album.Artists[0]?.artistName}`}>
                                     <span>{album.albumName}</span>
                                 </Tooltip>
                                     <IconButton>
