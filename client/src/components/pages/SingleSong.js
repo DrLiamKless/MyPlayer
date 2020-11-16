@@ -24,14 +24,13 @@ import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnlik
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
+    width: '130%',
     backgroundColor: brown[500],
     marginLeft: "20px"
   },
   paper: {
     height: "100%",
-    width: "400px",
+    width: "100%",
     backgroundColor: brown[500],
     marginRight: "20px",
     textAlign: "center",
@@ -86,56 +85,55 @@ function SingleSong({ setSongToPlay }) {
   
   return (
   singleSongObject && songsFromQuery ?
-  <div className="App">
-    <div className="single-song-page">
-             <Song
-              key={singleSongObject.song_id}
-              song={singleSongObject}
-              setSongToPlay={setSongToPlay}
-              likeState={likeState}
-              setLikeState={setLikeState}
-            >
-            </Song>
-            <div className="suggested-songs">
-              <List className={classes.root}
-                subheader={
-                      <Link to={`/${queryKey}/${queryValue}`}>
-                  <ListSubheader component="h5">
-                    {  songsFromQuery.Songs.length > 1 ? <h5>related songs from 
-                      {albumQuery ? 
-                      ' ' + songsFromQuery.albumName :
-                      artistQuery ? 
-                      ' ' + songsFromQuery.artistName :
-                      playlistQuery &&
-                      ' ' + songsFromQuery.playlistName + ' playlist'}</h5>
-                      : <h5>this is the only song from this {queryKey}</h5>}
-                  </ListSubheader>
-                  </Link>
-                }>
-                {songsFromQuery.Songs.filter(song => song.songName !== singleSongObject.songName).map((song, i) => (
-                  <ListItem key={i} role={undefined} dense>
-                    <Link 
-                    to={`/song/${song.id}?${queryKey}=${queryValue}`}
-                    style={{color: 'black'}}>
-                      <ListItemText primary={`${song.songName}`} />
-                    </Link>
-                    <ListItemSecondaryAction>
-                      <Tooltip 
-                        title={"add/remove from favorites"} placement={"right"}
-                        TransitionComponent={Fade} TransitionProps={{ timeout: 600 }}>
-                        <IconButton
-                          edge="end"
-                          aria-label="like"
-                          onClick={() => {handleLike(song)}}>
-                          <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
-                          </FavoriteIcon>
-                        </IconButton>
-                      </Tooltip>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            </div>
+  <div className="page">
+    <div className="single-page">
+      <Song
+      key={singleSongObject.song_id}
+      song={singleSongObject}
+      setSongToPlay={setSongToPlay}
+      likeState={likeState}
+      setLikeState={setLikeState}>
+      </Song>
+      <div className="suggested-songs">
+        <List className={classes.root}
+          subheader={
+                <Link to={`/${queryKey}/${queryValue}`}>
+            <ListSubheader component="p">
+              {  songsFromQuery.Songs.length > 1 ? <h5>related songs from 
+                {albumQuery ? 
+                ' ' + songsFromQuery.albumName :
+                artistQuery ? 
+                ' ' + songsFromQuery.artistName :
+                playlistQuery &&
+                ' ' + songsFromQuery.playlistName + ' playlist'}</h5>
+                : <h5>this is the only song from this {queryKey}</h5>}
+            </ListSubheader>
+            </Link>
+          }>
+          {songsFromQuery.Songs.filter(song => song.songName !== singleSongObject.songName).map((song, i) => (
+            <ListItem key={i} role={undefined} dense>
+              <Link 
+              to={`/song/${song.id}?${queryKey}=${queryValue}`}
+              style={{color: 'black'}}>
+                <ListItemText primary={`${song.songName}`} />
+              </Link>
+              <ListItemSecondaryAction>
+                <Tooltip 
+                  title={"add/remove from favorites"} placement={"right"}
+                  TransitionComponent={Fade} TransitionProps={{ timeout: 600 }}>
+                  <IconButton
+                    edge="end"
+                    aria-label="like"
+                    onClick={() => {handleLike(song)}}>
+                    <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
+                    </FavoriteIcon>
+                  </IconButton>
+                </Tooltip>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      </div>
     </div>
   </div>
   : <Loader/>

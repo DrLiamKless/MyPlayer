@@ -35,8 +35,9 @@ function TopPlaylists() {
 
   
   return (
-    topPlaylists[0] ?
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
+   { topPlaylists[0] ?
+    <>
         <p>{User.userName}, those are your Most Favorite Playlists</p>
         <Carousel
               responsive={responsive}
@@ -53,8 +54,10 @@ function TopPlaylists() {
           </Playlist>
             ))}
         </Carousel>
+    </>
+        : <div>No Playlists Yet</div> 
+        }
     </div>     
-    : <div>No Playlists Yet</div> 
 
   );
 }

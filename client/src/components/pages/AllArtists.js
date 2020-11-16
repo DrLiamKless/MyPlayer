@@ -54,7 +54,7 @@ function AllArtists() {
   
   return (
     artists != null ?
-    <header className="App-header">
+    <div className="page">
       <p  className="all-artists-header">All Artists</p>
         <div className={"all-artists-container"}>
             <div className={classes.root}>
@@ -80,7 +80,7 @@ function AllArtists() {
                 </GridList>
             </div>
         </div>
-    </header>
+    </div>
     : <Loader/>
   );
 }

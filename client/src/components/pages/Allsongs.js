@@ -26,22 +26,20 @@ function Allsongs({ setSongToPlay }) {
   
   return (
   songs != null ?
-  <div className="App">
-    <header className="App-header">
-      <p>All Songs</p>
-      <div className={"all-songs-container"}>
-        {songs && songs.map((song, i) => (
-            <Song
-              key={song.song_id}
-              song={song}
-              setSongToPlay={setSongToPlay}
-              likeState={likeState}
-              setLikeState={setLikeState}
-            >
-            </Song>
-        ))}
-      </div>
-    </header>
+  <div className="page">
+    <p>All Songs</p>
+    <div className={"all-songs-container"}>
+      {songs && songs.map((song, i) => (
+          <Song
+            key={song.song_id}
+            song={song}
+            setSongToPlay={setSongToPlay}
+            likeState={likeState}
+            setLikeState={setLikeState}
+          >
+          </Song>
+      ))}
+    </div>
   </div>
   : <Loader/>
   );

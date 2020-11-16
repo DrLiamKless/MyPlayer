@@ -23,25 +23,17 @@ function Player({ songToPlay }) {
   const classes = useStyles();
 
   return (
-    <div className={"player"} style={{backgroundColor: "rgb(43,19,21)"}}>
-        <div className={"iframe"} >
-        {songToPlay ?
+    <div className="player" style={{backgroundColor: "rgb(43,19,21)"}}>
+      <div className={"iframe"} >
+        {songToPlay &&
         <iframe title={"player"} src={
           `${songToPlay.youtubeLink}?autoplay=1`}
           className={"video"}
           allow={"autoplay"}
           frameBorder={0}
           height={260}></iframe>
-        : <h1>{user ? `Welcome Back ${user.userName}` : "Please Login. dont have a user!? Sign Up!"}</h1>
         }
-         </div>
-          {songToPlay && 
-            <Paper className={classes.paper}>
-              <Typography paragraph>
-                {songToPlay.lyrics}
-              </Typography>
-            </Paper>
-          }
+      </div>
     </div>     
   );
 }

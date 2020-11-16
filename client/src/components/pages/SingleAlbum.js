@@ -22,7 +22,7 @@ import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnlik
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '139%',
     maxWidth: 360,
     backgroundColor: brown[500],
     marginLeft: "20px"
@@ -57,8 +57,8 @@ function SingleAlbum({ setSongToPlay }) {
   
   return (
     singleAlbum ?
-  <div className="App">
-    <header className="single-song-page">
+  <div className="page">
+    <div className="single-page">
             <Album
               key={singleAlbum.id}
               album={singleAlbum}
@@ -68,7 +68,7 @@ function SingleAlbum({ setSongToPlay }) {
             <div className="suggested-songs">
               <List className={classes.root}
                 subheader={
-                  <ListSubheader component="div">
+                  <ListSubheader component="p">
                     more songs from {singleAlbum.albumName} 
                   </ListSubheader>
                 }>
@@ -92,7 +92,7 @@ function SingleAlbum({ setSongToPlay }) {
                 ))}
               </List>
               </div>
-    </header>
+    </div>
   </div>
   : <Loader/>
   );

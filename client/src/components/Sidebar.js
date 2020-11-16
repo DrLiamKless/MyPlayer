@@ -33,11 +33,14 @@ function Sidebar() {
 
   return (
     <div>
-        <MenuIcon id={"toggle-btn"} onClick={()=>{setSideBarOpen(!sideBarOpen)}}></MenuIcon>
         <ProSidebar id={"side-bar"} collapsed={sideBarOpen}
         image={"https://media.pri.org/s3fs-public/story/images/Music%20Listening.jpg"}
         >
             <Menu iconShape="circle">
+            <br></br>
+            <br></br>
+            <br></br>
+            <MenuItem icon={<MenuIcon/>} onClick={()=>{setSideBarOpen(!sideBarOpen)}}></MenuItem>
             <br></br>
             <br></br>
             <br></br>

@@ -19,7 +19,7 @@ import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnlik
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: '150%',
     maxWidth: 360,
     backgroundColor: brown[500],
     marginLeft: "20px"
@@ -54,8 +54,8 @@ function SinglePlaylist({ props, singleSong }) {
   
     return (
       singleArtist.artistName ? 
-        <div className="App">
-          <header className="single-song-page">
+        <div className="page">
+          <div className="single-page">
             <Artist
               key={singleArtist.id}
               artist={singleArtist}
@@ -64,8 +64,8 @@ function SinglePlaylist({ props, singleSong }) {
             <div className="suggested-songs">
               <List className={classes.root}
                 subheader={
-                  <ListSubheader component="div">
-                    more songs of {singleArtist.artistName}
+                  <ListSubheader component="p">
+                    suggestes songs from {singleArtist.artistName}
                   </ListSubheader>
                 }>
                 {singleArtist.Songs.map((song) => {
@@ -88,7 +88,7 @@ function SinglePlaylist({ props, singleSong }) {
               })}
               </List>
             </div>
-          </header>
+          </div>
         </div>
         : <Loader/>
         );

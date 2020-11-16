@@ -55,8 +55,8 @@ function App() {
   }, []);
 
   return (
-    <>
-      {
+    <div className="App">
+    {
         !loading ?
           !logged ?
           <Router>
@@ -87,8 +87,8 @@ function App() {
           </User.Provider>
         : <div>loading...</div>
       }
-    </>
-  );
+      </div>
+      );
 }
 
 export default App;

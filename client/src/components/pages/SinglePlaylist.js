@@ -26,14 +26,14 @@ function SinglePlaylist({ props, singleSong }) {
   
     return (
       singlePlaylistObject ?
-        <div className="App">
-          <header className="App-header">
-                  <Playlist
-                    key={singlePlaylistObject.id}
-                    playlist={singlePlaylistObject}
-                  >
-                  </Playlist>
-          </header>
+        <div className="page">
+          <div className="single-page">
+            <Playlist
+              key={singlePlaylistObject.id}
+              playlist={singlePlaylistObject}
+            >
+            </Playlist>
+          </div>
         </div>
         : <Loader/>
         );

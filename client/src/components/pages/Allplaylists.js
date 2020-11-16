@@ -48,21 +48,17 @@ function Allplaylists() {
       handleClose()
     } 
 
-
-  
-
   return (
   playlists != null ?
-  <div className="App">
-    <header className="App-header">
+  <div className="page">
       <p>All Playlists</p>
-    <Tooltip 
-          title="create new playlist" placement={"bottom"}
-          TransitionProps={{ timeout: 600 }}>
-            <IconButton aria-label="add" variant="outlined" onClick={handleClickOpen}>
-              <AddIcon/>
-            </IconButton>
-          </Tooltip>
+      <Tooltip 
+        title="create new playlist" placement={"bottom"}
+        TransitionProps={{ timeout: 600 }}>
+        <IconButton aria-label="add" variant="outlined" onClick={handleClickOpen}>
+          <AddIcon/>
+        </IconButton>
+      </Tooltip>
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add to Playlist</DialogTitle>
         <DialogContent>
@@ -107,16 +103,17 @@ function Allplaylists() {
         <DialogActions>
         </DialogActions>
       </Dialog>
-      <div className={"all-songs-container"}>
-        {playlists.map(playlist => (
+      <div className="page">
+        <div className={"all-playlists-container"}>
+          {playlists && playlists.map(playlist => (
             <Playlist
-              key={playlist.id}
-              playlist={playlist}
+            key={playlist.id}
+            playlist={playlist}
             >
             </Playlist>
-        ))}
+          ))}
+        </div>
       </div>
-    </header>
   </div>
   : <Loader/>
   );

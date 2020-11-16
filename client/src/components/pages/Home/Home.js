@@ -16,13 +16,11 @@ function Home({ setSongToPlay }) {
   },[])
   
   return (
-  <div className="App">
-    <header className="App-header">
-        <TopSongs setSongToPlay={setSongToPlay}></TopSongs>
-        <TopAlbums></TopAlbums>
-        <TopArtists></TopArtists>
-        <TopPlaylists></TopPlaylists>
-    </header>
+  <div className="page">
+      <TopSongs setSongToPlay={setSongToPlay}></TopSongs>
+      <TopAlbums></TopAlbums>
+      <TopArtists></TopArtists>
+      <TopPlaylists></TopPlaylists>
   </div>
   );
 }

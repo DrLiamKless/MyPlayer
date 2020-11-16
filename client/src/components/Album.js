@@ -46,16 +46,13 @@ function Album({ album }) {
           }
           title={album.albumName}
           disableTypography={false}
-          // subheader="song's artist"
         ></CardHeader>
         <CardContent>
-        <Link to={`/album/${album.id}`}>
-        <div className={"album-container"}>
-        {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} 
-        className="back-logo" alt="logo" />}
-        {<img src={album.albumCoverImg} className="album-logo" alt="logo" />}
-        </div>
-        </Link>
+          <Link to={`/album/${album.id}`}>
+          <div className={"logo-container"}>
+            {<img src={album.albumCoverImg} className="card-logo" alt="logo" />}
+          </div>
+          </Link>
         </CardContent>
       </Card>
     </div>
