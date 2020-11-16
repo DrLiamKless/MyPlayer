@@ -1,40 +1,29 @@
 import React, { useContext } from 'react';
 import { User } from '../../contexts/userContext';
 import 'fontsource-roboto';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import Draggable from 'react-draggable';
 import { brown } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    height: "100%",
-    width: "400px",
-    backgroundColor: brown[500],
-    marginLeft: "20px",
-    marginTop: "100px",
-    textAlign: "center",
-  }
-}));
-
 function Player({ songToPlay }) {
   const user = useContext(User)
-  const classes = useStyles();
 
   return (
-    <div className="player" style={{backgroundColor: "rgb(43,19,21)"}}>
-      <div className={"iframe"} >
-        {songToPlay &&
-        <iframe title={"player"} src={
-          `${songToPlay.youtubeLink}?autoplay=1`}
-          className={"video"}
-          allow={"autoplay"}
-          frameBorder={0}
-          height={260}></iframe>
-        }
+    <Draggable>
+      <div className="player">
+        <h1>{songToPlay ? "Drag Me!" : `Hey ${user.userName}! Your Songs Will Play Here`}</h1>
+        <div className={"iframe"} >
+          {songToPlay &&
+          <iframe title={"player"} src={
+            `${songToPlay.youtubeLink}?autoplay=1`}
+            className={"video"}
+            allow={"autoplay"}
+            frameBorder={0}
+            height={"100%"} width={"100%"}></iframe>
+          }
+        </div>     
       </div>
-    </div>     
+    </Draggable>
   );
 }
 
