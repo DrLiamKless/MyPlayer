@@ -18,11 +18,11 @@ router.get('/top', (req,res) => {
     artists.artist_name,
     artists.artist_cover_img,
     artists.upload_at, SUM(play_count) AS countSum 
-FROM songs
-JOIN interactions
-ON songs.song_id = interactions.song_id
-JOIN artists ON songs.artist_id = artists.artist_id
-GROUP BY artists.artist_id ORDER BY countSum DESC`
+    FROM songs
+    JOIN interactions
+    ON songs.song_id = interactions.song_id
+    JOIN artists ON songs.artist_id = artists.artist_id
+    GROUP BY artists.artist_id ORDER BY countSum DESC`
     db.query(sql, (err, results) => {
         if (err) throw err;
         res.json(results)
