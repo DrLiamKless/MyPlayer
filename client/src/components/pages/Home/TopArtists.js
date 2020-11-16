@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { read } from "../../../wrappers/ajax"
+import { Link } from 'react-router-dom';
 import 'fontsource-roboto';
 import Artist from '../../Artist'
 import Loader from '../../Loader';
@@ -27,22 +27,35 @@ function TopArtists({topArtists}) {
   <>
     <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
     <h5>Your most favorite artists</h5>
-      <Carousel
-        additionalTransfrom={0}
-        responsive={responsive}
-        keyBoardControl={true}
-        containerClass="carousel-container"
-        itemClass="carousel-item">
-        { topArtists ?
-        topArtists.map((artist, i) => (
-          <Artist className={"song"}
-          key={artist.artist_id}
-          artist={artist}>
-          </Artist>
-        ))
-          : <Loader/>
-        }
-      </Carousel>
+    { topArtists && topArtists.length > 0 ?
+      <>
+        <Carousel
+          additionalTransfrom={0}
+          responsive={responsive}
+          keyBoardControl={true}
+          containerClass="carousel-container"
+          itemClass="carousel-item">
+          { topArtists &&
+          topArtists.map((artist, i) => (
+            <Artist className={"song"}
+            key={artist.artist_id}
+            artist={artist}>
+            </Artist>
+          ))
+          }
+        </Carousel>
+      </> 
+      : !topArtists ?
+        <Loader/>
+      : topArtists.length === 0 &&
+      <div>
+      <Link style={{ textDecoration: 'none' }} to="/Allartists">
+        <h5 className="no-likes-message">
+        Go explore our artists!
+        </h5>
+      </Link>
+      </div> 
+      }
     </div>     
   </>
   );

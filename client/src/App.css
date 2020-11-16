@@ -53,8 +53,8 @@
   font-size: calc(10px + 2vmin);
 }
 
-.all-artists-container{
-}
+/* .all-artists-container{
+} */
 
 
 /* components: */
@@ -135,6 +135,15 @@
   pointer-events: all;
   cursor: pointer;
 }
+
+.no-likes-message {
+  color: rgb(82,65,44);
+}
+
+.no-likes-message a:visited {
+  color: rgb(82,65,44);
+}
+
 
 /* medias */
 

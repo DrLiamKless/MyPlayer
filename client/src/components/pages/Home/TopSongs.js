@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { User } from '../../../contexts/userContext';
 import Carousel from 'react-multi-carousel';
+import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
@@ -9,7 +10,7 @@ import Loader from '../../Loader'
 
 
 function TopSongs({ setSongToPlay, topSongs }) {
-
+  const user = useContext(User)
   const [likeState, setLikeState] = useState(false);
   
   const responsive = {
@@ -30,14 +31,15 @@ function TopSongs({ setSongToPlay, topSongs }) {
   return (
     <>
       <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
-      <h5>Your Most Favorite Songs</h5>
+      <h5>Hello {user.userName}, those are your Most Favorite Songs</h5>
+      { topSongs && topSongs.length > 0 ? 
         <Carousel
-          additionalTransfrom={0}
-          responsive={responsive}
-          keyBoardControl={true}
-          containerClass="carousel-container"
-          itemClass="carousel-item">
-          {topSongs ?
+        additionalTransfrom={0}
+        responsive={responsive}
+        keyBoardControl={true}
+        containerClass="carousel-container"
+        itemClass="carousel-item">
+        {
           topSongs.map((song, i) => (
             <Song
             key={song.song_id}
@@ -45,9 +47,20 @@ function TopSongs({ setSongToPlay, topSongs }) {
             setSongToPlay={setSongToPlay}
             likeState={likeState}
             setLikeState={setLikeState}/>
-          ))
-            : <Loader/>}
+            ))
+          }
         </Carousel>
+      : !topSongs ?
+      <Loader/>
+    : topSongs.length === 0 &&
+    <div>
+    <Link style={{ textDecoration: 'none' }} to="/Allsongs">
+      <h5 className="no-likes-message">
+      But You havnt liked any yet... Go explore our songs!
+      </h5>
+    </Link>
+    </div> 
+    }
       </div>     
     </>
   );

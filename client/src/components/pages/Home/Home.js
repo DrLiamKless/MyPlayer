@@ -26,16 +26,16 @@ function Home({ setSongToPlay }) {
   },[])
 
   const fetchAllTop = () => {
-    read("/api/v1/albums/top").then((res) => {
+    read(`/api/v1/albums/top/${user.id}`).then((res) => {
       setTopAlbums(res)
     });
-    read("/api/v1/artists/top").then((res) => {
+    read(`/api/v1/artists/top/${user.id}`).then((res) => {
       setTopArtists(res)
     });
     read(`/api/v1/playlists/top/${user.id}`).then((res) => {
       setTopPlaylists(res)
     });
-    read("/api/v1/songs/top").then((res) => {
+    read(`/api/v1/songs/top/${user.id}`).then((res) => {
       setTopSongs(res)
     });
   }

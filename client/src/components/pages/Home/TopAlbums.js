@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { Link } from 'react-router-dom';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Album from '../../Album'
@@ -14,7 +15,6 @@ function TopAlbums({topAlbums}) {
       desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 6,
-      // partialVisibilityGutter: 40
       },
       tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -30,21 +30,31 @@ function TopAlbums({topAlbums}) {
     <>
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
     <h5>Your most favorite albums</h5>
+    { topAlbums && topAlbums.length > 0 ?
       <Carousel
         additionalTransfrom={0}
         responsive={responsive}
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item">
-        {topAlbums != null ?
+        {
           topAlbums.map((album, i) => (
             <Album
             key={album.albumId}
             album={album}
             />
           ))
-        : <Loader/> }
+        }
       </Carousel>
+      : !topAlbums ?
+      <Loader/>
+    : topAlbums.length === 0 &&
+    <div> 
+      <h5 className="no-likes-message">
+        same for albums..
+      </h5>
+    </div> 
+    }
     </div>     
   </>
   ) 

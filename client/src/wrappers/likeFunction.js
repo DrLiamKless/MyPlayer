@@ -1,6 +1,6 @@
 import { create } from '../wrappers/ajax';
 
-export default function likeFunction (song) {
+export default function likeFunction (song, user, wasLiked) {
     function removeLinebreaks( str ) { 
       return str.replace( /[\r\n]+/gm, "" ); 
   } 
@@ -8,15 +8,15 @@ export default function likeFunction (song) {
     const dateToShow = `${date.getFullYear()}-${(date.getMonth() + 1)}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   
 
-    if (!song.Interactions[0]) {
+    if (!wasLiked) {
       const interaction = {
-        userId: 1, 
+        userId: user.id, 
         songId: song.id,
         isLiked: 1,
         playCount: 1,
       }
-      create(`/api/v1/songs/like/${song.id}`, interaction)
+      create(`/api/v1/songs/${song.id}/user-liked/${user.id}`, interaction)
     } else {
-      create(`/api/v1/songs/like/${song.id}`, {isLiked: song.Interactions[0].isLiked === true ? false : true})
+      create(`/api/v1/songs/${song.id}/user-liked/${user.id}`, {isLiked: wasLiked ? false : true})
     }
   }

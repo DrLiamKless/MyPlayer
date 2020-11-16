@@ -48,32 +48,27 @@ router.get('/', async (req,res) => {
         res.json(allPlaylists);   
 })
 
-// Get top 20 playlists of user
-router.get('/top/:userName', (req,res) => {
-    const sql = `
-    SELECT playlists.id, playlist_name AS playlistName,
-    playlist_cover_img AS playlistCoverImg, created_at AS createdAt, playsSum
-    FROM playlists JOIN (SELECT playlist_id, SUM(play_count) AS playsSum 
-    FROM songs_in_playlists INNER JOIN interactions 
-    ON songs_in_playlists.song_id = interactions.song_id
-    GROUP BY songs_in_playlists.playlist_id) AS SumTable 
-    ON playlists.id = SumTable.playlist_id ORDER BY playsSum DESC LIMIT 5`
-    db.query(sql, async (err, results) => {
-        if (err) throw err;
+// Get top 10 playlists of user
+router.get('/top/:userId', async (req,res) => {
 
-        const idysCondition = []
-        for (let i = 0; i < results.length; i++) {
-            idysCondition.push({id: results[i].id });
+    const topPlaylists = await Playlist.findAll({
+    include: [
+        {
+            model: Song,
+            include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
+        },
+        {
+            model: User,
         }
+  
+    ],
+    limit: 10,
+    subQuery: false,
+});
 
-        const condition = { [Op.or]: idysCondition }
+topPlaylists.sort((playlistA, playlistB) => { return playlistB["Songs"].length - playlistA["Songs"].length})
 
-        const topPlaylists = await User.findAll({
-        include: [{model: Playlist, include: [{model: Song, include: Interaction}, {model: User}], where: condition}],
-        where: {userName: req.params.userName}
-    });
-        res.json(topPlaylists);   
-    });
+res.json(topPlaylists.filter(playlist => (playlist["Songs"].length > 0)));      
 })
 
 // get playlist by id

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -24,6 +24,7 @@ import Select from '@material-ui/core/Select';
 import {useForm} from 'react-hook-form';
 import Loader from './Loader';
 import { mixpanelTrackSongPlayed, mixpanelTrackSongLiked, mixpanelTrackSongUnliked } from '../analytics/analyticsManager'
+import { User } from '../contexts/userContext';
 
 
 
@@ -56,8 +57,10 @@ const useStyles = makeStyles((theme) => ({
 function Song({ song, setSongToPlay, setLikeState, likeState}) {
 
     const classes = useStyles();
+    const user = useContext(User);
     const [open, setOpen] = useState(false);
     const [playlists, setPlaylists] = useState([]);
+    const [isLiked, setIsLiked] = useState();
     const {register: addToPlaylist, handleSubmit: handleAddToPlaylist} = useForm()
 
 
@@ -66,6 +69,16 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
         setPlaylists(res)
       });
     }, [open]);
+
+    useEffect(() => {
+      read(`/api/v1/interactions/song/${song.id}/user/${user.id}`).then((res) => {
+        setIsLiked(() => {
+          if (res[0]) {
+            return res[0].isLiked
+          } return false
+        })
+      });
+    }, [likeState]);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -81,8 +94,9 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
     } 
 
     const handleLike = () => {
-      likeFunction(song); 
+      likeFunction(song, user, isLiked); 
       setLikeState(!likeState); 
+      
       likeState ? 
       mixpanelTrackSongUnliked(song.songName)
       : mixpanelTrackSongLiked(song.songName) 
@@ -110,7 +124,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
               aria-label="Like"
               onClick={handleLike}>
               <FavoriteIcon 
-              color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
+              color={isLiked ? 'secondary' : 'inherit'}>
               </FavoriteIcon>
             </IconButton>
           </Tooltip>

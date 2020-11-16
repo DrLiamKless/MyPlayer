@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { read } from "../../../wrappers/ajax"
+import { Link } from 'react-router-dom';
 import { User } from '../../../contexts/userContext';
 import 'fontsource-roboto';
 import Playlist from '../../Playlist'
@@ -8,8 +8,6 @@ import Loader from '../../Loader'
 
 
 function TopPlaylists({topPlaylists}) {
-  const user = useContext(User)
-
 
     const responsive = {
       desktop: {
@@ -30,27 +28,37 @@ function TopPlaylists({topPlaylists}) {
   return (
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
     <>
-        { topPlaylists[0] ?
-        <>
-        <p>{user.userName}, those are your Most Favorite Playlists</p>
-        <Carousel
-              additionalTransfrom={0}
-              responsive={responsive}
-              keyBoardControl={true}
-              containerClass="carousel-container"
-              itemClass="carousel-item"
-              infinite
-              >
-            {topPlaylists[0].Playlists.map((playlist, i) => (
-            <Playlist
-              key={playlist.playlist_id}
-              playlist={playlist}
+    <h5>Your Favorite Playlists</h5>
+      { topPlaylists.length > 0 ?
+      <>
+      <Carousel
+            additionalTransfrom={0}
+            responsive={responsive}
+            keyBoardControl={true}
+            containerClass="carousel-container"
+            itemClass="carousel-item"
+            infinite
             >
-            </Playlist>
-            ))}
-        </Carousel>
-        </>
-          : "No Playlists Yet" }
+          {topPlaylists.map((playlist, i) => (
+          <Playlist
+            key={playlist.playlist_id}
+            playlist={playlist}
+          >
+          </Playlist>
+          ))}
+      </Carousel>
+      </>
+        : !topPlaylists ?
+          <Loader/>
+        : topPlaylists.length === 0 &&
+        <div>
+          <Link style={{ textDecoration: 'none' }} to="/Allplaylists">
+            <h5 className="no-likes-message">
+              go to Playlists and create your own!
+            </h5>
+          </Link>
+          </div> 
+      }
     </>
     </div>     
 

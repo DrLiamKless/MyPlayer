@@ -37,24 +37,28 @@ router.get('/', async (req,res) => {
     { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
 
     const allSongs = await Song.findAll({
-        include: [Interaction, Artist],
+        include: [{model: Artist}],
         where: condition
     });
         res.json(allSongs);   
 })
 
 // Get top 20 songs
-router.get('/top', async (req,res) => {
+router.get('/top/:userId', async (req,res) => {
     const topSongs = await Song.findAll({
         include: [
             {
             model: Interaction,
-            where: {isLiked: true}
+            where: {
+                isLiked: true,
+                userId: req.params.userId
+            }
             },
             {
             model: Artist,
             }
-        ]
+        ],
+        limit: 20,
     });
         res.json(topSongs);   
 })
@@ -123,13 +127,20 @@ router.patch('/update/:id', async (req, res) => {
   })
 
 // new interaction - like/unlike:
-router.post('/like/:id', async (req,res) => {
+router.post('/:songId/user-liked/:userId', async (req,res) => {
     const interaction = req.body;
     if(interaction.songId) {
         const newInteraction = await Interaction.create(interaction)
             res.json(newInteraction)
+            console.log('1')
     } else {
-        const updatedInteraction = await Interaction.update(interaction,{where: {songId: req.params.id}})
+        console.log('2')
+        const updatedInteraction = await Interaction.update(interaction,{where: 
+            {
+                songId: req.params.songId,
+                userId: req.params.userId
+            }
+        })
             res.json(updatedInteraction)
     }
 })

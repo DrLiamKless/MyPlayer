@@ -40,31 +40,27 @@ router.get('/all', async (req,res) => {
         res.json(allArtists);   
 })
 
-// Get top 20 artists
-router.get('/top', (req,res) => {
-    const sql = `
-    SELECT artists.id AS id, artists.artist_name AS artistName, 
-    artists.artist_cover_img AS artistCoverImg, SUM(play_count) AS countSum 
-    FROM songs
-    JOIN interactions
-    ON songs.id = interactions.song_id
-    JOIN artists ON songs.artist_id = artists.id
-    GROUP BY artists.id ORDER BY countSum DESC LIMIT 20`
-    db.query(sql, async (err, results) => {
-        if (err) throw err;
+// Get top 10 artists
+router.get('/top/:userId', async (req,res) => {
 
-        const idysCondition = []
-        for (let i = 0; i < results.length; i++) {
-            idysCondition.push({id: results[i].id });
+    const topArtists = await Artist.findAll({
+    include: [
+        {
+            model: Song,
+            include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
+        },
+        {
+            model: Album
         }
+    ],
+    limit: 10,
+    subQuery: false,
+    group: "id"
+});
 
-        const condition = { [Op.or]: idysCondition }
+topArtists.sort((artistA, artistB) => { return artistB["Songs"].length - artistA["Songs"].length})
 
-        const topArtists = await Artist.findAll({
-        where: condition
-    });
-        res.json(topArtists);   
-    })
+res.json(topArtists.filter(artist => (artist["Songs"].length > 0)));      
 })
 
 // Get a specific artist by id
