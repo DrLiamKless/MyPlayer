@@ -21,7 +21,7 @@ function NoMatch({ setSongToPlay }) {
     <header className="App-header">
         <code>404</code>
       <p>You have reached a dead end.</p>
-      <p>At leat click this button to play a song</p>
+      <p>At least click this button to play a song</p>
       <button onClick={()=>{setSongToPlay(errorSong)}}>play</button>
     </header>
   </div>

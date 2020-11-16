@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { create } from "../../../wrappers/ajax"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Typography from '@material-ui/core/Typography';
+import { Typography, Checkbox } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
@@ -36,20 +36,23 @@ function Login({ setUser }) {
   const classes = useStyles();
 
   const {register: Login, errors, handleSubmit: handleLogin} = useForm()
+  const [loginError, setLoginError] = useState(false)
 
   const onLogin = data => {
     create("/api/v1/auth/login", data).then(res => {
       if (res.success) {
         window.location = '/';
       } else {
-      console.log(res)
+        setLoginError(true)
       }
+    }).catch(err => {
+      setLoginError(true);
     })
   }
 
   
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"login-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -71,28 +74,30 @@ function Login({ setUser }) {
             name="email"
             autoFocus
           />
-          {errors.email?.type === "required" && <p>Please Enter mail</p>}
-          {errors.email?.type === "minLength" && <p>Please Enter valid mail</p>}
+          {errors.email?.type === "required" && <p className="auth-error">Please Enter mail</p>}
+          {errors.email?.type === "minLength" && <p className="auth-error">Please Enter valid mail</p>}
         <div className={"add-artist-container"}>
         </div>
           <TextField
             variant="outlined"
             margin="normal"
-            inputRef={Login({minLength: 1})}
+            inputRef={Login({minLength: 6})}
             required
             fullWidth
             name="password"
             label="password"
             type="password"
           />
-          <TextField
+          {errors.password?.type === "minLength" && 
+          <p className="auth-error">Your password must be 6 digits</p>}
+          <Checkbox
             inputRef={Login}
             fullWidth
             name="rememberMe"
             type="checkbox"
-            label="remember me"
-          />
-          {errors.email?.type === "required" && <p>Please Enter password</p>}
+            label="remember me">
+          </Checkbox>
+          <span>remember me</span>
           <Button
             type="submit"
             fullWidth
@@ -111,6 +116,7 @@ function Login({ setUser }) {
           >
             SignUp
           </Button>
+          {loginError && "wrong email / password please try again"}
         </form>
       </div>
     </Container>
