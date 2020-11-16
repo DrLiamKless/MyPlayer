@@ -16,7 +16,6 @@ import SingleAlbum from './components/pages/SingleAlbum';
 import SinglePlaylist from './components/pages/SinglePlaylist';
 import SingleArtist from './components/pages/SingleArtist';
 import Player from './components/pages/Player';
-import NoMatch from './components/pages/NoMatch';
 import Login from './components/pages/Identification/Login';
 import Signup from './components/pages/Identification/Signup';
 import { read } from "./wrappers/ajax"
@@ -84,7 +83,6 @@ function App() {
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
                 <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist></Route>
                 {user.isAdmin && <Route path="/Admin" exact> <Admin/> </Route>}
-                <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
             </Router>
           </User.Provider>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { User } from '../../../contexts/userContext';
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';

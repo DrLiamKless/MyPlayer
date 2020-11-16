@@ -18,7 +18,6 @@ function Home({ setSongToPlay }) {
   const [topArtists, setTopArtists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState("")
   const [topSongs, setTopSongs] = useState();
-  const [loading, setLoading] = useState();
 
   
   useEffect(() => {
@@ -42,7 +41,6 @@ function Home({ setSongToPlay }) {
 
   useEffect(() => {
     fetchAllTop();
-    setLoading(false)
   }, []);
   
   return (
