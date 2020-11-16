@@ -21,6 +21,7 @@ import Login from './components/pages/Identification/Login';
 import Signup from './components/pages/Identification/Signup';
 import { read } from "./wrappers/ajax"
 import { mixpanelTrackLoggedIn, mixpanelTrackEnteredLoginPage } from "./analytics/analyticsManager";
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 
@@ -49,7 +50,6 @@ function App() {
       } else {
         setLoading(false);
         mixpanelTrackEnteredLoginPage()
-        console.log('cant get token')
       }
     })();
   }, []);
@@ -61,8 +61,9 @@ function App() {
           !logged ?
           <Router>
           <Switch>
-          <Route path={'/'} exact> <Login></Login></Route>
-          <Route path={'/signUp'} exact> <Signup/> </Route>
+            <Route path={'/'} exact> <Login></Login></Route>
+            <Route path={'/signUp'} exact> <Signup/> </Route>
+            <Route path={'*'} exact> <Login></Login></Route>
           </Switch> 
           </Router>
           : 
@@ -70,17 +71,19 @@ function App() {
           <Router>
             <Topbar></Topbar>
             <Sidebar></Sidebar>
-            <Player songToPlay={songToPlay}></Player>
+            <ErrorBoundary>
+              <Player songToPlay={songToPlay}></Player>
+            </ErrorBoundary>
               <Switch>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
                 <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
-                <Route path="/Admin" exact> <Admin/> </Route>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
                 <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
                 <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
-                <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>
+                <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist></Route>
+                {user.isAdmin && <Route path="/Admin" exact> <Admin/> </Route>}
                 <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
             </Router>

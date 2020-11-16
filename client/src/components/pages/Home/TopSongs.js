@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { User } from '../../../contexts/userContext';
 import Carousel from 'react-multi-carousel';
+import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
@@ -8,21 +9,13 @@ import Song from '../../Song'
 import Loader from '../../Loader'
 
 
-function TopSongs({ setSongToPlay }) {
-
-  const [topSongs, setTopSongs] = useState();
+function TopSongs({ setSongToPlay, topSongs }) {
+  const user = useContext(User)
   const [likeState, setLikeState] = useState(false);
-
-
-  useEffect(() => {
-    read("/api/v1/songs/top").then((res) => {
-      setTopSongs(res)
-    });
-  }, [likeState]);
   
   const responsive = {
     desktop: {
-    breakpoint: { max: 1280, min: 1024 },
+    breakpoint: { max: 3000, min: 1024 },
     items: 6,
     },
     tablet: {
@@ -36,27 +29,40 @@ function TopSongs({ setSongToPlay }) {
   }
 
   return (
-    topSongs != null ?
     <>
       <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
-      <h5>Your Most Favorite Songs</h5>
-              <Carousel
-                responsive={responsive}
-                keyBoardControl={true}
-                containerClass="carousel-container"
-                itemClass="carousel-item">
-                {topSongs.map((song, i) => (
-                  <Song
-                  key={song.song_id}
-                  song={song}
-                  setSongToPlay={setSongToPlay}
-                  likeState={likeState}
-                  setLikeState={setLikeState}/>
-                ))}
-              </Carousel>
+      <h5>Hello {user.userName}, those are your Most Favorite Songs</h5>
+      { topSongs && topSongs.length > 0 ? 
+        <Carousel
+        additionalTransfrom={0}
+        responsive={responsive}
+        keyBoardControl={true}
+        containerClass="carousel-container"
+        itemClass="carousel-item">
+        {
+          topSongs.map((song, i) => (
+            <Song
+            key={song.song_id}
+            song={song}
+            setSongToPlay={setSongToPlay}
+            likeState={likeState}
+            setLikeState={setLikeState}/>
+            ))
+          }
+        </Carousel>
+      : !topSongs ?
+      <Loader/>
+    : topSongs.length === 0 &&
+    <div>
+    <Link style={{ textDecoration: 'none' }} to="/Allsongs">
+      <h5 className="no-likes-message">
+      But You havnt liked any yet... Go explore our songs!
+      </h5>
+    </Link>
+    </div> 
+    }
       </div>     
     </>
-    : <Loader/>
   );
 }
 

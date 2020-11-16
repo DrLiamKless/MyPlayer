@@ -17,20 +17,6 @@ const client = new Client({
     }
 })
 
-router.get('/all', async (req,res) => {
-    const allPlaylists = await Playlist.findAll({});
-        res.json(allPlaylists);   
-})
-
-router.get('/songsInPlaylists', async (req,res) => {
-    const all = await songs_in_playlists.findAll({});
-        res.json(all);   
-})
-
-router.get('/userPlaylists', async (req,res) => {
-    const all = await user_playlists.findAll({});
-        res.json(all);   
-})
 
 // Get all playlists + search query
 router.get('/', async (req,res) => {
@@ -48,49 +34,80 @@ router.get('/', async (req,res) => {
         res.json(allPlaylists);   
 })
 
-// Get top 20 playlists of user
-router.get('/top/:userName', (req,res) => {
-    const sql = `
-    SELECT playlists.id, playlist_name AS playlistName,
-    playlist_cover_img AS playlistCoverImg, created_at AS createdAt, playsSum
-    FROM playlists JOIN (SELECT playlist_id, SUM(play_count) AS playsSum 
-    FROM songs_in_playlists INNER JOIN interactions 
-    ON songs_in_playlists.song_id = interactions.song_id
-    GROUP BY songs_in_playlists.playlist_id) AS SumTable 
-    ON playlists.id = SumTable.playlist_id ORDER BY playsSum DESC LIMIT 5`
-    db.query(sql, async (err, results) => {
-        if (err) throw err;
+// Get top 10 playlists for user
+router.get('/top/:userId', async (req,res) => {
 
-        const idysCondition = []
-        for (let i = 0; i < results.length; i++) {
-            idysCondition.push({id: results[i].id });
+    const topPlaylists = await Playlist.findAll({
+    include: [
+        {
+            model: Song,
+            include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
+        },
+        {
+            model: User,
         }
+  
+    ],
+    limit: 10,
+    subQuery: false,
+});
 
-        const condition = { [Op.or]: idysCondition }
+topPlaylists.sort((playlistA, playlistB) => { return playlistB["Songs"].length - playlistA["Songs"].length})
 
-        const topPlaylists = await User.findAll({
-        include: [{model: Playlist, include: [{model: Song, include: Interaction}, {model: User}], where: condition}],
-        where: {userName: req.params.userName}
-    });
-        res.json(topPlaylists);   
-    });
+res.json(topPlaylists.filter(playlist => (playlist["Songs"].length > 0)));      
 })
+
+router.get('/all', async (req,res) => {
+    try{
+        const allPlaylists = await Playlist.findAll({where: {publich: true}});
+        res.json(allPlaylists);   
+    } catch (err) {
+        res.send("error occures")
+    }
+})
+
+router.get('/songsInPlaylists', async (req,res) => {
+    try{
+        const all = await songs_in_playlists.findAll({});
+        res.json(all);   
+    } catch (err) {
+        res.send("error occures")
+    }
+})
+
+router.get('/userPlaylists', async (req,res) => {
+    try {
+        const all = await user_playlists.findAll({});
+        res.json(all);   
+    } catch (err) {
+        res.send("error occures")
+    }
+})
+
 
 // get playlist by id
 router.get('/:id', async (req,res) => {
-    const playlist = await Playlist.findByPk(req.params.id, {
-        include: [{model: Song, include: Interaction}, {model: User}],
-    });
+    try{
+        const playlist = await Playlist.findByPk(req.params.id, {
+            include: [{model: Song, include: Interaction}, {model: User}],
+        });
         res.json(playlist);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // get songs_in_playlists by id
 router.get('/songInPlaylist/:songId/:playlistId', async (req,res) => {
-    const songInPlaylist = await songs_in_playlists.findOne({
-        where: [{song_id: req.params.songId}, {playlist_id: req.params.playlistId}],
-        attributes: ['id', 'songId', 'playlistId']
-    });
+    try{
+        const songInPlaylist = await songs_in_playlists.findOne({
+            where: [{song_id: req.params.songId}, {playlist_id: req.params.playlistId}],
+            attributes: ['id', 'songId', 'playlistId']
+        });
         res.json(songInPlaylist);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // // Insert playlist to playlists:
@@ -115,29 +132,45 @@ router.post('/add', async (req,res) => {
 
 // Insert song into playlist:
 router.post('/addSong', async (req,res) => {
-    const newSong = await songs_in_playlists.create(req.body)
-    res.json(newSong)
+    try{
+        const newSong = await songs_in_playlists.create(req.body)
+        res.json(newSong)
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 // update a playlist from playlists
 router.patch('/update/:id', async (req, res) => {
-    const playlist = await Playlist.findByPk(req.params.id);
-    await playlist.update(req.body);
-    res.json(playlist)
+    try{
+        const playlist = await Playlist.findByPk(req.params.id);
+        await playlist.update(req.body);
+        res.json(playlist)
+    } catch (err) {
+        res.send("error occures")
+    }
   })
 
 // remove song from playlist:
 router.delete('/removeSong/:id', async (req,res) => {
-    const song = await songs_in_playlists.findOne({where: {id: req.params.id}})
-    await song.destroy()
-    res.json({deleted: true})
+    try{
+        const song = await songs_in_playlists.findOne({where: {id: req.params.id}})
+        await song.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 // Delete a playlist from playlists
 router.delete('/delete/:id', async (req,res) => {
-    const playlist = await Playlist.findByPk(req.params.id)
-    await playlist.destroy()
-    res.json({deleted: true})
+    try{
+        const playlist = await Playlist.findByPk(req.params.id)
+        await playlist.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 

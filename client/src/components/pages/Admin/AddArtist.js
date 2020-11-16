@@ -13,25 +13,12 @@ import Loader from '../../Loader'
 
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
-    alignItems: 'center'
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+    alignItems: "center",
+    padding: "10px",
+    gap: "15px"
   },
 }));;
 
@@ -45,58 +32,38 @@ function AddArtist() {
   } 
 
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgba(43,19,21,0.9)"}}>
-    <Container component="main" maxWidth="xs" >
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <RecordVoiceOverIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Add a new artist
-        </Typography>
-        <form  
-            className={classes.form}
-            noValidate onSubmit={handleNewArtist(onSubmitArtist)}>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                inputRef={newArtist}
-                required
-                fullWidth
-                name="artistName"
-                label="Name"
-            />
-            <TextField
-                variant="outlined"
-                margin="normal"
-                inputRef={newArtist}
-                required
-                fullWidth
-                name="artistCoverImg"
-                label="Cover image"
-            />
-            <TextField
-                variant="outlined"
-                margin="normal"
-                inputRef={newArtist}
-                required
-                fullWidth
-                name="uploadAt"
-                label="Upload at: YY-MM-DD HH:MM:SS"
-            />
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                inputRef={newArtist}
-            >
-                Add artist
-            </Button>
-            </form>
-            </div>
-    </Container>
+    <div className={"admin-section"} style={{backgroundColor: "rgba(43,19,21,0.9)"}}>
+      <form  
+        className={classes.form}
+        noValidate onSubmit={handleNewArtist(onSubmitArtist)}
+      >
+        <h1 component="h1" variant="h5">Add a new artist</h1>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={newArtist}
+            required
+            name="artistName"
+            label="Name"
+        />
+        <TextField
+            variant="outlined"
+            margin="normal"
+            inputRef={newArtist}
+            required
+            name="artistCoverImg"
+            label="Cover image"
+        />
+        <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            inputRef={newArtist}
+        >
+            Add artist
+        </Button>
+      </form>
     </div>
   );
 }

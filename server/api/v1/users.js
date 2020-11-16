@@ -5,16 +5,24 @@ const { User } = require('../../models');
 
 // Get all users:    
 router.get('/', async (req,res) => {
-    const allUsers = await User.findAll();
+    try{
+
+        const allUsers = await User.findAll();
         res.json(allUsers);   
+    } catch (err) {
+        res.send("error occures")
+    } 
 })
 
 // get specific user;
 router.get('/id/:id', async (req,res) => {
     const userId = req.params.id
-
-    const user = await User.findOne({where: {id: userId }});
+    try{
+        const user = await User.findOne({where: {id: userId }});
         res.json(user);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Insert user to users:    

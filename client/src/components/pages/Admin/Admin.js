@@ -5,6 +5,7 @@ import AddSong from './AddSong';
 import AddArtist from './AddArtist';
 import AddAlbum from './AddAlbum';
 import { mixpanelTrackUrlChanged } from '../../../analytics/analyticsManager'
+import ErrorBoundary from '../../ErrorBoundary';
 
 function Admin() {
   const [artists, setArtists] = useState([])
@@ -16,27 +17,32 @@ function Admin() {
     mixpanelTrackUrlChanged(location.pathname)
   },[])
 
-  useEffect(() => {
+  const fetchData = () => {
     read("api/v1/artists").then((res) => {
       setArtists(res)
     });
-  }, []);
+      read("api/v1/albums").then((res) => {
+        setAlbums(res)
+    });
+  }
 
   useEffect(() => {
-    read("api/v1/albums").then((res) => {
-      setAlbums(res)
-    });
+    fetchData();
   }, []);
   
   return (
 
-    <div className="App" >
-    <header className="App-header">
-      <AddSong albums={albums} artists={artists}></AddSong>
-      <AddAlbum artists={artists}></AddAlbum>
-      <AddArtist></AddArtist>
-    </header>
-  </div>
+    <div className="page" >
+      <ErrorBoundary>
+        <AddSong albums={albums} artists={artists}></AddSong>
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <AddAlbum artists={artists}></AddAlbum>
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <AddArtist></AddArtist>
+      </ErrorBoundary>
+    </div>
   );
 }
 

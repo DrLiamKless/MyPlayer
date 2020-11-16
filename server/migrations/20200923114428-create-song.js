@@ -31,7 +31,7 @@ module.exports = {
       upload_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        // defaultValue: Sequelize.literal('CURRENT_DATE'),
+        defaultValue: new Date(),
       },
       updated_at: {
         allowNull: false,

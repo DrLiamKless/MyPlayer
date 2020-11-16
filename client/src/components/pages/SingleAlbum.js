@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
 import { useParams, Link, useLocation } from "react-router-dom";
@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import likeFunction from "../../wrappers/likeFunction"
 import Loader from '../Loader'
 import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnliked  } from '../../analytics/analyticsManager'
+import { User } from '../../contexts/userContext';
 
 
 
@@ -37,6 +38,7 @@ function SingleAlbum({ setSongToPlay }) {
   },[])
   
   let { id } = useParams() 
+  const user = useContext(User);
   const [singleAlbum, setSingleAlbum] = useState();
   const [likeState, setLikeState] = useState(false)
   const classes = useStyles();
@@ -48,7 +50,7 @@ function SingleAlbum({ setSongToPlay }) {
     }, [id, likeState]);
 
     const handleLike = (song) => {
-      likeFunction(song); 
+      likeFunction(song, user); 
       setLikeState(!likeState); 
       likeState ? 
       mixpanelTrackSongUnliked(song.songName)

@@ -53,10 +53,10 @@ function AllArtists() {
     }, []);
   
   return (
-    artists != null ?
     <div className="page">
-      <p  className="all-artists-header">All Artists</p>
+    {artists != null ?
         <div className={"all-artists-container"}>
+        <p  className="all-artists-header">All Artists</p>
             <div className={classes.root}>
                 <GridList cellHeight={150} spacing={2} className={classes.gridList}>
                     {artists.map((artist) => (
@@ -80,8 +80,8 @@ function AllArtists() {
                 </GridList>
             </div>
         </div>
+        : <Loader/>}
     </div>
-    : <Loader/>
   );
 }
 

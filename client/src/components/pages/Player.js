@@ -11,7 +11,7 @@ function Player({ songToPlay }) {
   return (
     <Draggable>
       <div className="player">
-        <h1>{songToPlay ? "Drag Me!" : `Hey ${user.userName}! Your Songs Will Play Here`}</h1>
+        <h5>{songToPlay ? "Drag Me!" : `Hey ${user.userName}! Your Songs Will Play Here`}</h5>
         <div className={"iframe"} >
           {songToPlay &&
           <iframe title={"player"} src={

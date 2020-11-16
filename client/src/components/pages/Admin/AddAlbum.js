@@ -14,25 +14,12 @@ import {useForm} from 'react-hook-form'
 import Loader from '../../Loader'
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
     display: "flex",
     flexDirection: "column",
-    alignItems: 'center'
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+    alignItems: "center",
+    padding: "10px",
+    gap: "15px"
   },
 }));;
 
@@ -47,75 +34,44 @@ function AddAlbum({ artists }) {
   
   return (
     artists != null ?
-    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}} >
-    <Container component="main" maxWidth="xs" >
-    <CssBaseline />
-    <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LibraryMusicIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Add a new Album
-      </Typography>
+    <div className={"admin-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}} >
         <form  
-            className={classes.form}
-            noValidate onSubmit={handleNewAlbum(onSubmitAlbum)}>
-            <div>
-              <InputLabel id="label">Artist</InputLabel>
-              <Select fullWidth placeholder="artists" native inputRef={newAlbum} name="artist_id" variant="outlined">
-              {artists.map(artist => (<option key={artist.artistName} value={artist.id}>{artist.artistName}</option>))}
-              </Select>
-            </div>
-            <TextField
-                variant="outlined"
-                margin="normal"
-                inputRef={newAlbum}
-                required
-                fullWidth
-                name="albumName"
-                label="Name"
-            />
-            <TextField
+        className={classes.form}
+        noValidate onSubmit={handleNewAlbum(onSubmitAlbum)}>
+        <h1>Add a new Album</h1>
+        <div>
+          <InputLabel id="label">Artist</InputLabel>
+          <Select fullWidth placeholder="artists" native inputRef={newAlbum} name="artistId" variant="outlined">
+            {artists.map(artist => (<option key={artist.artistName} value={artist.id}>{artist.artistName}</option>))}
+          </Select>
+        </div>
+        <TextField
             variant="outlined"
             margin="normal"
             inputRef={newAlbum}
             required
-            fullWidth
-            name="albumCoverImg"
-            label="album cover image"
-            />
-            <TextField
-            variant="outlined"
-            margin="normal"
+            name="albumName"
+            label="Name"
+        />
+        <TextField
+        variant="outlined"
+        margin="normal"
+        inputRef={newAlbum}
+        required
+        name="albumCoverImg"
+        label="album cover image"
+        />
+        <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.submit}
             inputRef={newAlbum}
-            required
-            fullWidth
-            name="createdAt"
-            label="Created at: YY-MM-DD"
-          />
-            <TextField
-                variant="outlined"
-                margin="normal"
-                inputRef={newAlbum}
-                required
-                fullWidth
-                name="uploadAt"
-                label="Upload at: YY-MM-DD HH:MM:SS"
-            />
-            <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                color="primary"
-                className={classes.submit}
-                inputRef={newAlbum}
-            >
-                Add album
-            </Button>
-            </form>
-            </div>
-    </Container>
-    </div>
+        >
+            Add album
+        </Button>
+        </form>
+      </div>
     : <Loader/>
   );
 }

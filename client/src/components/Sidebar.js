@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import 'fontsource-roboto';
@@ -14,11 +14,14 @@ import IconButton from '@material-ui/core/IconButton';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import Search from './Search'
+import { User } from '../contexts/userContext';
+import ErrorBoundary from './ErrorBoundary';
 
 
 function Sidebar() {
 
     const [sideBarOpen, setSideBarOpen] = useState(true)
+    const user = useContext(User)
 
     const logOut = async () => {
         try {
@@ -48,10 +51,6 @@ function Sidebar() {
                 Home
             <Link to="/" />
             </MenuItem>
-            <SubMenu title="My user" icon={<AccountCircleIcon/>}>
-                <MenuItem>settings</MenuItem>
-                <MenuItem>Admin <Link to="/Admin"/></MenuItem>
-            </SubMenu>
             <MenuItem icon={<AudiotrackIcon/>}>
                 All songs 
             <Link to="/Allsongs" />
@@ -65,8 +64,15 @@ function Sidebar() {
             <Link to="/Allplaylists"/>
             </MenuItem>
             <SubMenu title="Search" icon={<SearchIcon/>}>
+                <ErrorBoundary>
                 <Search></Search>
+                </ErrorBoundary>
             </SubMenu>
+            { user.isAdmin && 
+            <SubMenu title="My user" icon={<AccountCircleIcon/>}>
+                <MenuItem>Admin <Link to="/Admin"/></MenuItem>
+            </SubMenu>
+            }
                 <MenuItem icon={<ExitToAppIcon/>} onClick={logOut}>
                     log out
                 </MenuItem>

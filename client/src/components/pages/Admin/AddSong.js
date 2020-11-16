@@ -16,22 +16,16 @@ import Loader from '../../Loader'
 
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
-  },
+  // avatar: {
+  //   margin: theme.spacing(1),
+  //   backgroundColor: theme.palette.primary.main,
+  // },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "10px",
+    gap: "15px"
   },
 }));;
 
@@ -48,34 +42,24 @@ function AddSong({ artists, albums }) {
 
   
   return (
-    artists & albums ?
-    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <AudiotrackIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Add a new song
-        </Typography>
+    <div className={"admin-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
         <form  
           className={classes.form} 
           noValidate onSubmit={handleNewSong(onSubmitSong)}>
+            <h1>Add song</h1>
           <TextField
             variant="outlined"
             margin="normal"
             inputRef={newSong}
             required
-            fullWidth
             label="Youtube Link (Embded Code)"
             name="youtube_link"
             autoFocus
-          />
+            />
         <div className={"add-artist-container"}>
             <div>
               <InputLabel id="label">album</InputLabel>
-              <Select placeholder="albums" native inputRef={newSong} name="album_id" variant="outlined">
+              <Select placeholder="albums" native inputRef={newSong} name="albumId" variant="outlined">
               {albums.map(album => (<option key={album.albumName} value={album.id}>{album.albumName}</option>))}
               </Select>
             </div>
@@ -85,7 +69,7 @@ function AddSong({ artists, albums }) {
         <div className={"add-artist-container"}>
             <div>
               <InputLabel id="label">Artist</InputLabel>
-              <Select placeholder="artists" native inputRef={newSong} name="artist_id" variant="outlined">
+              <Select placeholder="artists" native inputRef={newSong} name="artistId" variant="outlined">
               {artists.map(artist => (<option key={artist.artistName} value={artist.id}>{artist.artistName}</option>))}
               </Select>
             </div>
@@ -97,8 +81,7 @@ function AddSong({ artists, albums }) {
             margin="normal"
             inputRef={newSong}
             required
-            fullWidth
-            name="songeName"
+            name="songName"
             label="Name"
           />
           <TextField
@@ -106,51 +89,11 @@ function AddSong({ artists, albums }) {
             margin="normal"
             inputRef={newSong}
             required
-            fullWidth
             name="length"
             label="Length: HH:MM:SS"
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={newSong}
-            required
-            fullWidth
-            name="trackNumber"
-            label="Track number (in album)"
-          />
-            <TextField
-            variant="outlined"
-            multiline
-            rows={4}
-            margin="normal"
-            inputRef={newSong}
-            required
-            fullWidth
-            name="lyrics"
-            label="Lyrics"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={newSong}
-            required
-            fullWidth
-            name="createdAt"
-            label="Created at: YY-MM-DD"
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={newSong}
-            required
-            fullWidth
-            name="uploadAt"
-            label="Upload at: YY-MM-DD HH:MM:SS"
-          />
           <Button
             type="submit"
-            fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
@@ -159,9 +102,6 @@ function AddSong({ artists, albums }) {
           </Button>
         </form>
       </div>
-    </Container>
-    </div>
-    : <Loader/>
   );
 }
 

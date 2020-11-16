@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm} from 'react-hook-form'
+import { Link } from "react-router-dom";
 
 
 
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function SignUp() {
   const classes = useStyles();
 
-  const {register: signUp, handleSubmit: handleSignUp} = useForm()
+  const {register: signUp, errors, handleSubmit: handleSignUp} = useForm()
 
   const onSignUp = data => {
     create("/api/v1/users/add", data);
@@ -45,7 +46,7 @@ function SignUp() {
   } 
   
   return (
-    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"login-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -61,37 +62,40 @@ function SignUp() {
           <TextField
             variant="outlined"
             margin="normal"
-            inputRef={signUp}
+            inputRef={signUp({required: true, minLength: 4})}
             required
             fullWidth
             label="username"
             name="userName"
             autoFocus
-          />
+            />
+            {errors.userName?.type === "required" && <p className="auth-error">Please Enter username</p>}
+            {errors.userName?.type === "minLength" && <p className="auth-error">Your username must be 4 digits</p>}
         <div className={"add-artist-container"}>
         </div>
           <TextField
             variant="outlined"
             margin="normal"
-            inputRef={signUp}
+            inputRef={signUp({required: true, minLength: 6})}
             required
             fullWidth
             name="password"
             label="password"
+            type="password"
           />
+          {errors.password?.type === "required" && <p className="auth-error">Please Enter password</p>}
+          {errors.password?.type === "minLength" && <p className="auth-error">Your password must be 6 digits</p>}
           <TextField
             variant="outlined"
             margin="normal"
-            inputRef={signUp}
+            inputRef={signUp({required: true, minLength: 10})}
             required
             fullWidth
             name="email"
             label="email"
           />
-          <Select placeholder="albums" native inputRef={signUp} name="rememberToken" variant="outlined">
-          <option value={1}>yes</option>
-          <option value={0}>no</option>
-          </Select>
+          {errors.email?.type === "required" && <p className="auth-error">Please Enter mail</p>}
+          {errors.email?.type === "minLength" && <p className="auth-error">Please Enter valid mail</p>}
           <Button
             type="submit"
             fullWidth
@@ -103,6 +107,7 @@ function SignUp() {
           </Button>
         </form>
       </div>
+      <span>already a member? <Link to="/">sign in</Link></span>
     </Container>
     </div>
   );
