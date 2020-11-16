@@ -9,25 +9,24 @@ import Loader from './Loader'
 
 
 const useStyles = makeStyles((theme) => ({
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    card: {
-      backgroundColor: brown[500],
-      height: '180px',
-    },
-  }));
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  card: {
+    backgroundColor: brown[500],
+  },
+}));
  
 
 function Song({ artist, setSongToPlay }) {
@@ -42,11 +41,14 @@ function Song({ artist, setSongToPlay }) {
         <CardHeader
           disableTypography={false}
           title={artist.artistName}
-          ></CardHeader>
-        <CardContent className={"logo-container"}>
-        <Link to={`/artist/${artist.id}`}>
-        {<img src={artist.artistCoverImg} className="artist-logo" alt="logo" />}
-        </Link> 
+        >
+        </CardHeader>
+        <CardContent className={"album-container"}>
+          <Link to={`/artist/${artist.id}`}>
+          <div className={"logo-container"}>
+            {<img src={artist.artistCoverImg} className="card-logo" alt="logo" />}
+          </div>
+          </Link> 
         </CardContent>
       </Card>
     </div>

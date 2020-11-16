@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import 'fontsource-roboto';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
@@ -21,8 +22,9 @@ function Sidebar() {
 
     const logOut = async () => {
         try {
-          localStorage.removeItem("token")
-          localStorage.removeItem("user")
+            Cookies.remove("accessToken")
+            Cookies.remove("refreshToken")
+            Cookies.remove("id")
           window.location = '/';
         } catch (error) {
           console.error(error)
@@ -31,11 +33,14 @@ function Sidebar() {
 
   return (
     <div>
-        <MenuIcon id={"toggle-btn"} onClick={()=>{setSideBarOpen(!sideBarOpen)}}></MenuIcon>
         <ProSidebar id={"side-bar"} collapsed={sideBarOpen}
         image={"https://media.pri.org/s3fs-public/story/images/Music%20Listening.jpg"}
         >
             <Menu iconShape="circle">
+            <br></br>
+            <br></br>
+            <br></br>
+            <MenuItem icon={<MenuIcon/>} onClick={()=>{setSideBarOpen(!sideBarOpen)}}></MenuItem>
             <br></br>
             <br></br>
             <br></br>

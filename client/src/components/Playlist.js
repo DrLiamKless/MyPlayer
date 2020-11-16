@@ -59,51 +59,52 @@ const date = new Date(playlist.createdAt);
   return (
     playlist.playlistName ? 
     <div className={"card"} >
-   <Card className={classes.card}>
-      <CardHeader
-        title={playlist.playlistName}
-        subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() + ' by ' + playlist['Users'][0].userName}
-      />
-      <Link to={`/playlist/${playlist.id}`}>
-        <CardContent>
-          <img src={playlist.playlistCoverImg} className="artist-logo" alt="logo"></img>
-        </CardContent>
-      </Link>
-      <CardActions disableSpacing>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show songs list"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>songs:</Typography>
-              {playlist.Songs.map((song, i) => (
-                <div 
-                key={i}
-                className={"playlist-list-item"}>
-                <Link 
-                to={`/song/${song.id}?playlist=${playlist.id}`}
-                style={{color: 'black'}}>
-                  <p>{song.songName}</p>
-                  </Link>
-                  <IconButton
-            aria-label="remove from playlist"
-            onClick={()=>{handleRemoveFromPlaylist(song.id)}}
-            >
-            <RemoveIcon/>
-          </IconButton>
-            </div>
-              ))}
+    <Card className={classes.card}>
+        <CardHeader
+          title={playlist.playlistName}
+          subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() + ' by ' + playlist['Users'][0].userName}
+        />
+        <Link to={`/playlist/${playlist.id}`}>
+          <CardContent className={"logo-container"}>
+            <img src={playlist.playlistCoverImg} className="playlist-logo" alt="logo"></img>
           </CardContent>
-        </Collapse>
-    </Card>
+        </Link>
+        <CardActions disableSpacing>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show songs list"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+                <Typography>songs:</Typography>
+              <ul>
+                {playlist.Songs.map((song, i) => (
+                  <li 
+                    key={i}
+                    className={"playlist-list-item"}>
+                      <Link 
+                      to={`/song/${song.id}?playlist=${playlist.id}`}
+                      style={{color: 'black'}}>
+                        <h5>{song.songName}</h5>
+                      </Link>
+                    <IconButton
+                    aria-label="remove from playlist"
+                    onClick={()=>{handleRemoveFromPlaylist(song.id)}}>
+                      <RemoveIcon/>
+                    </IconButton>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Collapse>
+      </Card>
     </div>
     : <Loader/>
   )

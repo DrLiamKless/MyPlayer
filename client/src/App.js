@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { User } from './contexts/userContext';
 import './App.css';
+import Cookies from 'js-cookie';
 import 'fontsource-roboto';
 import Home from './components/pages/Home/Home';
 import Sidebar from './components/Sidebar';
@@ -27,19 +29,25 @@ function App() {
 
   const [songToPlay, setSongToPlay] = useState();
   const [logged, setLogged] = useState(false);
-  let user = localStorage.getItem('user')
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState();
 
   useEffect(() => {// auth
     (async () => {
-      if (localStorage.getItem("token")) {
+      if (Cookies.get("accessToken")) {
         try {
           const data = await read("/api/v1/auth/validateToken");
           setLogged(data);
+          const userId = Cookies.get('id');
+          const userLogged = await read(`api/v1/users/id/${userId}`);
+          setUser(userLogged);
+          setLoading(false);
           mixpanelTrackLoggedIn()
         } catch (e) {
-          console.error(e);
+          setLoading(false)
         }
       } else {
+        setLoading(false);
         mixpanelTrackEnteredLoginPage()
         console.log('cant get token')
       }
@@ -47,34 +55,40 @@ function App() {
   }, []);
 
   return (
-      !logged ?
-      <Router>
-      <Switch>
-      <Route path={'/'} exact> <Login></Login></Route>
-      <Route path={'/signUp'} exact> <Signup/> </Route>
-      </Switch> 
-      </Router>
-    : 
-    <div>
-    <Router>
-      <Topbar></Topbar>
-      <Sidebar></Sidebar>
-      <Player songToPlay={songToPlay} user={user}></Player>
-        <Switch>
-          <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay} user={user}> </Home> </Route>
-          <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
-          <Route path="/Admin" exact> <Admin/> </Route>
-          <Route path="/Allartists" exact> <AllArtists/> </Route>
-          <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
-          <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
-          <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
-          <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
-          <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>
-          <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
-        </Switch>
-      </Router>
-    </div>
-  );
+    <div className="App">
+    {
+        !loading ?
+          !logged ?
+          <Router>
+          <Switch>
+          <Route path={'/'} exact> <Login></Login></Route>
+          <Route path={'/signUp'} exact> <Signup/> </Route>
+          </Switch> 
+          </Router>
+          : 
+          <User.Provider value={user}>
+          <Router>
+            <Topbar></Topbar>
+            <Sidebar></Sidebar>
+            <Player songToPlay={songToPlay}></Player>
+              <Switch>
+                <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
+                <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
+                <Route path="/Admin" exact> <Admin/> </Route>
+                <Route path="/Allartists" exact> <AllArtists/> </Route>
+                <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
+                <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
+                <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
+                <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
+                <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>
+                <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
+              </Switch>
+            </Router>
+          </User.Provider>
+        : <div>loading...</div>
+      }
+      </div>
+      );
 }
 
 export default App;

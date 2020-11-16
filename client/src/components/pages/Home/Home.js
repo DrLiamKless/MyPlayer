@@ -7,7 +7,7 @@ import TopPlaylists from './TopPlaylists'
 import TopArtists from './TopArtists'
 import { mixpanelTrackUrlChanged } from '../../../analytics/analyticsManager'
 
-function Home({ setSongToPlay, user }) {
+function Home({ setSongToPlay }) {
 
   const location = useLocation();
   
@@ -16,13 +16,11 @@ function Home({ setSongToPlay, user }) {
   },[])
   
   return (
-  <div className="App">
-    <header className="App-header">
-        <TopSongs setSongToPlay={setSongToPlay} user={user}></TopSongs>
-        <TopAlbums></TopAlbums>
-        <TopArtists></TopArtists>
-        <TopPlaylists></TopPlaylists>
-    </header>
+  <div className="page">
+      <TopSongs setSongToPlay={setSongToPlay}></TopSongs>
+      <TopAlbums></TopAlbums>
+      <TopArtists></TopArtists>
+      <TopPlaylists></TopPlaylists>
   </div>
   );
 }

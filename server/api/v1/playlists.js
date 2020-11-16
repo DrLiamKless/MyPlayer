@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../../connection')
-const { Artist, User, Playlist, songs_in_playlists, Interaction, Song } = require('../../models');
+const { User, Playlist, songs_in_playlists, Interaction, Song, user_playlists } = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -15,6 +15,21 @@ const client = new Client({
         username: process.env.ELASTIC_USERNAME,
         password: process.env.ELASTIC_PASSWORD,
     }
+})
+
+router.get('/all', async (req,res) => {
+    const allPlaylists = await Playlist.findAll({});
+        res.json(allPlaylists);   
+})
+
+router.get('/songsInPlaylists', async (req,res) => {
+    const all = await songs_in_playlists.findAll({});
+        res.json(all);   
+})
+
+router.get('/userPlaylists', async (req,res) => {
+    const all = await user_playlists.findAll({});
+        res.json(all);   
 })
 
 // Get all playlists + search query

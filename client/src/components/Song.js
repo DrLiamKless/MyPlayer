@@ -93,13 +93,9 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
     <div className={"card"}>
       <Card className={classes.card}>
         <CardHeader
-          avatar={
-            <Avatar alt="artist img" src={song.Artists[0] && song.Artists[0].artistCoverImg}>
-            </Avatar>
-          }
+          avatar={<Avatar alt="artist img" src={song.Artists[0] && song.Artists[0].artistCoverImg}/>}
           title={song.songName}
           disableTypography={false}
-          // subheader="song's artist"
         ></CardHeader>
         <CardContent className={"logo-container"}>
         <Link to={`/song/${song.id}?artist=${song.artistId}`}>

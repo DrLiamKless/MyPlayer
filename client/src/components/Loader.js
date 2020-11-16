@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 
 
-function SinglePlaylist() {
+function Loader() {
 
     return (
         <div className={'loaderContainr'}>
@@ -13,4 +13,4 @@ function SinglePlaylist() {
     );
 }
 
-export default SinglePlaylist;
+export default Loader;

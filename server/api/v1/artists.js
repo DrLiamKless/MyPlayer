@@ -18,7 +18,7 @@ const client = new Client({
     }
 })
 
-// Get all artists
+// Get all artists for app usages
 router.get('/', async (req,res) => {
     const artistName = req.query.artistName;
     const firstWordCondition = artistName ? {artistName: { [Op.like]: `${artistName}%`} } : null;
@@ -31,6 +31,12 @@ router.get('/', async (req,res) => {
         include: Album,
         where: condition     
     });
+        res.json(allArtists);   
+})
+
+//get all artist only
+router.get('/all', async (req,res) => {
+    const allArtists = await Artist.findAll({});
         res.json(allArtists);   
 })
 

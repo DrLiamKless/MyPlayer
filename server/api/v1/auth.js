@@ -1,28 +1,62 @@
 const express = require("express");
 const router = express.Router();
-const { User } = require('../../models');
+const { User, refresh_token } = require('../../models');
 const jwt = require('jsonwebtoken')
 const authenticateToken = require('../../middlewares/auth')
 
+// helpers:
+
+const generateToken = async (userInfo) => 
+  jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m" });
+
 // login:
 router.post('/login', async (req, res) => {
-    console.log('searching....');
-    let user = await User.findOne ({ where: {email: req.body.email}})
+    const loginData = req.body
+
+    let user = await User.findOne ({ where: {email: loginData.email}})
     if (!user) {
-        console.log('email not match');
-        return res.status(500).send('email dose not match any user')
+        return res.status(404).send('email dose not match any user')
     }
     try {
         // authentication :
-        if (user.password === req.body.password) {
-            console.log('password match');
+        if (user.password === loginData.password) {
             user = user.toJSON();
         // jwt:
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'})
-        return res.json({success: true, userName: user.userName, accessToken: accessToken})
+
+        const expiresIn = loginData.rememberMe ? "365 days" : "24h"
+        const infoForCookie = {
+            userId: user.id,
+            email: user.email,
+        };
+
+        const refreshToken = jwt.sign(
+            infoForCookie,
+            process.env.REFRESH_TOKEN_SECRET,
+            {expiresIn: expiresIn}
+        );
+
+        const existingRefreshToken = await refresh_token.findOne({ where: {userId: user.id} });
+
+        if (existingRefreshToken) {
+            await existingRefreshToken.update({refreshToken: refreshToken})
+        } else {
+            const newRefreshToken = await refresh_token.create({
+                userId: user.id,
+                token: refresh_token,
+            })    
         }
-    } catch {
-        console.log('something went wrong');
+
+
+        const accessToken = await generateToken(infoForCookie);
+        res.cookie('accessToken', accessToken);
+        res.cookie('refresh_token', refresh_token);
+        res.cookie('id', user.id);
+        res.status(200).send({success: true, userName: user.userName, accessToken: accessToken}); 
+        } else {
+            res.status(403).send("User or password is incorrect");
+        }
+    } catch (err) {
+        console.log('something went wrong', err);
         res.status(500).send()
     }
 })

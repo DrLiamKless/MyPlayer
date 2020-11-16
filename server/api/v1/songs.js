@@ -17,6 +17,17 @@ const client = new Client({
     }
 })
 
+router.get('/all', async (req,res) => {
+    const allSongs = await Song.findAll({});
+        res.json(allSongs);   
+})
+
+router.get('/songsByArtists', async (req, res) => {
+    const all = await songs_by_artists.findAll({});
+    res.json(all);   
+})
+
+
 // Get all songs + search query
 router.get('/', async (req,res) => {
     const songName = req.query.songName;
