@@ -8,21 +8,13 @@ import Song from '../../Song'
 import Loader from '../../Loader'
 
 
-function TopSongs({ setSongToPlay }) {
+function TopSongs({ setSongToPlay, topSongs }) {
 
-  const [topSongs, setTopSongs] = useState();
   const [likeState, setLikeState] = useState(false);
-
-
-  useEffect(() => {
-    read("/api/v1/songs/top").then((res) => {
-      setTopSongs(res)
-    });
-  }, [likeState]);
   
   const responsive = {
     desktop: {
-    breakpoint: { max: 1280, min: 1024 },
+    breakpoint: { max: 3000, min: 1024 },
     items: 6,
     },
     tablet: {
@@ -40,6 +32,7 @@ function TopSongs({ setSongToPlay }) {
       <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
       <h5>Your Most Favorite Songs</h5>
         <Carousel
+          additionalTransfrom={0}
           responsive={responsive}
           keyBoardControl={true}
           containerClass="carousel-container"

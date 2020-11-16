@@ -18,7 +18,7 @@ const client = new Client({
 })
 
 router.get('/all', async (req,res) => {
-    const allPlaylists = await Playlist.findAll({});
+    const allPlaylists = await Playlist.findAll({where: {publich: true}});
         res.json(allPlaylists);   
 })
 

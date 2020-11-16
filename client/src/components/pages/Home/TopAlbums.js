@@ -7,20 +7,14 @@ import Album from '../../Album'
 import Loader from '../../Loader'
 
 
-function TopAlbums() {
+function TopAlbums({topAlbums}) {
 
-    const [topAlbums, setTopAlbums] = useState()
-
-    useEffect(() => {
-      read("/api/v1/albums/top").then((res) => {
-        setTopAlbums(res)
-      });
-    }, []);
 
     const responsive = {
       desktop: {
-      breakpoint: { max: 1280, min: 1024 },
+      breakpoint: { max: 3000, min: 1024 },
       items: 6,
+      // partialVisibilityGutter: 40
       },
       tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -37,6 +31,7 @@ function TopAlbums() {
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
     <h5>Your most favorite albums</h5>
       <Carousel
+        additionalTransfrom={0}
         responsive={responsive}
         keyBoardControl={true}
         containerClass="carousel-container"

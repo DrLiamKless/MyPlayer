@@ -13,6 +13,7 @@
   text-align: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding-top: 10vh;
 }
 
 .home-section{
@@ -52,8 +53,8 @@
   font-size: calc(10px + 2vmin);
 }
 
-/* .all-artists-container{
-} */
+.all-artists-container{
+}
 
 
 /* components: */
@@ -80,7 +81,7 @@
 }
 
 .card {
-  width: 80%;
+  width: 100%;
   height: 100%;
 }
 
@@ -110,6 +111,7 @@
 
 .playlist-logo {
   height: 13vh;
+  width: 18vh;
   pointer-events: all;
   cursor: pointer;
 }
@@ -154,11 +156,15 @@
 /* single-components */
 
 .player {
-  width: 400px;
-  height: 400px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40vh;
+  height: 40vh;
   background-image: linear-gradient(to bottom right, rgba(114, 95, 72), rgba(68, 51, 30));
   box-shadow: 1px 1px 10px 5px rgba(36, 21, 4);
   display: flex;
+  z-index: 1;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
