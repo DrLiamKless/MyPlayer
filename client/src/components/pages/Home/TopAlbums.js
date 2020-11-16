@@ -33,8 +33,7 @@ function TopAlbums() {
   }
   
   return (
-  topAlbums != null ?
-  <>
+    <>
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
     <h5>Your most favorite albums</h5>
       <Carousel
@@ -42,16 +41,17 @@ function TopAlbums() {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item">
-          {topAlbums.map((album, i) => (
+        {topAlbums != null ?
+          topAlbums.map((album, i) => (
             <Album
             key={album.albumId}
             album={album}
-      />
-            ))}
+            />
+          ))
+        : <Loader/> }
       </Carousel>
     </div>     
   </>
-  : <Loader/>
   ) 
 }
 

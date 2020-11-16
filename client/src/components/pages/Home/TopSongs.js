@@ -36,27 +36,27 @@ function TopSongs({ setSongToPlay }) {
   }
 
   return (
-    topSongs != null ?
     <>
       <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
       <h5>Your Most Favorite Songs</h5>
-              <Carousel
-                responsive={responsive}
-                keyBoardControl={true}
-                containerClass="carousel-container"
-                itemClass="carousel-item">
-                {topSongs.map((song, i) => (
-                  <Song
-                  key={song.song_id}
-                  song={song}
-                  setSongToPlay={setSongToPlay}
-                  likeState={likeState}
-                  setLikeState={setLikeState}/>
-                ))}
-              </Carousel>
+        <Carousel
+          responsive={responsive}
+          keyBoardControl={true}
+          containerClass="carousel-container"
+          itemClass="carousel-item">
+          {topSongs ?
+          topSongs.map((song, i) => (
+            <Song
+            key={song.song_id}
+            song={song}
+            setSongToPlay={setSongToPlay}
+            likeState={likeState}
+            setLikeState={setLikeState}/>
+          ))
+            : <Loader/>}
+        </Carousel>
       </div>     
     </>
-    : <Loader/>
   );
 }
 

@@ -50,7 +50,6 @@
   flex-direction: row;
   align-items: center;
   font-size: calc(10px + 2vmin);
-  padding-top: 20vh;
 }
 
 /* .all-artists-container{

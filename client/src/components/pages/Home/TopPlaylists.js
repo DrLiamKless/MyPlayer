@@ -36,9 +36,10 @@ function TopPlaylists() {
   
   return (
     <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
-   { topPlaylists[0] ?
     <>
-        <p>{User.userName}, those are your Most Favorite Playlists</p>
+        { topPlaylists[0] ?
+        <>
+        <p>{user.userName}, those are your Most Favorite Playlists</p>
         <Carousel
               responsive={responsive}
               keyBoardControl={true}
@@ -47,16 +48,16 @@ function TopPlaylists() {
               infinite
               >
             {topPlaylists[0].Playlists.map((playlist, i) => (
-          <Playlist
-            key={playlist.playlist_id}
-            playlist={playlist}
-          >
-          </Playlist>
+            <Playlist
+              key={playlist.playlist_id}
+              playlist={playlist}
+            >
+            </Playlist>
             ))}
         </Carousel>
+        </>
+          : "No Playlists Yet" }
     </>
-        : <div>No Playlists Yet</div> 
-        }
     </div>     
 
   );

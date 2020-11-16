@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Artist from '../../Artist'
+import Loader from '../../Loader';
 
 function TopAlbums() {
 
@@ -39,12 +40,15 @@ function TopAlbums() {
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item">
-        {topArtists.map((artist, i) => (
+        { topArtists ?
+        topArtists.map((artist, i) => (
           <Artist className={"song"}
           key={artist.artist_id}
           artist={artist}>
           </Artist>
-        ))}
+        ))
+          : <Loader/>
+        }
       </Carousel>
     </div>     
   </>
