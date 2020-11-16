@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { User } from '../../contexts/userContext';
 import 'fontsource-roboto';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -17,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Player({ songToPlay, user }) {
-  
+function Player({ songToPlay }) {
+  const user = useContext(User)
   const classes = useStyles();
 
   return (

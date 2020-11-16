@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { User } from './contexts/userContext';
 import './App.css';
 import Cookies from 'js-cookie';
 import 'fontsource-roboto';
@@ -65,13 +66,13 @@ function App() {
           </Switch> 
           </Router>
           : 
-          <div>
+          <User.Provider value={user}>
           <Router>
             <Topbar></Topbar>
             <Sidebar></Sidebar>
-            <Player songToPlay={songToPlay} user={user}></Player>
+            <Player songToPlay={songToPlay}></Player>
               <Switch>
-                <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay} user={user}> </Home> </Route>
+                <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
                 <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
                 <Route path="/Admin" exact> <Admin/> </Route>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
@@ -83,7 +84,7 @@ function App() {
                 <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
             </Router>
-          </div>
+          </User.Provider>
         : <div>loading...</div>
       }
     </>

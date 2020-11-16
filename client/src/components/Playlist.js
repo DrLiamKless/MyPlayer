@@ -57,7 +57,7 @@ function Playlist({ playlist }) {
 
 const date = new Date(playlist.createdAt);
   return (
-    playlist.playlistName ? 
+    playlist['users'] ? 
     <div className={"card"} >
    <Card className={classes.card}>
       <CardHeader

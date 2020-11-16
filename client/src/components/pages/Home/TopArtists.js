@@ -34,20 +34,20 @@ function TopAlbums() {
     <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
         <p>Your most favorite artists</p>
         <Carousel
-              responsive={responsive}
-              keyBoardControl={true}
-              containerClass="carousel-container"
-              itemClass="carousel-item"
-              infinite
-              >
-            {topArtists.map((artist, i) => (
-                <Artist className={"song"}
-                key={artist.artist_id}
-                artist={artist}
-                >
-                </Artist>
-            ))}
-            </Carousel>
+          responsive={responsive}
+          keyBoardControl={true}
+          containerClass="carousel-container"
+          itemClass="carousel-item"
+          infinite
+        >
+          {topArtists.map((artist, i) => (
+            <Artist className={"song"}
+            key={artist.artist_id}
+            artist={artist}
+            >
+            </Artist>
+          ))}
+        </Carousel>
         </div>     
   );
 }
