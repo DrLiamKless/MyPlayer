@@ -61,8 +61,8 @@ function App() {
           !logged ?
           <Router>
           <Switch>
-          <Route path={'/'} exact> <Login></Login></Route>
-          <Route path={'/signUp'} exact> <Signup/> </Route>
+            <Route path={'/'} exact> <Login></Login></Route>
+            <Route path={'/signUp'} exact> <Signup/> </Route>
           </Switch> 
           </Router>
           : 
@@ -74,13 +74,13 @@ function App() {
               <Switch>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
                 <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
-                <Route path="/Admin" exact> <Admin/> </Route>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
                 <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
                 <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
                 <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>
+                {user.isAdmin && <Route path="/Admin" exact> <Admin/> </Route>}
                 <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
             </Router>

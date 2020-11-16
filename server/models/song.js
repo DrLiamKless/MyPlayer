@@ -33,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     artistId: DataTypes.INTEGER,
     songName: DataTypes.STRING,
     length: DataTypes.STRING,
-    uploadAt: {type: DataTypes.DATE, defaultValue:Date.now()}
   }, {
     sequelize,
     modelName: 'Song',

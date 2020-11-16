@@ -16,27 +16,26 @@ function Admin() {
     mixpanelTrackUrlChanged(location.pathname)
   },[])
 
-  useEffect(() => {
+  const fetchData = () => {
     read("api/v1/artists").then((res) => {
       setArtists(res)
     });
-  }, []);
+      read("api/v1/albums").then((res) => {
+        setAlbums(res)
+    });
+  }
 
   useEffect(() => {
-    read("api/v1/albums").then((res) => {
-      setAlbums(res)
-    });
+    fetchData();
   }, []);
   
   return (
 
-    <div className="App" >
-    <header className="App-header">
+    <div className="page" >
       <AddSong albums={albums} artists={artists}></AddSong>
       <AddAlbum artists={artists}></AddAlbum>
       <AddArtist></AddArtist>
-    </header>
-  </div>
+    </div>
   );
 }
 

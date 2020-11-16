@@ -17,20 +17,6 @@ const client = new Client({
     }
 })
 
-router.get('/all', async (req,res) => {
-    const allPlaylists = await Playlist.findAll({where: {publich: true}});
-        res.json(allPlaylists);   
-})
-
-router.get('/songsInPlaylists', async (req,res) => {
-    const all = await songs_in_playlists.findAll({});
-        res.json(all);   
-})
-
-router.get('/userPlaylists', async (req,res) => {
-    const all = await user_playlists.findAll({});
-        res.json(all);   
-})
 
 // Get all playlists + search query
 router.get('/', async (req,res) => {
@@ -48,7 +34,7 @@ router.get('/', async (req,res) => {
         res.json(allPlaylists);   
 })
 
-// Get top 10 playlists of user
+// Get top 10 playlists for user
 router.get('/top/:userId', async (req,res) => {
 
     const topPlaylists = await Playlist.findAll({
@@ -70,6 +56,22 @@ topPlaylists.sort((playlistA, playlistB) => { return playlistB["Songs"].length -
 
 res.json(topPlaylists.filter(playlist => (playlist["Songs"].length > 0)));      
 })
+
+router.get('/all', async (req,res) => {
+    const allPlaylists = await Playlist.findAll({where: {publich: true}});
+        res.json(allPlaylists);   
+})
+
+router.get('/songsInPlaylists', async (req,res) => {
+    const all = await songs_in_playlists.findAll({});
+        res.json(all);   
+})
+
+router.get('/userPlaylists', async (req,res) => {
+    const all = await user_playlists.findAll({});
+        res.json(all);   
+})
+
 
 // get playlist by id
 router.get('/:id', async (req,res) => {

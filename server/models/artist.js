@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
   Artist.init({
     artistName: DataTypes.STRING,
     artistCoverImg: DataTypes.TEXT,
-    uploadAt: {type: DataTypes.DATE, defaultValue: new Date()}
   }, {
     sequelize,
     modelName: 'Artist',

@@ -65,7 +65,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
 
 
     useEffect(() => {
-      read("api/v1/playlists").then((res) => {
+      read(`api/v1/playlists/`).then((res) => {
         setPlaylists(res)
       });
     }, [open]);
@@ -150,10 +150,10 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
             noValidate onSubmit={handleAddToPlaylist(onAddToPlaylist)}>
             <div>
               <Select fullWidth native inputRef={addToPlaylist} name="songId" variant="outlined">
-              <option value={song.id}>{song.songName}</option>
+                <option value={song.id}>{song.songName}</option>
               </Select>
               <Select fullWidth placeholder="playlists" native inputRef={addToPlaylist} name="playlistId" variant="outlined">
-              {playlists.map(playlist => (<option key={playlist.playlistName} value={playlist.id}>{playlist.playlistName}</option>))}
+                {playlists.map(playlist => (<option key={playlist.playlistName} value={playlist.id}>{playlist.playlistName}</option>))}
               </Select>
             </div>
           <Button

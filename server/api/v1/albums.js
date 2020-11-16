@@ -80,10 +80,11 @@ router.get('/:id', async (req,res) => {
 router.post('/add', async (req,res) => {
     const album = req.body;
     const artistId = album.artistId
+    console.log(artistId)
     const albumId = album.id;
     
     try { 
-        artistExists = await Artist.findOne({where: {id : artistId}});
+        artistExists = await Artist.findOne({where: {id: artistId}});
 
         if(artistExists) {
             const newAlbum = await Album.create(album);
