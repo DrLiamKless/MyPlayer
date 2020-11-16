@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../../connection')
-const { Artist, Album, Song, Interaction, albums_by_artists} = require('../../models');
+const { Artist, Album, Song, Interaction, albums_by_artists, sequelize} = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -19,77 +19,91 @@ const client = new Client({
 
 // Get all albums + search query
 router.get('/', async (req,res) => {
-    const albumName = req.query.albumName;
-    const firstWordCondition = albumName ? {albumName: { [Op.like]: `${albumName}%`} } : null;
-    const otherWordsCondition = albumName ? {albumName: { [Op.like]: `% ${albumName}%`} } : null;
-    const condition = firstWordCondition ||  firstWordCondition ? 
-    { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
-
-
-    const allAlbums = await Album.findAll({ 
-        include: [Artist],
-        where: condition
-    })
+    try{
+        const albumName = req.query.albumName;
+        const firstWordCondition = albumName ? {albumName: { [Op.like]: `${albumName}%`} } : null;
+        const otherWordsCondition = albumName ? {albumName: { [Op.like]: `% ${albumName}%`} } : null;
+        const condition = firstWordCondition ||  firstWordCondition ? 
+        { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
+        
+        
+        const allAlbums = await Album.findAll({ 
+            include: [Artist],
+            where: condition
+        })
         res.json(allAlbums);   
+    } catch (err) {
+        res.send("error occures");
+    }
 })
 
-router.get('/all', async (req, res) => {
-    const allAlbums = await Album.findAll({ })
-        res.json(allAlbums);   
-})
-
-router.get('/albumsByArtists', async (req, res) => {
-    const all = await albums_by_artists.findAll({});
-    res.json(all);   
-})
-
-// Get top 20 albums - for now its 2
-router.get('/top', (req,res) => {
-    const sql = `
-    SELECT albums.id AS id, albums.artist_id AS artistId, album_name AS albumName,
-    album_cover_img AS albumCoverImg,  artist_cover_img AS artistCoverImg, playsSum 
-    from 
-    (albums INNER JOIN artists ON albums.artist_id = artists.id)
-	LEFT JOIN
-    (SELECT album_id, SUM(play_count) AS playsSum FROM myplayer.songs AS s 
-    LEFT JOIN 
-    myplayer.interactions AS i ON s.song_id = i.song_id 
-    GROUP BY album_id) 
-    AS sumTable ON albums.id = sumTable.album_id ORDER BY playsSum DESC LIMIT 20`
-    db.query(sql, async (err, results) => {
-        if (err) throw err;
-
-        const idysCondition = []
-        for (let i = 0; i < results.length; i++) {
-            idysCondition.push({id: results[i].id });
-        }
-
-        const condition = { [Op.or]: idysCondition }
-
+// Get top 10 albums
+router.get('/top/:userId', async (req,res) => {
+    try{
         const topAlbums = await Album.findAll({
-        include: [Song, Artist],
-        where: condition
-    });
-        res.json(topAlbums);  
-    })
+            include: [
+                {
+                    model: Song,
+                    include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
+                },
+                {
+                    model: Artist
+                }
+            ],
+            limit: 10,
+            subQuery: false,
+            group: "song_id"
+        });
+        
+        topAlbums.sort((albumA, albumB) => { return albumB["Songs"].length - albumA["Songs"].length})
+        
+        res.json(topAlbums.filter(album => (album["Songs"].length > 0)));     
+    } catch(err) {
+        res.send("error occures");
+    }
+})
+
+// albums by artists
+router.get('/albumsByArtists', async (req, res) => {
+    try{
+        const all = await albums_by_artists.findAll({});
+        res.json(all);   
+    } catch (err) {
+        res.send("error occures")
+    }
+})
+
+// all albums
+router.get('/all', async (req, res) => {
+    try{
+        const allAlbums = await Album.findAll({ })
+        res.json(allAlbums);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Get a specific album by id
 router.get('/:id', async (req,res) => {
-    const album = await Album.findByPk(req.params.id, {
-        include: [{model: Song, include: Interaction}, {model: Artist}]
-    });
+    try{
+        const album = await Album.findByPk(req.params.id, {
+            include: [{model: Song, include: Interaction}, {model: Artist}]
+        });
         res.json(album);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Insert album to albums:
 router.post('/add', async (req,res) => {
     const album = req.body;
     const artistId = album.artistId
+    console.log(artistId)
     const albumId = album.id;
     
     try { 
-        artistExists = await Artist.findOne({where: {id : artistId}});
+        artistExists = await Artist.findOne({where: {id: artistId}});
 
         if(artistExists) {
             const newAlbum = await Album.create(album);
@@ -126,16 +140,24 @@ router.post('/add', async (req,res) => {
 
  //update an album from albums
 router.patch('/update/:id', async (req, res) => {
-    const album = await Album.findByPk(req.params.id);
-    await album.update(req.body);
-    res.json(album)
+    try{
+        const album = await Album.findByPk(req.params.id);
+        await album.update(req.body);
+        res.json(album)
+    } catch (err) {
+        res.send("error occures")
+    }
   })
 
 // Delete a album from albums
 router.delete('/delete/:id', async (req,res) => {
-    const album = await Album.findByPk(req.params.id)
-    await album.destroy()
-    res.json({deleted: true})
+    try{
+        const album = await Album.findByPk(req.params.id)
+        await album.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 module.exports = router;

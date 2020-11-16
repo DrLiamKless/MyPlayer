@@ -6,7 +6,6 @@ module.exports = [
     password: "liam1234",
     is_admin: true,
     preferneces: null,
-    remember_token: true,
     created_at: new Date(),
     updated_at: new Date()
     },

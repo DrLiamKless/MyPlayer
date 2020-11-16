@@ -23,9 +23,6 @@ module.exports = {
       preferneces: {
         type: Sequelize.STRING,
       },
-      remember_token: {
-        type: Sequelize.BOOLEAN,
-      },
       upload_at: {
         type: Sequelize.DATE,
       },
