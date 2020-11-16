@@ -15,6 +15,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import Search from './Search'
 import { User } from '../contexts/userContext';
+import ErrorBoundary from './ErrorBoundary';
 
 
 function Sidebar() {
@@ -63,7 +64,9 @@ function Sidebar() {
             <Link to="/Allplaylists"/>
             </MenuItem>
             <SubMenu title="Search" icon={<SearchIcon/>}>
+                <ErrorBoundary>
                 <Search></Search>
+                </ErrorBoundary>
             </SubMenu>
             { user.isAdmin && 
             <SubMenu title="My user" icon={<AccountCircleIcon/>}>

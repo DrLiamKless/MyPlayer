@@ -21,6 +21,7 @@ import Login from './components/pages/Identification/Login';
 import Signup from './components/pages/Identification/Signup';
 import { read } from "./wrappers/ajax"
 import { mixpanelTrackLoggedIn, mixpanelTrackEnteredLoginPage } from "./analytics/analyticsManager";
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 
@@ -70,7 +71,9 @@ function App() {
           <Router>
             <Topbar></Topbar>
             <Sidebar></Sidebar>
-            <Player songToPlay={songToPlay}></Player>
+            <ErrorBoundary>
+              <Player songToPlay={songToPlay}></Player>
+            </ErrorBoundary>
               <Switch>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
                 <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>

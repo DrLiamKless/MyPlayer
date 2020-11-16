@@ -32,9 +32,15 @@ function Admin() {
   return (
 
     <div className="page" >
-      <AddSong albums={albums} artists={artists}></AddSong>
-      <AddAlbum artists={artists}></AddAlbum>
-      <AddArtist></AddArtist>
+      <ErrorBoundary>
+        <AddSong albums={albums} artists={artists}></AddSong>
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <AddAlbum artists={artists}></AddAlbum>
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <AddArtist></AddArtist>
+      </ErrorBoundary>
     </div>
   );
 }
