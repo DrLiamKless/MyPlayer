@@ -19,61 +19,80 @@ const client = new Client({
 
 // Get all albums + search query
 router.get('/', async (req,res) => {
-    const albumName = req.query.albumName;
-    const firstWordCondition = albumName ? {albumName: { [Op.like]: `${albumName}%`} } : null;
-    const otherWordsCondition = albumName ? {albumName: { [Op.like]: `% ${albumName}%`} } : null;
-    const condition = firstWordCondition ||  firstWordCondition ? 
-    { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
-
-
-    const allAlbums = await Album.findAll({ 
-        include: [Artist],
-        where: condition
-    })
+    try{
+        const albumName = req.query.albumName;
+        const firstWordCondition = albumName ? {albumName: { [Op.like]: `${albumName}%`} } : null;
+        const otherWordsCondition = albumName ? {albumName: { [Op.like]: `% ${albumName}%`} } : null;
+        const condition = firstWordCondition ||  firstWordCondition ? 
+        { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
+        
+        
+        const allAlbums = await Album.findAll({ 
+            include: [Artist],
+            where: condition
+        })
         res.json(allAlbums);   
+    } catch (err) {
+        res.send("error occures");
+    }
 })
 
 // Get top 10 albums
 router.get('/top/:userId', async (req,res) => {
-
+    try{
         const topAlbums = await Album.findAll({
-        include: [
-            {
-                model: Song,
-                include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
-            },
-            {
-                model: Artist
-            }
-        ],
-        limit: 10,
-        subQuery: false,
-        group: "song_id"
-    });
-
-    topAlbums.sort((albumA, albumB) => { return albumB["Songs"].length - albumA["Songs"].length})
-
-    res.json(topAlbums.filter(album => (album["Songs"].length > 0)));      
+            include: [
+                {
+                    model: Song,
+                    include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
+                },
+                {
+                    model: Artist
+                }
+            ],
+            limit: 10,
+            subQuery: false,
+            group: "song_id"
+        });
+        
+        topAlbums.sort((albumA, albumB) => { return albumB["Songs"].length - albumA["Songs"].length})
+        
+        res.json(topAlbums.filter(album => (album["Songs"].length > 0)));     
+    } catch(err) {
+        res.send("error occures");
+    }
 })
 
 // albums by artists
 router.get('/albumsByArtists', async (req, res) => {
-    const all = await albums_by_artists.findAll({});
-    res.json(all);   
+    try{
+        const all = await albums_by_artists.findAll({});
+        res.json(all);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // all albums
 router.get('/all', async (req, res) => {
-    const allAlbums = await Album.findAll({ })
+    try{
+        const allAlbums = await Album.findAll({ })
         res.json(allAlbums);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Get a specific album by id
 router.get('/:id', async (req,res) => {
-    const album = await Album.findByPk(req.params.id, {
-        include: [{model: Song, include: Interaction}, {model: Artist}]
-    });
+    try{
+        const album = await Album.findByPk(req.params.id, {
+            include: [{model: Song, include: Interaction}, {model: Artist}]
+        });
         res.json(album);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Insert album to albums:
@@ -121,16 +140,24 @@ router.post('/add', async (req,res) => {
 
  //update an album from albums
 router.patch('/update/:id', async (req, res) => {
-    const album = await Album.findByPk(req.params.id);
-    await album.update(req.body);
-    res.json(album)
+    try{
+        const album = await Album.findByPk(req.params.id);
+        await album.update(req.body);
+        res.json(album)
+    } catch (err) {
+        res.send("error occures")
+    }
   })
 
 // Delete a album from albums
 router.delete('/delete/:id', async (req,res) => {
-    const album = await Album.findByPk(req.params.id)
-    await album.destroy()
-    res.json({deleted: true})
+    try{
+        const album = await Album.findByPk(req.params.id)
+        await album.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 module.exports = router;

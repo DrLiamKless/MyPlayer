@@ -56,14 +56,17 @@ router.post('/login', async (req, res) => {
             res.status(403).send("User or password is incorrect");
         }
     } catch (err) {
-        console.log('something went wrong', err);
         res.status(500).send()
     }
 })
 
  // Validate Token
  router.get("/validateToken", authenticateToken, (req, res) => {
-    res.json({ valid: true })
+     try {
+         res.json({ valid: true })
+     } catch (err) {
+         res.json({valid:false});
+     }
   })
 
   module.exports = router;

@@ -50,7 +50,6 @@ function App() {
       } else {
         setLoading(false);
         mixpanelTrackEnteredLoginPage()
-        console.log('cant get token')
       }
     })();
   }, []);
@@ -64,6 +63,7 @@ function App() {
           <Switch>
             <Route path={'/'} exact> <Login></Login></Route>
             <Route path={'/signUp'} exact> <Signup/> </Route>
+            <Route path={'*'} exact> <Login></Login></Route>
           </Switch> 
           </Router>
           : 
@@ -82,7 +82,7 @@ function App() {
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
                 <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
-                <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist> </Route>
+                <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist></Route>
                 {user.isAdmin && <Route path="/Admin" exact> <Admin/> </Route>}
                 <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>

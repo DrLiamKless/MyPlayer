@@ -58,36 +58,56 @@ res.json(topPlaylists.filter(playlist => (playlist["Songs"].length > 0)));
 })
 
 router.get('/all', async (req,res) => {
-    const allPlaylists = await Playlist.findAll({where: {publich: true}});
+    try{
+        const allPlaylists = await Playlist.findAll({where: {publich: true}});
         res.json(allPlaylists);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 router.get('/songsInPlaylists', async (req,res) => {
-    const all = await songs_in_playlists.findAll({});
+    try{
+        const all = await songs_in_playlists.findAll({});
         res.json(all);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 router.get('/userPlaylists', async (req,res) => {
-    const all = await user_playlists.findAll({});
+    try {
+        const all = await user_playlists.findAll({});
         res.json(all);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 
 // get playlist by id
 router.get('/:id', async (req,res) => {
-    const playlist = await Playlist.findByPk(req.params.id, {
-        include: [{model: Song, include: Interaction}, {model: User}],
-    });
+    try{
+        const playlist = await Playlist.findByPk(req.params.id, {
+            include: [{model: Song, include: Interaction}, {model: User}],
+        });
         res.json(playlist);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // get songs_in_playlists by id
 router.get('/songInPlaylist/:songId/:playlistId', async (req,res) => {
-    const songInPlaylist = await songs_in_playlists.findOne({
-        where: [{song_id: req.params.songId}, {playlist_id: req.params.playlistId}],
-        attributes: ['id', 'songId', 'playlistId']
-    });
+    try{
+        const songInPlaylist = await songs_in_playlists.findOne({
+            where: [{song_id: req.params.songId}, {playlist_id: req.params.playlistId}],
+            attributes: ['id', 'songId', 'playlistId']
+        });
         res.json(songInPlaylist);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // // Insert playlist to playlists:
@@ -112,29 +132,45 @@ router.post('/add', async (req,res) => {
 
 // Insert song into playlist:
 router.post('/addSong', async (req,res) => {
-    const newSong = await songs_in_playlists.create(req.body)
-    res.json(newSong)
+    try{
+        const newSong = await songs_in_playlists.create(req.body)
+        res.json(newSong)
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 // update a playlist from playlists
 router.patch('/update/:id', async (req, res) => {
-    const playlist = await Playlist.findByPk(req.params.id);
-    await playlist.update(req.body);
-    res.json(playlist)
+    try{
+        const playlist = await Playlist.findByPk(req.params.id);
+        await playlist.update(req.body);
+        res.json(playlist)
+    } catch (err) {
+        res.send("error occures")
+    }
   })
 
 // remove song from playlist:
 router.delete('/removeSong/:id', async (req,res) => {
-    const song = await songs_in_playlists.findOne({where: {id: req.params.id}})
-    await song.destroy()
-    res.json({deleted: true})
+    try{
+        const song = await songs_in_playlists.findOne({where: {id: req.params.id}})
+        await song.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 // Delete a playlist from playlists
 router.delete('/delete/:id', async (req,res) => {
-    const playlist = await Playlist.findByPk(req.params.id)
-    await playlist.destroy()
-    res.json({deleted: true})
+    try{
+        const playlist = await Playlist.findByPk(req.params.id)
+        await playlist.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 

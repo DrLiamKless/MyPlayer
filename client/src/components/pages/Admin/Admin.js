@@ -5,6 +5,7 @@ import AddSong from './AddSong';
 import AddArtist from './AddArtist';
 import AddAlbum from './AddAlbum';
 import { mixpanelTrackUrlChanged } from '../../../analytics/analyticsManager'
+import ErrorBoundary from '../../ErrorBoundary';
 
 function Admin() {
   const [artists, setArtists] = useState([])

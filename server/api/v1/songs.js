@@ -45,36 +45,43 @@ router.get('/', async (req,res) => {
 
 // Get top 20 songs
 router.get('/top/:userId', async (req,res) => {
-    const topSongs = await Song.findAll({
-        include: [
-            {
-            model: Interaction,
-            where: {
-                isLiked: true,
-                userId: req.params.userId
-            }
-            },
-            {
-            model: Artist,
-            }
-        ],
-        limit: 20,
-    });
-        res.json(topSongs);   
-})
-
+        try{
+            const topSongs = await Song.findAll({
+                include: [
+                    {
+                        model: Interaction,
+                        where: {
+                            isLiked: true,
+                            userId: req.params.userId
+                        }
+                    },
+                    {
+                        model: Artist,
+                    }
+                ],
+                limit: 20,
+            });
+            res.json(topSongs);   
+        } catch (err) {
+            res.send("error occures")
+        }
+    })
+    
 // Get a specific song by id
 router.get('/:id', async (req,res) => {
-    const song = await Song.findByPk(req.params.id, {
-        include: [Interaction, Artist]
-    });
+        try{
+        const song = await Song.findByPk(req.params.id, {
+            include: [Interaction, Artist]
+        });
         res.json(song);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Insert song to songs:    
 router.post('/add', async (req,res) => {
     try {
-
         const song = req.body;
         const albumId = song.albumId;
         const artistId = song.artistId;
@@ -114,42 +121,53 @@ router.post('/add', async (req,res) => {
             res.json('artist or album dosent exists');
         }
     } catch (err) {
-        console.log(err)
         res.send('error has occured')
     }
  })
 
 // update a song from songs
 router.patch('/update/:id', async (req, res) => {
-    const song = await Song.findByPk(req.params.id);
-    await song.update(req.body);
-    res.json(song)
+    try {
+        const song = await Song.findByPk(req.params.id);
+        await song.update(req.body);
+        res.json(song)
+    } catch (err) {
+        res.send("error occures")
+    }
   })
 
 // new interaction - like/unlike:
 router.post('/:songId/user-liked/:userId', async (req,res) => {
-    const interaction = req.body;
-    if(interaction.songId) {
-        const newInteraction = await Interaction.create(interaction)
+    try{
+        const interaction = req.body;
+        if(interaction.songId) {
+            const newInteraction = await Interaction.create(interaction)
             res.json(newInteraction)
             console.log('1')
-    } else {
-        console.log('2')
-        const updatedInteraction = await Interaction.update(interaction,{where: 
-            {
-                songId: req.params.songId,
-                userId: req.params.userId
-            }
-        })
+        } else {
+            console.log('2')
+            const updatedInteraction = await Interaction.update(interaction,{where: 
+                {
+                    songId: req.params.songId,
+                    userId: req.params.userId
+                }
+            })
             res.json(updatedInteraction)
+        }
+    } catch (err) {
+        res.send("error occures")
     }
 })
 
 // Delete a artist from artists
 router.delete('/delete/:id', async (req,res) => {
-    const song = await Song.findByPk(req.params.id)
-    await song.destroy()
-    res.json({deleted: true})
+    try{
+        const song = await Song.findByPk(req.params.id)
+        await song.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 

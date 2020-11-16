@@ -20,19 +20,24 @@ const client = new Client({
 
 // Get all artists for app usages
 router.get('/', async (req,res) => {
-    const artistName = req.query.artistName;
-    const firstWordCondition = artistName ? {artistName: { [Op.like]: `${artistName}%`} } : null;
-    const otherWordsCondition = artistName ? {artistName: { [Op.like]: `% ${artistName}%`} } : null;
-    const condition = firstWordCondition ||  firstWordCondition ? 
-    { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
-
-
-    const allArtists = await Artist.findAll({
-        include: Album,
-        where: condition     
-    });
+    try{
+        const artistName = req.query.artistName;
+        const firstWordCondition = artistName ? {artistName: { [Op.like]: `${artistName}%`} } : null;
+        const otherWordsCondition = artistName ? {artistName: { [Op.like]: `% ${artistName}%`} } : null;
+        const condition = firstWordCondition ||  firstWordCondition ? 
+        { [Op.or]: [firstWordCondition,otherWordsCondition] } : null
+        
+        
+        const allArtists = await Artist.findAll({
+            include: Album,
+            where: condition     
+        });
         res.json(allArtists);   
-})
+    } catch(err) {
+                res.send("error occures")
+
+    }
+    })
 
 //get all artist only
 router.get('/all', async (req,res) => {
@@ -42,36 +47,43 @@ router.get('/all', async (req,res) => {
 
 // Get top 10 artists
 router.get('/top/:userId', async (req,res) => {
-
-    const topArtists = await Artist.findAll({
-    include: [
-        {
-            model: Song,
-            include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
-        },
-        {
-            model: Album
-        }
-    ],
-    limit: 10,
-    subQuery: false,
-    group: "id"
-});
-
-topArtists.sort((artistA, artistB) => { return artistB["Songs"].length - artistA["Songs"].length})
-
-res.json(topArtists.filter(artist => (artist["Songs"].length > 0)));      
+    try {
+        const topArtists = await Artist.findAll({
+            include: [
+                {
+                    model: Song,
+                    include: [{model: Interaction, where: {isLiked: true, userId: req.params.userId}}],
+                },
+                {
+                    model: Album
+                }
+            ],
+            limit: 10,
+            subQuery: false,
+            group: "id"
+        });
+        
+        topArtists.sort((artistA, artistB) => { return artistB["Songs"].length - artistA["Songs"].length})
+        
+        res.json(topArtists.filter(artist => (artist["Songs"].length > 0)));      
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Get a specific artist by id
 router.get('/:id', async (req,res) => {
-    const artist = await Artist.findByPk(req.params.id, {
-        include: [
-            { model: Song, include: Interaction},   
-            { model: Album } 
-        ]
-    });
+    try{
+        const artist = await Artist.findByPk(req.params.id, {
+            include: [
+                { model: Song, include: Interaction},   
+                { model: Album } 
+            ]
+        });
         res.json(artist);   
+    } catch (err) {
+        res.send("error occures")
+    }
 })
 
 // Insert artist to artists:
@@ -108,16 +120,24 @@ router.post('/add', async (req,res) => {
 
 // update an artist from artists
 router.patch('/update/:id', async (req, res) => {
-    const artist = await Artist.findByPk(req.params.id);
-    await artist.update(req.body);
-    res.json(artist)
+    try{
+        const artist = await Artist.findByPk(req.params.id);
+        await artist.update(req.body);
+        res.json(artist)
+    } catch (err) {
+        res.send("error occures")
+    }
   })
 
 // Delete a artist from artists
 router.delete('/delete/:id', async (req,res) => {
-    const artist = await Artist.findByPk(req.params.id)
-    await artist.destroy()
-    res.json({deleted: true})
+    try {  
+        const artist = await Artist.findByPk(req.params.id)
+        await artist.destroy()
+        res.json({deleted: true})
+    } catch (err) {
+        res.send("error occures")
+    }
  })
 
 
