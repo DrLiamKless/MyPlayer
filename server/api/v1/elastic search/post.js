@@ -5,6 +5,7 @@ const { Song, Artist, Playlist, Album } = require('../../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 const { Client } = require('@elastic/elasticsearch')
+require('dotenv').config()
 
 const client = new Client({
     cloud: {

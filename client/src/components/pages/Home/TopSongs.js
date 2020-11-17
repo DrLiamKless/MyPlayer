@@ -3,7 +3,6 @@ import { User } from '../../../contexts/userContext';
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
-import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from '../../Song'
 import Loader from '../../Loader'

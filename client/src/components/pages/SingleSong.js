@@ -45,7 +45,6 @@ function SingleSong({ setSongToPlay }) {
   const [singleSongObject, setSingleSongObject] = useState();
   const [songsFromQuery, setSongsFromQuery] = useState();
   const [likeState, setLikeState] = useState(false);
-  const [singlePlaylistObject, setSinglePlaylistObject] = useState()
   const classes = useStyles();
   const location = useLocation();
 

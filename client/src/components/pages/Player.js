@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { User } from '../../contexts/userContext';
 import 'fontsource-roboto';
 import Draggable from 'react-draggable';
-import { brown } from '@material-ui/core/colors';
-import { makeStyles } from '@material-ui/core/styles';
 
 function Player({ songToPlay }) {
   const user = useContext(User)

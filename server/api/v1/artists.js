@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../../connection')
 const { Artist, Album, Song, Interaction } = require('../../models');
+require('dotenv').config()
 
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;

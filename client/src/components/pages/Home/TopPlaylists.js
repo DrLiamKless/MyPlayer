@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { User } from '../../../contexts/userContext';
 import 'fontsource-roboto';
 import Playlist from '../../Playlist'
 import Carousel from 'react-multi-carousel';

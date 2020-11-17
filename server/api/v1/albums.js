@@ -4,6 +4,7 @@ const db = require('../../connection')
 const { Artist, Album, Song, Interaction, albums_by_artists, sequelize} = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
+require('dotenv').config()
 
 const { Client } = require('@elastic/elasticsearch')
 
