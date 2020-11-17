@@ -62,7 +62,7 @@ function App() {
           <Switch>
             <Route path={'/'} exact> <Login></Login></Route>
             <Route path={'/signUp'} exact> <Signup/> </Route>
-            <Route path={'*'} exact> <Login></Login></Route>
+            {/* <Route path={'*'} exact> <Login></Login></Route> */}
           </Switch> 
           </Router>
           : 
@@ -75,7 +75,7 @@ function App() {
             </ErrorBoundary>
               <Switch>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
-                <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
+                <Route path="/Allsongs"> exact<Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
                 <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
