@@ -28,49 +28,50 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function SinglePlaylist({ props, singleSong }) {
-  let { id } = useParams() 
+  let { id } = useParams();
   const user = useContext(User);
-  const [singleArtist, setSingleArtist] = useState({})
+  const [singleArtist, setSingleArtist] = useState({});
   const [likeState, setLikeState] = useState(false); 
   const classes = useStyles();
   const location = useLocation();
   
   useEffect(() => {
-    mixpanelTrackUrlChanged(location.pathname)
+    mixpanelTrackUrlChanged(location.pathname);
   },[])
 
 
-    useEffect(() => {
-      read(`/api/v1/artists/${id}`).then((res) => {
-        setSingleArtist(res)
-      });
-    },[likeState]);
+  useEffect(() => {
+    read(`/api/v1/artists/${id}`).then((res) => {
+      setSingleArtist(res);
+    });
+  },[likeState]);
 
-    const handleLike = (song) => {
-      likeFunction(song, user); 
-      setLikeState(!likeState); 
-      likeState ? 
-      mixpanelTrackSongUnliked(song.songName)
-      : mixpanelTrackSongLiked(song.songName) 
-    }
+  const handleLike = (song) => {
+    likeFunction(song, user); 
+    setLikeState(!likeState); 
+    likeState ? 
+    mixpanelTrackSongUnliked(song.songName)
+    : mixpanelTrackSongLiked(song.songName); 
+  }
   
-    return (
-      singleArtist.artistName ? 
-        <div className="page">
-          <div className="single-page">
-            <Artist
-              key={singleArtist.id}
-              artist={singleArtist}
-            >
-            </Artist>
-            <div className="suggested-songs">
-              <List className={classes.root}
-                subheader={
-                  <ListSubheader component="p">
-                    suggestes songs from {singleArtist.artistName}
-                  </ListSubheader>
-                }>
-                {singleArtist.Songs.map((song) => {
+  return (
+    singleArtist.artistName ? 
+      <div className="page">
+        <div className="single-page">
+          <Artist
+            key={singleArtist.id}
+            artist={singleArtist}
+          >
+          </Artist>
+          <div className="suggested-songs">
+            <List className={classes.root}
+              subheader={
+                <ListSubheader component="p">
+                  suggestes songs from {singleArtist.artistName}
+                </ListSubheader>
+              }>
+              {
+                singleArtist.Songs.map((song) => {
                   return <ListItem key={song.id} role={undefined} dense>
                       <Link 
                       to={`/song/${song.id}?artist=${singleArtist.id}`}
@@ -87,13 +88,14 @@ function SinglePlaylist({ props, singleSong }) {
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>
-              })}
-              </List>
-            </div>
+                })
+              }
+            </List>
           </div>
         </div>
-        : <Loader/>
-        );
+      </div>
+    : <Loader/>
+  );
 }
 
 export default SinglePlaylist;

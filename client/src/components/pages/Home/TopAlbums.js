@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { Link } from 'react-router-dom';
-import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Album from '../../Album'
 import Loader from '../../Loader'

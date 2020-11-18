@@ -23,10 +23,6 @@ import { read } from "./wrappers/ajax"
 import { mixpanelTrackLoggedIn, mixpanelTrackEnteredLoginPage } from "./analytics/analyticsManager";
 import ErrorBoundary from './components/ErrorBoundary';
 import BGImage from './images/login.jpg'
-import Loader from './components/Loader';
-
-
-
 
 function App() {
 
@@ -47,10 +43,11 @@ function App() {
           setLoading(false);
           mixpanelTrackLoggedIn()
         } catch (e) {
-          Cookies.remove("accessToken")
-          Cookies.remove("id")
-          Cookies.remove("refreshToken")
-          window.location = '/';
+          // Cookies.remove("accessToken")
+          // Cookies.remove("id")
+          // Cookies.remove("refreshToken")
+          console.error(e);
+          // window.location = '/';
         }
       } else {
         setLoading(false);
@@ -80,15 +77,35 @@ function App() {
               <Player songToPlay={songToPlay}></Player>
             </ErrorBoundary>
               <Switch>
+              <ErrorBoundary>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
+              </ErrorBoundary>
+              <ErrorBoundary>
                 <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist></Route>
-                {user.isAdmin && <Route path="/Admin" exact> <Admin/> </Route>}
+              </ErrorBoundary>
+                {user.isAdmin && 
+                  <ErrorBoundary>
+                    <Route path="/Admin" exact> <Admin/> </Route>
+                  </ErrorBoundary>
+                }
                 <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
             </Router>

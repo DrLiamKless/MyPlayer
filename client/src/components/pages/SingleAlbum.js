@@ -37,15 +37,15 @@ function SingleAlbum({ setSongToPlay }) {
     mixpanelTrackUrlChanged(location.pathname)
   },[])
   
-  let { id } = useParams() 
+  let { id } = useParams() ;
   const user = useContext(User);
   const [singleAlbum, setSingleAlbum] = useState();
-  const [likeState, setLikeState] = useState(false)
+  const [likeState, setLikeState] = useState(false);
   const classes = useStyles();
 
     useEffect(() => {
       read(`/api/v1/albums/${id}`).then((res) => {
-        setSingleAlbum(res)
+        setSingleAlbum(res);
       });
     }, [id, likeState]);
 
@@ -54,46 +54,46 @@ function SingleAlbum({ setSongToPlay }) {
       setLikeState(!likeState); 
       likeState ? 
       mixpanelTrackSongUnliked(song.songName)
-      : mixpanelTrackSongLiked(song.songName) 
+      : mixpanelTrackSongLiked(song.songName);
     }
   
   return (
     singleAlbum ?
   <div className="page">
     <div className="single-page">
-            <Album
-              key={singleAlbum.id}
-              album={singleAlbum}
-              setSongToPlay={setSongToPlay}
-            >
-            </Album>
-            <div className="suggested-songs">
-              <List className={classes.root}
-                subheader={
-                  <ListSubheader component="p">
-                    more songs from {singleAlbum.albumName} 
-                  </ListSubheader>
-                }>
-                {singleAlbum.Songs.map((song) => (
-                  <ListItem key={song.id} role={undefined} dense button>
-                    <Link 
-                    to={`/song/${song.id}?album=${song.albumId}`}
-                    style={{color: 'black'}}>
-                      <ListItemText primary={`${song.songName}`} />
-                    </Link>
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        aria-label="like"
-                        onClick={() => {handleLike(song)}}>
-                        <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
-                        </FavoriteIcon>
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-              </div>
+      <Album
+        key={singleAlbum.id}
+        album={singleAlbum}
+        setSongToPlay={setSongToPlay}
+      >
+      </Album>
+      <div className="suggested-songs">
+        <List className={classes.root}
+          subheader={
+            <ListSubheader component="p">
+              more songs from {singleAlbum.albumName} 
+            </ListSubheader>
+          }>
+          {singleAlbum.Songs.map((song) => (
+            <ListItem key={song.id} role={undefined} dense button>
+              <Link 
+              to={`/song/${song.id}?album=${song.albumId}`}
+              style={{color: 'black'}}>
+                <ListItemText primary={`${song.songName}`} />
+              </Link>
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="like"
+                  onClick={() => {handleLike(song)}}>
+                  <FavoriteIcon  color={song.Interactions[0] && song.Interactions[0].isLiked === true ? 'secondary' : 'inherit'}>
+                  </FavoriteIcon>
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      </div>
     </div>
   </div>
   : <Loader/>

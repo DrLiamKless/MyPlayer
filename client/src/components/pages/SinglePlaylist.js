@@ -9,34 +9,34 @@ import { mixpanelTrackUrlChanged } from '../../analytics/analyticsManager'
 
 
 function SinglePlaylist({ props, singleSong }) {
-  let { id } = useParams() 
+  let { id } = useParams();
   const location = useLocation();
 
-  const [singlePlaylistObject, setSinglePlaylistObject] = useState()
+  const [singlePlaylistObject, setSinglePlaylistObject] = useState();
   
   useEffect(() => {
-    mixpanelTrackUrlChanged(location.pathname)
+    mixpanelTrackUrlChanged(location.pathname);
   },[])
 
-    useEffect(() => {
-      read(`/api/v1/playlists/${id}`).then((res) => {
-        setSinglePlaylistObject(res)
-      });
-    }, [id]);
+  useEffect(() => {
+    read(`/api/v1/playlists/${id}`).then((res) => {
+      setSinglePlaylistObject(res);
+    });
+  }, [id]);
   
-    return (
-      singlePlaylistObject ?
-        <div className="page">
-          <div className="single-page">
-            <Playlist
-              key={singlePlaylistObject.id}
-              playlist={singlePlaylistObject}
-            >
-            </Playlist>
-          </div>
+  return (
+    singlePlaylistObject ?
+      <div className="page">
+        <div className="single-page">
+          <Playlist
+            key={singlePlaylistObject.id}
+            playlist={singlePlaylistObject}
+          >
+          </Playlist>
         </div>
-        : <Loader/>
-        );
+      </div>
+    : <Loader/>
+  );
 }
 
 export default SinglePlaylist;

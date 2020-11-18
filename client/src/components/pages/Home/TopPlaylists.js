@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import 'fontsource-roboto';
 import Playlist from '../../Playlist'
@@ -37,7 +37,7 @@ function TopPlaylists({topPlaylists}) {
             itemClass="carousel-item"
             infinite
             >
-        { topPlaylists.length > 0 ?
+        { topPlaylists?.length > 0 ?
           topPlaylists.map((playlist, i) => (
           <Playlist
             key={playlist.playlist_id}

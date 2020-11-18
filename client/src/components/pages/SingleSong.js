@@ -19,10 +19,6 @@ import Loader from '../Loader'
 import { mixpanelTrackUrlChanged, mixpanelTrackSongLiked, mixpanelTrackSongUnliked  } from '../../analytics/analyticsManager'
 import { User } from '../../contexts/userContext';
 
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '130%',
@@ -38,26 +34,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function SingleSong({ setSongToPlay }) {
   
   let { id } = useParams(); 
   const [singleSongObject, setSingleSongObject] = useState();
   const [songsFromQuery, setSongsFromQuery] = useState();
   const [likeState, setLikeState] = useState(false);
-  const [singlePlaylistObject, setSinglePlaylistObject] = useState()
   const classes = useStyles();
   const location = useLocation();
 
   useEffect(() => {
-    mixpanelTrackUrlChanged(location.pathname)
+    mixpanelTrackUrlChanged(location.pathname);
   },[])
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
 
-  const query = useQuery()
+  const query = useQuery();
   const user = useContext(User);
   const artistQuery = query.get("artist");
   const albumQuery = query.get('album');
@@ -65,25 +59,25 @@ function SingleSong({ setSongToPlay }) {
   const queryKey = albumQuery !== null ? `album` : artistQuery !== null ? 'artist' : 'playlist';
   const queryValue = albumQuery !== null ? albumQuery : artistQuery !== null ? artistQuery : playlistQuery;
 
-    useEffect(() => {
-      read(`/api/v1/songs/${id}`).then((res) => {
-        setSingleSongObject(res)
-      });
-    }, [id, likeState]);
+  useEffect(() => {
+    read(`/api/v1/songs/${id}`).then((res) => {
+      setSingleSongObject(res);
+    });
+  }, [id, likeState]);
 
-    useEffect(() => {
-        read(`/api/v1/${queryKey}s/${queryValue}`).then((res) => {
-          setSongsFromQuery(res);
-        })
-      }, [likeState]);
+  useEffect(() => {
+      read(`/api/v1/${queryKey}s/${queryValue}`).then((res) => {
+        setSongsFromQuery(res);
+      })
+    }, [likeState]);
 
-      const handleLike = (song) => {
-        likeFunction(song, user); 
-        setLikeState(!likeState); 
-        likeState ? 
-        mixpanelTrackSongUnliked(song.songName)
-        : mixpanelTrackSongLiked(song.songName) 
-      }
+  const handleLike = (song) => {
+    likeFunction(song, user); 
+    setLikeState(!likeState); 
+    likeState ? 
+    mixpanelTrackSongUnliked(song.songName)
+    : mixpanelTrackSongLiked(song.songName); 
+  }
   
   return (
   singleSongObject && songsFromQuery ?
