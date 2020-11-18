@@ -99,7 +99,6 @@ router.get('/:id', async (req,res) => {
 router.post('/add', async (req,res) => {
     const album = req.body;
     const artistId = album.artistId
-    console.log(artistId)
     const albumId = album.id;
     
     try { 
@@ -133,7 +132,6 @@ router.post('/add', async (req,res) => {
         }
        
     } catch (err) {
-        console.log(err)
         res.send('error has occured')
     }
  })

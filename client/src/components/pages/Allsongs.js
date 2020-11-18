@@ -22,7 +22,6 @@ function Allsongs({ setSongToPlay }) {
     useEffect(() => {
       read(`/api/v1/songs`).then((res) => {
         setSongs(res);
-        console.log(res);
       }).catch(err => {
         setSongs(false);
       })

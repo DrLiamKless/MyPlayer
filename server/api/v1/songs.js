@@ -147,9 +147,7 @@ router.post('/:songId/user-liked/:userId', async (req,res) => {
         if(!interactionExists) {
             const newInteraction = await Interaction.create(interaction)
             res.json(newInteraction)
-            console.log("interaction not Exists................................", interactionExists)
         } else {
-            console.log("interaction Exists.................................", interactionExists)
             const updatedInteraction = await Interaction.update(interaction,{where: 
                 {
                     songId: req.params.songId,
