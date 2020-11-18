@@ -16,6 +16,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import Search from './Search'
 import { User } from '../contexts/userContext';
 import ErrorBoundary from './ErrorBoundary';
+import BGSidebar from '../images/sidebar.jpg'
 
 
 function Sidebar() {
@@ -37,7 +38,7 @@ function Sidebar() {
   return (
     <div>
         <ProSidebar id={"side-bar"} collapsed={sideBarOpen}
-        image={"https://media.pri.org/s3fs-public/story/images/Music%20Listening.jpg"}
+        image={BGSidebar}
         >
             <Menu iconShape="circle">
             <br></br>

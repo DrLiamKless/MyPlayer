@@ -28,7 +28,7 @@ function TopAlbums({topAlbums}) {
   
   return (
     <>
-    <div className={"home-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
+    <div className={"home-section"}>
     <h5>Your most favorite albums</h5>
     { topAlbums && topAlbums.length > 0 ?
       <Carousel

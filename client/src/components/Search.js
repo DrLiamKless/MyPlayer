@@ -78,6 +78,10 @@ function Search() {
                 {searchSongsOutputs.length > 0 && <h5>songs:</h5>}
                 {searchSongsOutputs && searchSongsOutputs.map(song =>(
                         <div key={song.id}  style={{width: "max-content", fontSize: "12px"}}>
+                                <IconButton>
+                            <Link to={`/song/${song.id}?artist=${song.Artists[0]?.id}`}>
+                                    <Avatar alt="artist img" src={song.Artists[0]?.artistCoverImg}/>                                    </Link>
+                                </IconButton>
                             <Tooltip 
                                 placement={"bottom"}
                                 TransitionComponent={Fade}
@@ -85,10 +89,6 @@ function Search() {
                                 title={`by ${song.Artists[0]?.artistName}`}>
                                 <span>{song.songName}</span>
                             </Tooltip>
-                                <IconButton>
-                            <Link to={`/song/${song.id}?artist=${song.Artists[0]?.id}`}>
-                                    <Avatar alt="artist img" src={song.Artists[0]?.artistCoverImg}/>                                    </Link>
-                                </IconButton>
                         </div> 
                     ))}
                 {searchArtistsOutputs.length > 0 && <h5>artists:</h5>}
@@ -104,6 +104,10 @@ function Search() {
                 {searchAlbumsOutputs.length > 0 && <h5>albums:</h5>}
                     { searchAlbumsOutputs && searchAlbumsOutputs.map(album =>(
                         <div key={album.id}  style={{width: "max-content", fontSize: "12px"}}>
+                                <IconButton>
+                            <Link to={`/album/${album.id}`}>
+                                    <Avatar alt="artist img" src={album.albumCoverImg}/>                                    </Link>
+                                </IconButton>
                             <Tooltip 
                                 placement={"bottom"}
                                 TransitionComponent={Fade}
@@ -111,10 +115,6 @@ function Search() {
                                 title={album.Artists[0] && `by ${album.Artists[0]?.artistName}`}>
                                 <span>{album.albumName}</span>
                             </Tooltip>
-                                <IconButton>
-                            <Link to={`/album/${album.id}`}>
-                                    <Avatar alt="artist img" src={album.albumCoverImg}/>                                    </Link>
-                                </IconButton>
                         </div> 
                     ))}
             </div>

@@ -32,7 +32,7 @@ function AddArtist() {
   } 
 
   return (
-    <div className={"admin-section"} style={{backgroundColor: "rgba(43,19,21,0.9)"}}>
+    <div className={"admin-section"}>
       <form  
         className={classes.form}
         noValidate onSubmit={handleNewArtist(onSubmitArtist)}

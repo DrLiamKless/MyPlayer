@@ -25,7 +25,7 @@ function TopArtists({topArtists}) {
   
   return (
   <>
-    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"home-section"}>
     <h5>Your most favorite artists</h5>
     { topArtists && topArtists.length > 0 ?
       <>
