@@ -58,6 +58,15 @@ function SignUp() {
         <form  
           className={classes.form} 
           noValidate onSubmit={handleSignUp(onSignUp)}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              inputRef={signUp({required: true, minLength: 10})}
+              required
+              fullWidth
+              name="email"
+              label="email"
+            />
           <TextField
             variant="outlined"
             margin="normal"
@@ -70,6 +79,8 @@ function SignUp() {
             />
             {errors.userName?.type === "required" && <p className="auth-error">Please Enter username</p>}
             {errors.userName?.type === "minLength" && <p className="auth-error">Your username must be 4 digits</p>}
+          {errors.password?.type === "required" && <p className="auth-error">Please Enter password</p>}
+          {errors.password?.type === "minLength" && <p className="auth-error">Your password must be 6 digits</p>}
           <TextField
             variant="outlined"
             margin="normal"
@@ -79,17 +90,6 @@ function SignUp() {
             name="password"
             label="password"
             type="password"
-          />
-          {errors.password?.type === "required" && <p className="auth-error">Please Enter password</p>}
-          {errors.password?.type === "minLength" && <p className="auth-error">Your password must be 6 digits</p>}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            inputRef={signUp({required: true, minLength: 10})}
-            required
-            fullWidth
-            name="email"
-            label="email"
           />
           {errors.email?.type === "required" && <p className="auth-error">Please Enter mail</p>}
           {errors.email?.type === "minLength" && <p className="auth-error">Please Enter valid mail</p>}
