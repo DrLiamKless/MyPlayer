@@ -3,7 +3,6 @@ import { read } from "../../wrappers/ajax"
 import 'fontsource-roboto';
 import { useParams, Link, useLocation } from "react-router-dom";
 import Album from '../Album';
-import { brown } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '139%',
     maxWidth: 360,
-    backgroundColor: brown[500],
+    backgroundColor: "rgba(13, 18, 24, 0.692)",
     marginLeft: "20px"
   },
 }));

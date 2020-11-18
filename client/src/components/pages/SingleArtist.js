@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import { brown } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 import likeFunction from "../../wrappers/likeFunction"
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '150%',
     maxWidth: 360,
-    backgroundColor: brown[500],
+    backgroundColor: "rgba(13, 18, 24, 0.692)",
     marginLeft: "20px"
   },
 }))
