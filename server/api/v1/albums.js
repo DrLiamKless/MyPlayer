@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require('../../connection')
-const { Artist, Album, Song, Interaction, albums_by_artists, sequelize} = require('../../models');
+const { Artist, Album, Song, Interaction, albums_by_artists} = require('../../models');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 require('dotenv').config()
@@ -34,7 +34,7 @@ router.get('/', async (req,res) => {
         })
         res.json(allAlbums);   
     } catch (err) {
-        res.send("error occures");
+        res.send("error occured");
     }
 })
 
@@ -60,7 +60,7 @@ router.get('/top/:userId', async (req,res) => {
         
         res.json(topAlbums.filter(album => (album["Songs"].length > 0)));     
     } catch(err) {
-        res.send("error occures");
+        res.send("error occured");
     }
 })
 
@@ -70,7 +70,7 @@ router.get('/albumsByArtists', async (req, res) => {
         const all = await albums_by_artists.findAll({});
         res.json(all);   
     } catch (err) {
-        res.send("error occures")
+        res.send("error occured")
     }
 })
 
@@ -80,7 +80,7 @@ router.get('/all', async (req, res) => {
         const allAlbums = await Album.findAll({ })
         res.json(allAlbums);   
     } catch (err) {
-        res.send("error occures")
+        res.send("error occured")
     }
 })
 
@@ -92,7 +92,7 @@ router.get('/:id', async (req,res) => {
         });
         res.json(album);   
     } catch (err) {
-        res.send("error occures")
+        res.send("error occured")
     }
 })
 
@@ -100,7 +100,6 @@ router.get('/:id', async (req,res) => {
 router.post('/add', async (req,res) => {
     const album = req.body;
     const artistId = album.artistId
-    console.log(artistId)
     const albumId = album.id;
     
     try { 
@@ -134,7 +133,6 @@ router.post('/add', async (req,res) => {
         }
        
     } catch (err) {
-        console.log(err)
         res.send('error has occured')
     }
  })
@@ -146,7 +144,7 @@ router.patch('/update/:id', async (req, res) => {
         await album.update(req.body);
         res.json(album)
     } catch (err) {
-        res.send("error occures")
+        res.send("error occured")
     }
   })
 
@@ -157,7 +155,7 @@ router.delete('/delete/:id', async (req,res) => {
         await album.destroy()
         res.json({deleted: true})
     } catch (err) {
-        res.send("error occures")
+        res.send("error occured")
     }
  })
 
