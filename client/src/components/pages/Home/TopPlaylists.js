@@ -26,7 +26,7 @@ function TopPlaylists({topPlaylists}) {
 
   
   return (
-    <div className={"home-playlists-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
+    <div className={"home-playlists-section"}>
     <>
     <h5>Your Favorite Playlists</h5>
       { topPlaylists.length > 0 ?

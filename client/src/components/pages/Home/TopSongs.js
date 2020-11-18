@@ -30,8 +30,8 @@ function TopSongs({ setSongToPlay, topSongs }) {
 
   return (
     <>
-      <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
-      <h5>Hello {user.userName}, those are your Most Favorite Songs</h5>
+      <div className={"home-section"}>
+      <h5>those are your Most Favorite Songs</h5>
       { topSongs && topSongs.length > 0 ? 
         <Carousel
         additionalTransfrom={0}
