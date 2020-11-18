@@ -21,6 +21,7 @@ import Signup from './components/pages/Identification/Signup';
 import { read } from "./wrappers/ajax"
 import { mixpanelTrackLoggedIn, mixpanelTrackEnteredLoginPage } from "./analytics/analyticsManager";
 import ErrorBoundary from './components/ErrorBoundary';
+import BGImage from './images/login.jpg'
 
 
 
@@ -54,7 +55,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{backgroundImage: `url(${BGImage})`, backgroundSize: "cover"}}>
     {
         !loading ?
           !logged ?

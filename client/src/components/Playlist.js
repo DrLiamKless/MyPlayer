@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
       transform: 'rotate(180deg)',
     },
     card: {
-      backgroundColor: brown[500],
+      backgroundColor: "rgba(13, 18, 24, 0.692)",
+      color: "white",
     },
   }));
  

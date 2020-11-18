@@ -29,7 +29,7 @@ function AddAlbum({ artists }) {
   
   return (
     artists != null ?
-    <div className={"admin-section"} style={{backgroundColor: "rgba(0,31,63,0.8)"}} >
+    <div className={"admin-section"}>
         <form  
         className={classes.form}
         noValidate onSubmit={handleNewAlbum(onSubmitAlbum)}>

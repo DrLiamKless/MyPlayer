@@ -2,7 +2,6 @@
   text-align: center;
   height: 100%;
   min-height: 100vh;
-  background-color: rgb(82,65,44, 0.9);
   overflow-x: hidden;
 }
 
@@ -26,6 +25,11 @@
   align-content: center;
   justify-content: center;
   text-align: center;
+  background-image: linear-gradient(rgb(41,34,22,0.6), rgb(41,34,22,0.3), rgb(41,34,22,0));
+  background-size: cover;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  ;
 }
 
 .admin-section{
@@ -43,6 +47,9 @@
   align-content: center;
   justify-content: center;
   text-align: center;
+  background-image: linear-gradient(rgb(41,34,22,0.6), rgb(41,34,22,0.3), rgb(41,34,22,0));
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .single-page {
@@ -59,12 +66,20 @@
   flex-direction: row;
   gap: 20px;
   justify-content: center;
+  background-image: linear-gradient(rgb(41,34,22,0.6), rgb(41,34,22,0.3), rgb(41,34,22,0));
 }
 
 /* containers */
 
+.no-match-container {
+  max-width: 80%;
+  gap: 20px;
+  margin: 7vh;
+  margin-left: 10vw;
+}
+
 .all-songs-container {
-  max-width: 100%;
+  max-width: 80%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
   gap: 20px;
@@ -97,9 +112,10 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: rgb(82,65,44);
+  background-color: rgba(13, 18, 24, 0.692);
   text-align: right;
   z-index: 1;
+  /* background-image: linear-gradient(rgb(41,34,22,1), rgb(41,34,22,0.8), rgb(41,34,22,0.6)); */
 }
 
 #top-bar img {
@@ -120,19 +136,21 @@
 }
 
 .card :hover {
-  background-color: rgb(102, 68, 55);
+  background-color: rgb(20, 27, 36);
 }
 
 .player {
   position: fixed;
-  top: 0;
-  right: 0;
+  bottom: -100px;
+  right: 39rem;
   width: 40vh;
   height: 40vh;
-  background-image: linear-gradient(to bottom right, rgba(114, 95, 72), rgba(68, 51, 30));
-  box-shadow: 1px 1px 10px 5px rgba(36, 21, 4);
+  background-color: rgba(13, 18, 24, 0.9);
+  background-image: linear-gradient(rgba(13, 18, 24, 1),  rgba(13, 18, 24, 0.9),  rgba(13, 18, 24, 0.8));
+  box-shadow: 1px 1px 10px black;
+  color: white;
   display: flex;
-  z-index: 1;
+  z-index: 1001;
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
@@ -146,8 +164,8 @@
 	width: 120px;
 	height: 120px;
 	-webkit-animation: spin 2s linear infinite; /* Safari */
-	animation: spin 2s linear infinite;
-  }
+  animation: spin 2s linear infinite;
+}
 
 /* carousle: */
 
@@ -200,11 +218,19 @@
 /* messages */
 
 .no-likes-message {
-  color: rgb(82,65,44);
+  color: rgb(61, 52, 41);
+  padding-left: 17vw;
+  width: 300%
+}
+
+.no-likes-artists-message {
+  color: rgb(61, 52, 41);
+  padding-left: 8vw;
+  width: 300%
 }
 
 .no-likes-message a:visited {
-  color: rgb(82,65,44);
+  color: rgb(61, 52, 41);
 }
 
 .auth-error {

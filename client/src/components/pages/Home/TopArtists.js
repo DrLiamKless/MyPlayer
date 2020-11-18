@@ -25,9 +25,8 @@ function TopArtists({topArtists}) {
   
   return (
   <>
-    <div className={"home-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"home-section"}>
     <h5>Your most favorite artists</h5>
-    { topArtists && topArtists.length > 0 ?
       <>
         <Carousel
           additionalTransfrom={0}
@@ -35,27 +34,27 @@ function TopArtists({topArtists}) {
           keyBoardControl={true}
           containerClass="carousel-container"
           itemClass="carousel-item">
-          { topArtists &&
+          { topArtists && topArtists.length > 0 ?
+            topArtists &&
           topArtists.map((artist, i) => (
             <Artist className={"song"}
             key={artist.artist_id}
             artist={artist}>
             </Artist>
           ))
+            : !topArtists ?
+              <Loader/>
+            : topArtists.length === 0 &&
+            <div>
+            <Link style={{ textDecoration: 'none' }} to="/Allartists">
+              <h5 className="no-likes-artists-message">
+              Go explore our artists!
+              </h5>
+            </Link>
+            </div> 
           }
         </Carousel>
       </> 
-      : !topArtists ?
-        <Loader/>
-      : topArtists.length === 0 &&
-      <div>
-      <Link style={{ textDecoration: 'none' }} to="/Allartists">
-        <h5 className="no-likes-message">
-        Go explore our artists!
-        </h5>
-      </Link>
-      </div> 
-      }
     </div>     
   </>
   );

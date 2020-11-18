@@ -141,12 +141,16 @@ router.patch('/update/:id', async (req, res) => {
 router.post('/:songId/user-liked/:userId', async (req,res) => {
     try{
         const interaction = req.body;
-        if(interaction.songId) {
+        userId = interaction.userId;
+        songId = interaction.songId;
+
+        interactionExists = await Interaction.findOne({where: {userId, songId}})
+        if(!interactionExists) {
             const newInteraction = await Interaction.create(interaction)
             res.json(newInteraction)
-            console.log('1')
+            console.log("interaction not Exists................................", interactionExists)
         } else {
-            console.log('2')
+            console.log("interaction Exists.................................", interactionExists)
             const updatedInteraction = await Interaction.update(interaction,{where: 
                 {
                     songId: req.params.songId,
@@ -156,7 +160,7 @@ router.post('/:songId/user-liked/:userId', async (req,res) => {
             res.json(updatedInteraction)
         }
     } catch (err) {
-        res.send("error occures")
+        res.send("error occured")
     }
 })
 

@@ -25,10 +25,9 @@ function TopPlaylists({topPlaylists}) {
 
   
   return (
-    <div className={"home-playlists-section"} style={{backgroundColor: "rgba(0,31,63,0.79)"}}>
+    <div className={"home-playlists-section"}>
     <>
     <h5>Your Favorite Playlists</h5>
-      { topPlaylists.length > 0 ?
       <>
       <Carousel
             additionalTransfrom={0}
@@ -38,26 +37,27 @@ function TopPlaylists({topPlaylists}) {
             itemClass="carousel-item"
             infinite
             >
-          {topPlaylists.map((playlist, i) => (
+        { topPlaylists.length > 0 ?
+          topPlaylists.map((playlist, i) => (
           <Playlist
             key={playlist.playlist_id}
             playlist={playlist}
           >
           </Playlist>
-          ))}
+          ))
+          : !topPlaylists ?
+            <Loader/>
+          : topPlaylists.length === 0 &&
+          <div>
+            <Link style={{ textDecoration: 'none' }} to="/Allplaylists">
+              <h5 className="no-likes-message">
+                go to Playlists and create your own!
+              </h5>
+            </Link>
+            </div> 
+        }
       </Carousel>
       </>
-        : !topPlaylists ?
-          <Loader/>
-        : topPlaylists.length === 0 &&
-        <div>
-          <Link style={{ textDecoration: 'none' }} to="/Allplaylists">
-            <h5 className="no-likes-message">
-              go to Playlists and create your own!
-            </h5>
-          </Link>
-          </div> 
-      }
     </>
     </div>     
 

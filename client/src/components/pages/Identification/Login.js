@@ -52,7 +52,7 @@ function Login({ setUser }) {
 
   
   return (
-    <div className={"login-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"login-section"}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>

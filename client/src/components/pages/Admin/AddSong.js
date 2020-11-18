@@ -10,10 +10,6 @@ import {useForm} from 'react-hook-form'
 
 
 const useStyles = makeStyles((theme) => ({
-  // avatar: {
-  //   margin: theme.spacing(1),
-  //   backgroundColor: theme.palette.primary.main,
-  // },
   form: {
     display: "flex",
     flexDirection: "column",
@@ -36,7 +32,7 @@ function AddSong({ artists, albums }) {
 
   
   return (
-    <div className={"admin-section"} style={{backgroundColor: "rgb(99,84,65)"}}>
+    <div className={"admin-section"}>
         <form  
           className={classes.form} 
           noValidate onSubmit={handleNewSong(onSubmitSong)}>
