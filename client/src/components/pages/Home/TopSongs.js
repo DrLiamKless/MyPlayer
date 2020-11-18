@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { User } from '../../../contexts/userContext';
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
-import { read } from "../../../wrappers/ajax"
 import 'fontsource-roboto';
 import Song from '../../Song'
 import Loader from '../../Loader'
 
 
 function TopSongs({ setSongToPlay, topSongs }) {
-  const user = useContext(User)
   const [likeState, setLikeState] = useState(false);
   
   const responsive = {
@@ -32,14 +29,13 @@ function TopSongs({ setSongToPlay, topSongs }) {
     <>
       <div className={"home-section"}>
       <h5>those are your Most Favorite Songs</h5>
-      { topSongs && topSongs.length > 0 ? 
         <Carousel
         additionalTransfrom={0}
         responsive={responsive}
         keyBoardControl={true}
         containerClass="carousel-container"
         itemClass="carousel-item">
-        {
+        { topSongs && topSongs.length > 0 ? 
           topSongs.map((song, i) => (
             <Song
             key={song.song_id}
@@ -48,8 +44,6 @@ function TopSongs({ setSongToPlay, topSongs }) {
             likeState={likeState}
             setLikeState={setLikeState}/>
             ))
-          }
-        </Carousel>
       : !topSongs ?
       <Loader/>
     : topSongs.length === 0 &&
@@ -60,7 +54,8 @@ function TopSongs({ setSongToPlay, topSongs }) {
       </h5>
     </Link>
     </div> 
-    }
+          }
+        </Carousel>
       </div>     
     </>
   );

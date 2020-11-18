@@ -71,6 +71,13 @@
 
 /* containers */
 
+.no-match-container {
+  max-width: 80%;
+  gap: 20px;
+  margin: 7vh;
+  margin-left: 10vw;
+}
+
 .all-songs-container {
   max-width: 80%;
   display: grid;
@@ -157,8 +164,8 @@
 	width: 120px;
 	height: 120px;
 	-webkit-animation: spin 2s linear infinite; /* Safari */
-	animation: spin 2s linear infinite;
-  }
+  animation: spin 2s linear infinite;
+}
 
 /* carousle: */
 
@@ -212,6 +219,14 @@
 
 .no-likes-message {
   color: rgb(61, 52, 41);
+  padding-left: 17vw;
+  width: 300%
+}
+
+.no-likes-artists-message {
+  color: rgb(61, 52, 41);
+  padding-left: 8vw;
+  width: 300%
 }
 
 .no-likes-message a:visited {

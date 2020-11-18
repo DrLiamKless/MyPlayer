@@ -12,18 +12,19 @@ function NoMatch({ setSongToPlay }) {
   },[])
   
     const errorSong = {
-        youtube_link: "https://www.youtube.com/embed/fTRm3nyNpro",
+        youtubeLink: "https://www.youtube.com/embed/fTRm3nyNpro",
         lyrics: "?לאן אלך"
       }
 
   return (
-    <div className="App">
-    <header className="App-header">
-        <code>404</code>
+  <div className="page">
+    <div className="no-match-container">
+      <code>404</code>
       <p>You have reached a dead end.</p>
-      <p>At least click this button to play a song</p>
-      <button onClick={()=>{setSongToPlay(errorSong)}}>play</button>
-    </header>
+      <p>At least click 
+        <strong style={{cursor: "pointer"}} onClick={()=>{setSongToPlay(errorSong)}}> HERE </strong>
+         to play a song</p>
+    </div>
   </div>
   );
 }

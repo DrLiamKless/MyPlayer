@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { User } from '../../../contexts/userContext';
 import 'fontsource-roboto';
 import Playlist from '../../Playlist'
 import Carousel from 'react-multi-carousel';
@@ -29,7 +28,6 @@ function TopPlaylists({topPlaylists}) {
     <div className={"home-playlists-section"}>
     <>
     <h5>Your Favorite Playlists</h5>
-      { topPlaylists.length > 0 ?
       <>
       <Carousel
             additionalTransfrom={0}
@@ -39,26 +37,27 @@ function TopPlaylists({topPlaylists}) {
             itemClass="carousel-item"
             infinite
             >
-          {topPlaylists.map((playlist, i) => (
+        { topPlaylists.length > 0 ?
+          topPlaylists.map((playlist, i) => (
           <Playlist
             key={playlist.playlist_id}
             playlist={playlist}
           >
           </Playlist>
-          ))}
+          ))
+          : !topPlaylists ?
+            <Loader/>
+          : topPlaylists.length === 0 &&
+          <div>
+            <Link style={{ textDecoration: 'none' }} to="/Allplaylists">
+              <h5 className="no-likes-message">
+                go to Playlists and create your own!
+              </h5>
+            </Link>
+            </div> 
+        }
       </Carousel>
       </>
-        : !topPlaylists ?
-          <Loader/>
-        : topPlaylists.length === 0 &&
-        <div>
-          <Link style={{ textDecoration: 'none' }} to="/Allplaylists">
-            <h5 className="no-likes-message">
-              go to Playlists and create your own!
-            </h5>
-          </Link>
-          </div> 
-      }
     </>
     </div>     
 
