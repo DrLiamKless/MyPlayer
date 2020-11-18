@@ -1,6 +1,6 @@
 import network from "./network"
 
-export function create(url, body) { // todo: use await
+export function create(url, body) {
   return network(url, body)
 }
 

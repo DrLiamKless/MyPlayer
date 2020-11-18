@@ -16,12 +16,14 @@ import SingleAlbum from './components/pages/SingleAlbum';
 import SinglePlaylist from './components/pages/SinglePlaylist';
 import SingleArtist from './components/pages/SingleArtist';
 import Player from './components/pages/Player';
+import NoMatch from './components/pages/NoMatch';
 import Login from './components/pages/Identification/Login';
 import Signup from './components/pages/Identification/Signup';
 import { read } from "./wrappers/ajax"
 import { mixpanelTrackLoggedIn, mixpanelTrackEnteredLoginPage } from "./analytics/analyticsManager";
 import ErrorBoundary from './components/ErrorBoundary';
 import BGImage from './images/login.jpg'
+import Loader from './components/Loader';
 
 
 
@@ -33,9 +35,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState();
 
-  useEffect(() => {// auth
+  useEffect(() => {
     (async () => {
-      if (Cookies.get("accessToken")) {
+      if (Cookies.get("refreshToken")) {
         try {
           const data = await read("/api/v1/auth/validateToken");
           setLogged(data);
@@ -45,7 +47,10 @@ function App() {
           setLoading(false);
           mixpanelTrackLoggedIn()
         } catch (e) {
-          setLoading(false)
+          Cookies.remove("accessToken")
+          Cookies.remove("id")
+          Cookies.remove("refreshToken")
+          window.location = '/';
         }
       } else {
         setLoading(false);
@@ -61,9 +66,9 @@ function App() {
           !logged ?
           <Router>
           <Switch>
-            <Route path={'/'} exact> <Login></Login></Route>
+            <Route path={'/'} exact> <Login setUser={setUser}></Login></Route>
             <Route path={'/signUp'} exact> <Signup/> </Route>
-            {/* <Route path={'*'} exact> <Login></Login></Route> */}
+            <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
           </Switch> 
           </Router>
           : 
@@ -76,7 +81,7 @@ function App() {
             </ErrorBoundary>
               <Switch>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
-                <Route path="/Allsongs"> exact<Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
+                <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
                 <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
@@ -84,10 +89,11 @@ function App() {
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
                 <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist></Route>
                 {user.isAdmin && <Route path="/Admin" exact> <Admin/> </Route>}
+                <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
             </Router>
           </User.Provider>
-        : <div>loading...</div>
+        : <div/>
       }
       </div>
       );

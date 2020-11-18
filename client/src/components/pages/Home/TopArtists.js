@@ -43,7 +43,7 @@ function TopArtists({topArtists}) {
             </Artist>
           ))
             : !topArtists ?
-              <Loader/>
+            <div className="top-loader"><Loader/></div>
             : topArtists.length === 0 &&
             <div>
             <Link style={{ textDecoration: 'none' }} to="/Allartists">

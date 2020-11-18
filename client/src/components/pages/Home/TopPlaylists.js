@@ -46,7 +46,7 @@ function TopPlaylists({topPlaylists}) {
           </Playlist>
           ))
           : !topPlaylists ?
-            <Loader/>
+          <div className="top-loader"><Loader/></div>
           : topPlaylists.length === 0 &&
           <div>
             <Link style={{ textDecoration: 'none' }} to="/Allplaylists">

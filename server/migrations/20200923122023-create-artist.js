@@ -20,7 +20,6 @@ module.exports = {
       },
       upload_at: {
         type: Sequelize.DATE,
-        // defaultValue: Sequelize.literal('CURRENT_DATE'),
       },
       updated_at: {
         allowNull: false,
