@@ -45,8 +45,8 @@ function TopSongs({ setSongToPlay, topSongs }) {
             setLikeState={setLikeState}/>
             ))
       : !topSongs ?
-      <Loader/>
-    : topSongs.length === 0 &&
+      <div className="top-loader"><Loader/></div>
+      : topSongs.length === 0 &&
     <div>
     <Link style={{ textDecoration: 'none' }} to="/Allsongs">
       <h5 className="no-likes-message">

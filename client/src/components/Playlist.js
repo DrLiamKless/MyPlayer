@@ -20,7 +20,7 @@ import Loader from './Loader'
 const useStyles = makeStyles((theme) => ({
     media: {
       height: 120,
-      paddingTop: '56.25%', // 16:9
+      paddingTop: '56.25%',
     
     },
     expand: {

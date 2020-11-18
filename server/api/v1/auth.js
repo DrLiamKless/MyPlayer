@@ -38,20 +38,20 @@ router.post('/login', async (req, res) => {
         const existingRefreshToken = await refresh_token.findOne({ where: {userId: user.id} });
 
         if (existingRefreshToken) {
-            await existingRefreshToken.update({refreshToken: refreshToken})
+            const updatedRefreshToken = await existingRefreshToken.update({refreshToken: refreshToken})
         } else {
             const newRefreshToken = await refresh_token.create({
                 userId: user.id,
-                token: refresh_token,
+                token: refreshToken,
             })    
         }
 
 
         const accessToken = await generateToken(infoForCookie);
         res.cookie('accessToken', accessToken);
-        res.cookie('refresh_token', refresh_token);
+        res.cookie('refreshToken', refreshToken);
         res.cookie('id', user.id);
-        res.status(200).send({success: true, userName: user.userName, accessToken: accessToken}); 
+        res.status(200).send({success: true, user: user, accessToken: accessToken}); 
         } else {
             res.status(403).send("User or password is incorrect");
         }

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -41,10 +41,11 @@ function Login({ setUser }) {
   const onLogin = data => {
     create("/api/v1/auth/login", data).then(res => {
       if (res.success) {
+        setUser(res.user)
         window.location = '/';
       } else {
         setLoginError(true)
-      }
+      }   
     }).catch(err => {
       setLoginError(true);
     })

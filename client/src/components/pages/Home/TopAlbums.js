@@ -44,7 +44,7 @@ function TopAlbums({topAlbums}) {
             />
           ))
           : !topAlbums ?
-            <Loader/>
+          <div className="top-loader"><Loader/></div>
           : topAlbums.length === 0 &&
     <div> 
       <h5 className="no-likes-message">

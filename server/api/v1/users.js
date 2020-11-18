@@ -29,8 +29,6 @@ router.get('/id/:id', async (req,res) => {
 router.post('/add', async (req,res) => {
     const regsitrationData = req.body;
 
-    // userRegisterationData.password = await bcrypt.hash(userRegisterationData.password, 10); //:todo add hash
-
     try {
         const newUser = await User.create(regsitrationData)
         res.json(newUser)

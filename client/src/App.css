@@ -142,7 +142,7 @@
 .player {
   position: fixed;
   bottom: -100px;
-  right: 39rem;
+  right: 43rem;
   width: 40vh;
   height: 40vh;
   background-color: rgba(13, 18, 24, 0.9);
@@ -165,6 +165,10 @@
 	height: 120px;
 	-webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+
+.top-loader {
+  padding-left: 30vw;
 }
 
 /* carousle: */
@@ -253,5 +257,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg);}
+  100% { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
 }
 

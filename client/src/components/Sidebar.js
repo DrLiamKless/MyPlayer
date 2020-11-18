@@ -41,42 +41,42 @@ function Sidebar() {
         image={BGSidebar}
         >
             <Menu iconShape="circle">
-            <br></br>
-            <br></br>
-            <br></br>
-            <MenuItem icon={<MenuIcon/>} onClick={()=>{setSideBarOpen(!sideBarOpen)}}></MenuItem>
-            <br></br>
-            <br></br>
-            <br></br>
-            <MenuItem icon={<HomeIcon/>}>
-                Home
-            <Link to="/" />
-            </MenuItem>
-            <MenuItem icon={<AudiotrackIcon/>}>
-                All songs 
-            <Link to="/Allsongs" />
-            </MenuItem>
-            <MenuItem icon={<RecordVoiceOverIcon/>}>
-                All Artists 
-            <Link to="/AllArtists"/>
-            </MenuItem>
-            <MenuItem icon={<LibraryMusicIcon/>}>
-                All Playlists 
-            <Link to="/Allplaylists"/>
-            </MenuItem>
-            <SubMenu title="Search" icon={<SearchIcon/>}>
-                <ErrorBoundary>
-                <Search></Search>
-                </ErrorBoundary>
-            </SubMenu>
-            { user.isAdmin && 
-            <SubMenu title="My user" icon={<AccountCircleIcon/>}>
-                <MenuItem>Admin <Link to="/Admin"/></MenuItem>
-            </SubMenu>
-            }
-                <MenuItem icon={<ExitToAppIcon/>} onClick={logOut}>
-                    log out
+                <br></br>
+                <br></br>
+                <br></br>
+                <MenuItem icon={<MenuIcon/>} onClick={()=>{setSideBarOpen(!sideBarOpen)}}></MenuItem>
+                <br></br>
+                <br></br>
+                <br></br>
+                <MenuItem icon={<HomeIcon/>}>
+                    Home
+                <Link to="/" />
                 </MenuItem>
+                <MenuItem icon={<AudiotrackIcon/>}>
+                    All songs 
+                <Link to="/Allsongs" />
+                </MenuItem>
+                <MenuItem icon={<RecordVoiceOverIcon/>}>
+                    All Artists 
+                <Link to="/AllArtists"/>
+                </MenuItem>
+                <MenuItem icon={<LibraryMusicIcon/>}>
+                    All Playlists 
+                <Link to="/Allplaylists"/>
+                </MenuItem>
+                <SubMenu title="Search" icon={<SearchIcon/>}>
+                    <ErrorBoundary>
+                    <Search></Search>
+                    </ErrorBoundary>
+                </SubMenu>
+                { user.isAdmin ?
+                <SubMenu title="My user" icon={<AccountCircleIcon/>}>
+                    <MenuItem>Admin <Link to="/Admin"/></MenuItem>
+                    <MenuItem icon={<ExitToAppIcon/>} onClick={logOut}>log out</MenuItem>
+                </SubMenu>
+                    : 
+                    <MenuItem icon={<ExitToAppIcon/>} onClick={logOut}>log out</MenuItem>
+                }
             </Menu>
         </ProSidebar>
     </div>
