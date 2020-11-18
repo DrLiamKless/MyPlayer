@@ -21,28 +21,34 @@ function Allsongs({ setSongToPlay }) {
 
     useEffect(() => {
       read(`/api/v1/songs`).then((res) => {
-        setSongs(res)
-      });
-    }, [likeState]);
+        setSongs(res);
+        console.log(res);
+      }).catch(err => {
+        setSongs(false);
+      })
+    }, []);
   
   return (
-  songs.length > 0  ?
-  <div className="page">
-    <p>All Songs</p>
-    <div className={"all-songs-container"}>
-      {songs && songs.map((song, i) => (
-        <Song
-          key={song.song_id}
-          song={song}
-          setSongToPlay={setSongToPlay}
-          likeState={likeState}
-          setLikeState={setLikeState}
-        >
-        </Song>
-      ))}
-    </div>
+    <div className="page">
+    { songs.length > 0  ?
+    <>
+      <p>All Songs</p>
+      <div className={"all-songs-container"}>
+        {songs && songs.map((song, i) => (
+          <Song
+            key={song.song_id}
+            song={song}
+            setSongToPlay={setSongToPlay}
+            likeState={likeState}
+            setLikeState={setLikeState}
+          >
+          </Song>
+        ))}
+      </div>
+    </>
+    : <Loader/>
+    }
   </div>
-  : <Loader/>
   );
 }
 

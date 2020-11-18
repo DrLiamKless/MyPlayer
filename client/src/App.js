@@ -77,34 +77,16 @@ function App() {
               <Player songToPlay={songToPlay}></Player>
             </ErrorBoundary>
               <Switch>
-              <ErrorBoundary>
                 <Route path={"/"} exact> <Home setSongToPlay={setSongToPlay}> </Home> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/Allsongs"> <Allsongs setSongToPlay={setSongToPlay}> </Allsongs> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/Allartists" exact> <AllArtists/> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/Allplaylists" exact> <Allplaylists/> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/playlist/:id" exact> <SinglePlaylist/> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/song/:id" exact> <SingleSong setSongToPlay={setSongToPlay}></SingleSong> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/album/:id" exact> <SingleAlbum setSongToPlay={setSongToPlay}></SingleAlbum> </Route>
-              </ErrorBoundary>
-              <ErrorBoundary>
                 <Route path="/artist/:id" exact> <SingleArtist setSongToPlay={setSongToPlay}></SingleArtist></Route>
-              </ErrorBoundary>
                 {user.isAdmin && 
-                  <ErrorBoundary>
                     <Route path="/Admin" exact> <Admin/> </Route>
-                  </ErrorBoundary>
                 }
                 <Route> <NoMatch setSongToPlay={setSongToPlay}></NoMatch></Route>
               </Switch>
