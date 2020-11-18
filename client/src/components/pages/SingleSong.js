@@ -11,7 +11,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
-import { brown } from '@material-ui/core/colors';
 import Fade from '@material-ui/core/Fade';
 import Tooltip from '@material-ui/core/Tooltip';
 import likeFunction from "../../wrappers/likeFunction"
@@ -22,13 +21,13 @@ import { User } from '../../contexts/userContext';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '130%',
-    backgroundColor: brown[500],
+    backgroundColor: "rgba(13, 18, 24, 0.692)",
     marginLeft: "20px"
   },
   paper: {
     height: "100%",
     width: "100%",
-    backgroundColor: brown[500],
+    backgroundColor: "rgba(13, 18, 24, 0.692)",
     marginRight: "20px",
     textAlign: "center",
   }
