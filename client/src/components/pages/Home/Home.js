@@ -12,30 +12,30 @@ import { read } from '../../../wrappers/ajax';
 function Home({ setSongToPlay }) {
 
   const location = useLocation();
-  const user = useContext(User)
+  const user = useContext(User);
 
-  const [topAlbums, setTopAlbums] = useState()
-  const [topArtists, setTopArtists] = useState([])
-  const [topPlaylists, setTopPlaylists] = useState("")
+  const [topAlbums, setTopAlbums] = useState();
+  const [topArtists, setTopArtists] = useState();
+  const [topPlaylists, setTopPlaylists] = useState();
   const [topSongs, setTopSongs] = useState();
 
   
   useEffect(() => {
-    mixpanelTrackUrlChanged(location.pathname)
-  },[])
+    mixpanelTrackUrlChanged(location.pathname);
+  },[]);
 
   const fetchAllTop = () => {
     read(`/api/v1/albums/top/${user.id}`).then((res) => {
-      setTopAlbums(res)
+      setTopAlbums(res);
     });
     read(`/api/v1/artists/top/${user.id}`).then((res) => {
-      setTopArtists(res)
+      setTopArtists(res);
     });
     read(`/api/v1/playlists/top/${user.id}`).then((res) => {
-      setTopPlaylists(res)
+      setTopPlaylists(res);
     });
     read(`/api/v1/songs/top/${user.id}`).then((res) => {
-      setTopSongs(res)
+      setTopSongs(res);
     });
   }
 

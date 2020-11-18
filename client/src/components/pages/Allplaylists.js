@@ -18,19 +18,19 @@ import { mixpanelTrackUrlChanged } from '../../analytics/analyticsManager'
 
 function Allplaylists() {
 
-    const [playlists, setPlaylists] = useState([])
+    const [playlists, setPlaylists] = useState([]);
     const [open, setOpen] = useState(false);
-    const {register: addNewPlaylist, handleSubmit: handleAddNewPlaylist} = useForm()
+    const {register: addNewPlaylist, handleSubmit: handleAddNewPlaylist} = useForm();
     const location = useLocation();
   
     useEffect(() => {
-      mixpanelTrackUrlChanged(location.pathname)
+      mixpanelTrackUrlChanged(location.pathname);
     },[])
 
 
     useEffect(() => {
       read("/api/v1/playlists").then((res) => {
-        setPlaylists(res)
+        setPlaylists(res);
       });
     }, []);
 
@@ -45,7 +45,7 @@ function Allplaylists() {
 
     const onAddNewPlaylist = data => {
       create("/playlists/add", data);
-      handleClose()
+      handleClose();
     } 
 
   return (
@@ -59,7 +59,7 @@ function Allplaylists() {
           <AddIcon/>
         </IconButton>
       </Tooltip>
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add to Playlist</DialogTitle>
         <DialogContent>
         </DialogContent>

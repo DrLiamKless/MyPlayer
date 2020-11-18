@@ -41,10 +41,10 @@ function Login({ setUser }) {
   const onLogin = data => {
     create("/api/v1/auth/login", data).then(res => {
       if (res.success) {
-        setUser(res.user)
+        setUser(res.user);
         window.location = '/';
       } else {
-        setLoginError(true)
+        setLoginError(true);
       }   
     }).catch(err => {
       setLoginError(true);
@@ -77,8 +77,6 @@ function Login({ setUser }) {
           />
           {errors.email?.type === "required" && <p className="auth-error">Please Enter mail</p>}
           {errors.email?.type === "minLength" && <p className="auth-error">Please Enter valid mail</p>}
-        <div className={"add-artist-container"}>
-        </div>
           <TextField
             variant="outlined"
             margin="normal"

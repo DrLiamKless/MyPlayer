@@ -70,8 +70,6 @@ function SignUp() {
             />
             {errors.userName?.type === "required" && <p className="auth-error">Please Enter username</p>}
             {errors.userName?.type === "minLength" && <p className="auth-error">Your username must be 4 digits</p>}
-        <div className={"add-artist-container"}>
-        </div>
           <TextField
             variant="outlined"
             margin="normal"

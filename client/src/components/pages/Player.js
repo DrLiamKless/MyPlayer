@@ -3,8 +3,9 @@ import { User } from '../../contexts/userContext';
 import 'fontsource-roboto';
 import Draggable from 'react-draggable';
 
+
 function Player({ songToPlay }) {
-  const user = useContext(User)
+  const user = useContext(User);
 
   return (
     <Draggable>
@@ -17,7 +18,8 @@ function Player({ songToPlay }) {
             className={"video"}
             allow={"autoplay"}
             frameBorder={0}
-            height={"100%"} width={"100%"}></iframe>
+            height={"100%"} width={"100%"}>
+          </iframe>
           }
         </div>     
       </div>

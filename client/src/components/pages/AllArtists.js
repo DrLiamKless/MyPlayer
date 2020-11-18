@@ -37,17 +37,17 @@ const useStyles = makeStyles((theme) => ({
 
 function AllArtists() {
 
-    const [artists, setArtists] = useState()
+    const [artists, setArtists] = useState();
     const classes = useStyles();
     const location = useLocation();
   
     useEffect(() => {
-      mixpanelTrackUrlChanged(location.pathname)
+      mixpanelTrackUrlChanged(location.pathname);
     },[])
 
     useEffect(() => {
       read("api/v1/artists").then((res) => {
-        setArtists(res)
+        setArtists(res);
       });
     }, []);
   

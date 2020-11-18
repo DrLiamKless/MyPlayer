@@ -15,52 +15,50 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import RemoveIcon from '@material-ui/icons/Remove';
 import Loader from './Loader'
 
-
-
 const useStyles = makeStyles((theme) => ({
-    media: {
-      height: 120,
-      paddingTop: '56.25%',
-    
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    card: {
-      backgroundColor: "rgba(13, 18, 24, 0.692)",
-      color: "white",
-    },
-  }));
+  media: {
+    height: 120,
+    paddingTop: '56.25%',
+  
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  card: {
+    backgroundColor: "rgba(13, 18, 24, 0.692)",
+    color: "white",
+  },
+}));
  
 
 function Playlist({ playlist }) {
 
-    const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-    const handleRemoveFromPlaylist = (songId) => {
-      read(`/api/v1/playlists/songInPlaylist/${songId}/${playlist.id}`).then(songInPlaylist => {
-        destroy(`api/v1/playlists/removeSong/${songInPlaylist.id}`);
-      })
-    }
-
+  const handleRemoveFromPlaylist = (songId) => {
+    read(`/api/v1/playlists/songInPlaylist/${songId}/${playlist.id}`).then(songInPlaylist => {
+      destroy(`api/v1/playlists/removeSong/${songInPlaylist.id}`);
+    })
+  }
 
 const date = new Date(playlist.createdAt);
+
   return (
     playlist.playlistName ? 
     <div className={"card"} >
-    <Card className={classes.card}>
+      <Card className={classes.card}>
         <CardHeader
           title={playlist.playlistName}
           subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() + ' by ' + playlist['Users'][0].userName}

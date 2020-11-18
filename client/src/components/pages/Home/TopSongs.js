@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
@@ -13,7 +13,7 @@ function TopSongs({ setSongToPlay, topSongs }) {
   const responsive = {
     desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 6,
+    items: 5,
     },
     tablet: {
     breakpoint: { max: 1024, min: 464 },
@@ -31,6 +31,7 @@ function TopSongs({ setSongToPlay, topSongs }) {
       <h5>those are your Most Favorite Songs</h5>
         <Carousel
         additionalTransfrom={0}
+        infinite
         responsive={responsive}
         keyBoardControl={true}
         containerClass="carousel-container"

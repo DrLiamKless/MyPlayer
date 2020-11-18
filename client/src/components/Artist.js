@@ -34,7 +34,6 @@ function Song({ artist, setSongToPlay }) {
 
     const classes = useStyles();
 
-
   return (
     artist.id ?
     <div className={"card"}>

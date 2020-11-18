@@ -7,7 +7,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { brown } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { Link } from 'react-router-dom';
@@ -27,81 +26,75 @@ import { mixpanelTrackSongPlayed, mixpanelTrackSongLiked, mixpanelTrackSongUnlik
 import { User } from '../contexts/userContext';
 
 
-
-
-
-
-
-
 const useStyles = makeStyles((theme) => ({
-    media: {
-      height: 0,
-      paddingTop: '56.25%'
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    card: {
-      backgroundColor: "rgba(13, 18, 24, 0.692)",
-      color: "white",
-    },
-  }));
+  media: {
+    height: 0,
+    paddingTop: '56.25%'
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  card: {
+    backgroundColor: "rgba(13, 18, 24, 0.692)",
+    color: "white",
+  },
+}));
  
 
 function Song({ song, setSongToPlay, setLikeState, likeState}) {
 
-    const classes = useStyles();
-    const user = useContext(User);
-    const [open, setOpen] = useState(false);
-    const [playlists, setPlaylists] = useState([]);
-    const [isLiked, setIsLiked] = useState();
-    const {register: addToPlaylist, handleSubmit: handleAddToPlaylist} = useForm()
+  const classes = useStyles();
+  const user = useContext(User);
+  const [open, setOpen] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
+  const [isLiked, setIsLiked] = useState();
+  const {register: addToPlaylist, handleSubmit: handleAddToPlaylist} = useForm();
 
 
-    useEffect(() => {
-      read(`api/v1/playlists/`).then((res) => {
-        setPlaylists(res)
-      });
-    }, [open]);
+  useEffect(() => {
+    read(`api/v1/playlists/`).then((res) => {
+      setPlaylists(res)
+    });
+  }, [open]);
 
-    useEffect(() => {
-      read(`/api/v1/interactions/song/${song.id}/user/${user.id}`).then((res) => {
-        setIsLiked(() => {
-          if (res[0]) {
-            return res[0].isLiked
-          } return false
-        })
-      });
-    }, [likeState]);
+  useEffect(() => {
+    read(`/api/v1/interactions/song/${song.id}/user/${user.id}`).then((res) => {
+      setIsLiked(() => {
+        if (res[0]) {
+          return res[0].isLiked
+        } return false
+      })
+    });
+  }, [likeState]);
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const onAddToPlaylist = data => {
-      create("api/v1/playlists/addSong", data);
-      handleClose()
-    } 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleLike = () => {
-      likeFunction(song, user, isLiked); 
-      setLikeState(!likeState); 
-      
-      likeState ? 
-      mixpanelTrackSongUnliked(song.songName)
-      : mixpanelTrackSongLiked(song.songName) 
-    }
+  const onAddToPlaylist = data => {
+    create("api/v1/playlists/addSong", data);
+    handleClose()
+  } 
+
+  const handleLike = () => {
+    likeFunction(song, user, isLiked); 
+    setLikeState(!likeState); 
+    
+    likeState ? 
+    mixpanelTrackSongUnliked(song.songName)
+    : mixpanelTrackSongLiked(song.songName) ;
+  }
 
   return (
     song ?
@@ -110,12 +103,12 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
         <CardHeader
           avatar={<Avatar alt="artist img" src={song.Artists[0] && song.Artists[0].artistCoverImg}/>}
           title={song.songName}
-          disableTypography={false}
-        ></CardHeader>
+          disableTypography={false}>
+        </CardHeader>
         <CardContent className={"logo-container"}>
-        <Link to={`/song/${song.id}?artist=${song.artistId}`}>
-        {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} className="song-logo" alt="logo" />}
-        </Link>
+          <Link to={`/song/${song.id}?artist=${song.artistId}`}>
+          {<img src={"https://assets.onlinelabels.com/images/clip-art/BenBois/BenBois_Vinyl_records.png"} className="song-logo" alt="logo" />}
+          </Link>
         </CardContent>
         <CardActions disableSpacing>
           <Tooltip 
