@@ -36,18 +36,21 @@ function App() {
       if (Cookies.get("refreshToken")) {
         try {
           const data = await read("/api/v1/auth/validateToken");
-          setLogged(data);
-          const userId = Cookies.get('id');
-          const userLogged = await read(`api/v1/users/id/${userId}`);
-          setUser(userLogged);
-          setLoading(false);
-          mixpanelTrackLoggedIn()
+          if (data === "Unauthorized") {
+            Cookies.remove("accessToken")
+            Cookies.remove("id")
+            Cookies.remove("refreshToken")
+            window.location = '/';
+          } else {
+            setLogged(data);
+            const userId = Cookies.get('id');
+            const userLogged = await read(`api/v1/users/id/${userId}`);
+            setUser(userLogged);
+            setLoading(false);
+            mixpanelTrackLoggedIn()
+          }
         } catch (e) {
-          // Cookies.remove("accessToken")
-          // Cookies.remove("id")
-          // Cookies.remove("refreshToken")
           console.error(e);
-          // window.location = '/';
         }
       } else {
         setLoading(false);

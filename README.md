@@ -1,7 +1,7 @@
 ## My Player
 A Spotify-Like Web App.
 
-##### Technologies
+#### Technologies
 * mySQL
 * ORM
 * REST API
@@ -11,7 +11,13 @@ A Spotify-Like Web App.
 * Elastic Search
 * Uploaded to docker
 
-![mygif](./readme-files/myplayer.gif)
+##### app demo
+![app](./readme-files/myPlayer.gif)
+
+
+##### ERD
+![ERD](./readme-files/ERD.png)
+
 
 
 Enjoy!
