@@ -23,7 +23,7 @@ function Search() {
     useEffect(() => {
         if(debouncedSearchInput) {
             try {
-                read(`api/v1/search/songs/${searchInput}`).then((res) => {
+                read(`/api/v1/search/songs/${searchInput}`).then((res) => {
                     setSearchSongsOutputs(() => {
                         if (res.name === "ResponseError") {
                             return false
@@ -33,7 +33,7 @@ function Search() {
                 }).catch(err => {
                     setSearchSongsOutputs(false)
                 })
-                read(`api/v1/search/artists/${searchInput}`).then((res) => {
+                read(`/api/v1/search/artists/${searchInput}`).then((res) => {
                     setSearchArtistsOutputs(() => {
                         if (res.name === "ResponseError") {
                             return false
@@ -43,7 +43,7 @@ function Search() {
                 }).catch(err => {
                     setSearchSongsOutputs(false)
                 })
-                read(`api/v1/search/albums/${searchInput}`).then((res) => {
+                read(`/api/v1/search/albums/${searchInput}`).then((res) => {
                     setSearchAlbumsOutputs(() => {
                         if (res.name === "ResponseError") {
                             return false

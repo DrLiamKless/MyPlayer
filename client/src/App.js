@@ -44,7 +44,7 @@ function App() {
           } else {
             setLogged(data);
             const userId = Cookies.get('id');
-            const userLogged = await read(`api/v1/users/id/${userId}`);
+            const userLogged = await read(`/api/v1/users/id/${userId}`);
             setUser(userLogged);
             setLoading(false);
             mixpanelTrackLoggedIn()

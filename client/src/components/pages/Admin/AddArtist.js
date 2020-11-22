@@ -22,7 +22,7 @@ function AddArtist() {
   const {register: newArtist, handleSubmit: handleNewArtist} = useForm()
 
   const onSubmitArtist = data => {
-    create("api/v1/artists/add", data)
+    create("/api/v1/artists/add", data)
   } 
 
   return (

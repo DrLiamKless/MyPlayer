@@ -46,7 +46,7 @@ function AllArtists() {
     },[])
 
     useEffect(() => {
-      read("api/v1/artists").then((res) => {
+      read("/api/v1/artists").then((res) => {
         setArtists(res);
       });
     }, []);

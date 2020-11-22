@@ -24,7 +24,7 @@ function AddAlbum({ artists }) {
   const {register: newAlbum, handleSubmit: handleNewAlbum} = useForm()
 
   const onSubmitAlbum = data => {
-    create("api/v1/albums/add", data)
+    create("/api/v1/albums/add", data)
   } 
   
   return (

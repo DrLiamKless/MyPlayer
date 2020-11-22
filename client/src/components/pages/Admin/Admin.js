@@ -18,10 +18,10 @@ function Admin() {
   },[])
 
   const fetchData = () => {
-    read("api/v1/artists").then((res) => {
+    read("/api/v1/artists").then((res) => {
       setArtists(res)
     });
-      read("api/v1/albums").then((res) => {
+      read("/api/v1/albums").then((res) => {
         setAlbums(res)
     });
   }

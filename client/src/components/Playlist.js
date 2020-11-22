@@ -49,7 +49,7 @@ function Playlist({ playlist }) {
 
   const handleRemoveFromPlaylist = (songId) => {
     read(`/api/v1/playlists/songInPlaylist/${songId}/${playlist.id}`).then(songInPlaylist => {
-      destroy(`api/v1/playlists/removeSong/${songInPlaylist.id}`);
+      destroy(`/api/v1/playlists/removeSong/${songInPlaylist.id}`);
     })
   }
 

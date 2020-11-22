@@ -59,7 +59,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
 
 
   useEffect(() => {
-    read(`api/v1/playlists/`).then((res) => {
+    read(`/api/v1/playlists/`).then((res) => {
       setPlaylists(res)
     });
   }, [open]);
@@ -83,7 +83,7 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
   };
 
   const onAddToPlaylist = data => {
-    create("api/v1/playlists/addSong", data);
+    create("/api/v1/playlists/addSong", data);
     handleClose()
   } 
 
