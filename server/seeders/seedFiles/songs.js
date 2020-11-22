@@ -1,6 +1,5 @@
 module.exports = [
     {
-    id: 1,
     youtube_link: "https://www.youtube.com/embed/HQmmM_qwG4k",
     album_id: 1,
     artist_id: 1,
@@ -11,7 +10,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 2,
     youtube_link: "https://www.youtube.com/embed/Nnu1E5Kslig",
     album_id: 1,
     artist_id: 1,
@@ -22,7 +20,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 3,
     youtube_link: "https://www.youtube.com/embed/y8OtzJtp-EM",
     album_id: 1,
     artist_id: 1,
@@ -33,7 +30,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 4,
     youtube_link: "https://www.youtube.com/embed/8Tvq1h1WJm4",
     album_id: 2,
     artist_id: 2,
@@ -44,7 +40,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 5,
     youtube_link: "https://www.youtube.com/embed/bI8P6ZSHSvE",
     album_id: 3,
     artist_id: 3,
@@ -55,7 +50,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 6,
     youtube_link: "https://www.youtube.com/embed/Man4Xw8Xypo",
     album_id: 3,
     artist_id: 3,
@@ -66,7 +60,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 7,
     youtube_link: "https://www.youtube.com/embed/vdvnOH060Qg",
     album_id: 3,
     artist_id: 3,
@@ -77,7 +70,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 8,
     youtube_link: "https://www.youtube.com/embed/yS_tA7WNghM",
     album_id: 5,
     artist_id: 20,
@@ -88,7 +80,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 9,
     youtube_link: "https://www.youtube.com/embed/pse5JzwHVtM",
     album_id: 6,
     artist_id: 5,
@@ -99,7 +90,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 10,
     youtube_link: "https://www.youtube.com/embed/cGbDHwrC_1E",
     album_id: 2,
     artist_id: 2,
@@ -110,7 +100,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 11,
     youtube_link: "https://www.youtube.com/embed/9Ny3OkpN4b4",
     album_id: 2,
     artist_id: 2,
@@ -121,7 +110,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 12,
     youtube_link: "https://www.youtube.com/embed/P0CMm9QccZg",
     album_id: 4,
     artist_id: 4,
@@ -132,7 +120,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 13,
     youtube_link: "https://www.youtube.com/embed/zAaHhoNMXS0",
     album_id: 8,
     artist_id: 6,
@@ -143,7 +130,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 14,
     youtube_link: "https://www.youtube.com/embed/orkXG-xXO-k",
     album_id: 8,
     artist_id: 6,
@@ -154,7 +140,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 15,
     youtube_link: "https://www.youtube.com/embed/ymjNGjuBCTo",
     album_id: 9,
     artist_id: 7,
@@ -165,7 +150,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 16,
     youtube_link: "https://www.youtube.com/embed/UAWcs5H-qgQ",
     album_id: 9,
     artist_id: 7,
@@ -176,7 +160,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 17,
     youtube_link: "https://www.youtube.com/watch?v=E07s5ZYygMg",
     album_id: 11,
     artist_id: 23,
@@ -187,7 +170,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 18,
     youtube_link: "https://www.youtube.com/watch?v=A_MjCqQoLLA",
     album_id: 10,
     artist_id: 3,
@@ -198,7 +180,6 @@ module.exports = [
     updated_at: new Date()
     },
     {
-    id: 19,
     youtube_link: "https://www.youtube.com/watch?v=TPFbwxajnrs",
     album_id: 12,
     artist_id: 25,

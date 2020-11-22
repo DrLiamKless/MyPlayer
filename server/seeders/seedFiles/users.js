@@ -1,6 +1,5 @@
 module.exports = [
     {
-    id: 1,
     user_name: "Liam",
     email: "Klessliam@gmail.com",
     password: "liam1234",

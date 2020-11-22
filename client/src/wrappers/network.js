@@ -32,6 +32,7 @@ export default function network(url ,body, {...customConfig} = {}) {
         return Promise.reject(`${response.status} : ''${data.message}'`);
       }
     }).catch(err => {
+      console.log(err)
       return "Unauthorized"
     })
 }

@@ -2,8 +2,10 @@ FROM node:12
 
 WORKDIR /usr/app/client
 
-COPY . .
+ADD /package.json .
 RUN npm install 
+
+COPY . .
 
 
 CMD [ "npm", "run", "start"]
