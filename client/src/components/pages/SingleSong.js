@@ -92,16 +92,16 @@ function SingleSong({ setSongToPlay }) {
       <div className="suggested-songs">
         <List className={classes.root}
           subheader={
-                <Link to={`/${queryKey}/${queryValue}`}>
-            <ListSubheader component="p">
-              {  songsFromQuery.Songs.length > 1 ? <h5>related songs from 
+                <Link to={`/${queryKey}/${queryValue}`} style={{color: 'white', textDecoration: 'none'}}>
+            <ListSubheader component="p"  style={{color: 'white'}}>
+              {  songsFromQuery.Songs.length > 1 ? <span>related songs from 
                 {albumQuery ? 
                 ' ' + songsFromQuery.albumName :
                 artistQuery ? 
                 ' ' + songsFromQuery.artistName :
                 playlistQuery &&
-                ' ' + songsFromQuery.playlistName + ' playlist'}</h5>
-                : <h5>this is the only song from this {queryKey}</h5>}
+                ' ' + songsFromQuery.playlistName + ' playlist'}</span>
+                : <span>this is the only song from this {queryKey}</span>}
             </ListSubheader>
             </Link>
           }>

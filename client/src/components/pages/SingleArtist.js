@@ -65,7 +65,7 @@ function SinglePlaylist({ props, singleSong }) {
           <div className="suggested-songs">
             <List className={classes.root}
               subheader={
-                <ListSubheader component="p">
+                <ListSubheader component="p" style={{color: 'white'}}>
                   suggestes songs from {singleArtist.artistName}
                 </ListSubheader>
               }>

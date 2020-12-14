@@ -69,7 +69,7 @@ function SingleAlbum({ setSongToPlay }) {
       <div className="suggested-songs">
         <List className={classes.root}
           subheader={
-            <ListSubheader component="p">
+            <ListSubheader component="p" style={{color: 'white'}}>
               more songs from {singleAlbum.albumName} 
             </ListSubheader>
           }>
