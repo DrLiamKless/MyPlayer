@@ -22,9 +22,9 @@ function Search() {
 
     const fetchSearchOutputs = async () => {
         try {
-            const songsOutputs = await read(`api/v1/search/songs/${searchInput}`)
-            const artistsOutputs = await read(`api/v1/search/artists/${searchInput}`)
-            const albumsOutputs = await read(`api/v1/search/albums/${searchInput}`)
+            const songsOutputs = await read(`api/v1/songs/?songName=${searchInput}`)
+            const artistsOutputs = await read(`api/v1/artists/?artistName=${searchInput}`)
+            const albumsOutputs = await read(`api/v1/albums/?albumName=${searchInput}`)
 
                 setSearchSongsOutputs(() => {
                     if (songsOutputs.name === "ResponseError") {
