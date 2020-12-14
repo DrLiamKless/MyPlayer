@@ -3,7 +3,8 @@ FROM node:12
 WORKDIR /usr/app/server
 
 ADD /package.json .
-RUN npm install 
+RUN npm install --silent
+
 
 COPY . .
 

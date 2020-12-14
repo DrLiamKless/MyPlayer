@@ -33,7 +33,9 @@ function TopArtists({topArtists}) {
           responsive={responsive}
           keyBoardControl={true}
           containerClass="carousel-container"
-          itemClass="carousel-item">
+          itemClass="carousel-item"
+          infinite
+        >
           { topArtists && topArtists.length > 0 ?
             topArtists &&
           topArtists.map((artist, i) => (

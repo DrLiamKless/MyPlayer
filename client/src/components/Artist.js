@@ -13,16 +13,6 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', 
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
   card: {
     backgroundColor: "rgba(13, 18, 24, 0.692)",
     color: "white",
@@ -43,7 +33,7 @@ function Song({ artist, setSongToPlay }) {
           title={artist.artistName}
         >
         </CardHeader>
-        <CardContent className={"album-container"}>
+        <CardContent>
           <Link to={`/artist/${artist.id}`}>
           <div className={"logo-container"}>
             {<img src={artist.artistCoverImg} className="card-logo" alt="logo" />}

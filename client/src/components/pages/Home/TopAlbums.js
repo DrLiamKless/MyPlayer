@@ -12,7 +12,7 @@ function TopAlbums({topAlbums}) {
     const responsive = {
       desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 6,
+      items: 4,
       },
       tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -33,7 +33,9 @@ function TopAlbums({topAlbums}) {
         responsive={responsive}
         keyBoardControl={true}
         containerClass="carousel-container"
-        itemClass="carousel-item">
+        itemClass="carousel-item"
+        infinite
+      >
         { topAlbums && topAlbums.length > 0 ?
           topAlbums.map((album, i) => (
             <Album

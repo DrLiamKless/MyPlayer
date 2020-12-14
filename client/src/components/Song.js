@@ -29,21 +29,17 @@ import { User } from '../contexts/userContext';
 const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
-    paddingTop: '56.25%'
+    paddingTop: '56.25%',
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  card: {
+   card: {
     backgroundColor: "rgba(13, 18, 24, 0.692)",
     color: "white",
+    minWidth: '175px',
+    maxWidth: '175px'
+  },
+  cardHeader: {
+    maxHeight: '100%',
+    overflowY: 'hidden',
   },
 }));
  
@@ -102,8 +98,9 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
       <Card className={classes.card}>
         <CardHeader
           avatar={<Avatar alt="artist img" src={song.Artists[0] && song.Artists[0].artistCoverImg}/>}
-          title={song.songName}
-          disableTypography={false}>
+          title={song.songName.length >= 22 ? song.songName.substring(0,20) + '..' : song.songName}
+          disableTypography={false}
+        >
         </CardHeader>
         <CardContent className={"logo-container"}>
           <Link to={`/song/${song.id}?artist=${song.artistId}`}>
@@ -112,8 +109,8 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
         </CardContent>
         <CardActions disableSpacing>
           <Tooltip 
-          title={"add/remove from favorites"} placement={"bottom"}
-          TransitionComponent={Fade} TransitionProps={{ timeout: 600 }}>
+            title={"add/remove from favorites"} placement={"bottom"}
+            TransitionComponent={Fade} TransitionProps={{ timeout: 600 }}>
             <IconButton
               aria-label="Like"
               onClick={handleLike}>
@@ -123,15 +120,15 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
             </IconButton>
           </Tooltip>
           <Tooltip 
-          title="play" placement={"bottom"}
-          TransitionProps={{ timeout: 600 }}>
+            title="play" placement={"bottom"}
+            TransitionProps={{ timeout: 600 }}>
             <IconButton aria-label="play" onClick={()=>{setSongToPlay(song); mixpanelTrackSongPlayed(song.songName)}}>
               <PlayArrowIcon />
             </IconButton>
           </Tooltip>
           <Tooltip 
-          title="add to playlist" placement={"bottom"}
-          TransitionProps={{ timeout: 600 }}>
+            title="add to playlist" placement={"bottom"}
+            TransitionProps={{ timeout: 600 }}>
             <IconButton aria-label="add" variant="outlined" onClick={handleClickOpen}>
               <AddIcon/>
             </IconButton>
@@ -150,26 +147,26 @@ function Song({ song, setSongToPlay, setLikeState, likeState}) {
                 {playlists.map(playlist => (<option key={playlist.playlistName} value={playlist.id}>{playlist.playlistName}</option>))}
               </Select>
             </div>
-          <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          style={{marginBottom:"5px"}}
-          inputRef={addToPlaylist}>
-            Add
-          </Button>
-          <Button onClick={handleClose}
-          color="primary"
-          fullWidth
-          variant="contained"
-          >
-            Cancel
-          </Button>
+            <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{marginBottom:"5px"}}
+            inputRef={addToPlaylist}>
+              Add
+            </Button>
+            <Button onClick={handleClose}
+            color="primary"
+            fullWidth
+            variant="contained"
+            >
+              Cancel
+            </Button>
           </form>
-        <DialogActions>
-        </DialogActions>
-      </Dialog>
+          <DialogActions>
+          </DialogActions>
+          </Dialog>
         </CardActions>
       </Card>
     </div>

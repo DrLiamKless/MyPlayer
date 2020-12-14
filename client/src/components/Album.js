@@ -12,16 +12,6 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', 
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
   card: {
     backgroundColor: "rgba(13, 18, 24, 0.692)",
     color: "white",
@@ -40,7 +30,7 @@ function Album({ album }) {
           avatar={
             <Avatar alt="artist img" src={album.Artists[0] && album.Artists[0].artistCoverImg}></Avatar>
           }
-          title={album.albumName}
+          title={album.albumName.length >= 31 ? album.albumName.substring(0,31) + '..' : album.albumName}
           disableTypography={false}>
         </CardHeader>
         <CardContent>

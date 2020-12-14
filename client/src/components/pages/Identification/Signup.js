@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%',
@@ -49,8 +49,8 @@ function SignUp() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <AccountCircleIcon />
+        <Avatar className={classes.avatar} color="secondary">
+          <AccountCircleIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
             Not a member?
@@ -97,14 +97,21 @@ function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="secondary"
             className={classes.submit}
           >
             Sign Up
           </Button>
         </form>
       </div>
-      <span>already a member? <Link to="/">sign in</Link></span>
+      <span style={{color: 'black', backgroundColor: 'rgba(154,171,161, 0.3)'}}>already a member?{' '} 
+        <Link 
+          to="/"
+          style={{color: 'black', backgroundColor: 'rgba(154,171,161, 0.3)'}}
+        >
+          sign in
+        </Link>
+      </span>
     </Container>
     </div>
   );

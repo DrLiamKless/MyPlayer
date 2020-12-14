@@ -60,7 +60,13 @@ function App() {
   }, []);
 
   return (
-    <div className="App" style={{backgroundImage: `url(${BGImage})`, backgroundSize: "cover"}}>
+    <div 
+      className="App" 
+      style={{
+        backgroundImage: `url(${BGImage})`, 
+        backgroundSize: "cover",
+      }}
+    >
     {
         !loading ?
           !logged ?

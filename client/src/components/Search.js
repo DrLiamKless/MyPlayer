@@ -20,42 +20,41 @@ function Search() {
     const [searchAlbumsOutputs, setSearchAlbumsOutputs] = useState([]);
     const debouncedSearchInput = useDebounce(searchInput, 500);
 
+    const fetchSearchOutputs = async () => {
+        try {
+            const songsOutputs = await read(`api/v1/search/songs/${searchInput}`)
+            const artistsOutputs = await read(`api/v1/search/artists/${searchInput}`)
+            const albumsOutputs = await read(`api/v1/search/albums/${searchInput}`)
+
+                setSearchSongsOutputs(() => {
+                    if (songsOutputs.name === "ResponseError") {
+                        console.log(songsOutputs.meta.body.message)
+                        return false
+                    }
+                    return songsOutputs
+                });
+                setSearchArtistsOutputs(() => {
+                    if (artistsOutputs.name === "ResponseError") {
+                        console.log(artistsOutputs)
+                        return false
+                    }
+                    return artistsOutputs
+                });
+                setSearchAlbumsOutputs(() => {
+                    if (albumsOutputs.name === "ResponseError") {
+                        console.log(albumsOutputs)
+                        return false
+                    }
+                    return albumsOutputs
+                });
+        } catch (err) {
+            console.error(err);
+        } 
+    }
+
     useEffect(() => {
         if(debouncedSearchInput) {
-            try {
-                read(`api/v1/search/songs/${searchInput}`).then((res) => {
-                    setSearchSongsOutputs(() => {
-                        if (res.name === "ResponseError") {
-                            return false
-                        }
-                        return res
-                    });
-                }).catch(err => {
-                    setSearchSongsOutputs(false)
-                })
-                read(`api/v1/search/artists/${searchInput}`).then((res) => {
-                    setSearchArtistsOutputs(() => {
-                        if (res.name === "ResponseError") {
-                            return false
-                        }
-                        return res
-                    });
-                }).catch(err => {
-                    setSearchSongsOutputs(false)
-                })
-                read(`api/v1/search/albums/${searchInput}`).then((res) => {
-                    setSearchAlbumsOutputs(() => {
-                        if (res.name === "ResponseError") {
-                            return false
-                        }
-                        return res
-                    });
-                }).catch(err => {
-                    setSearchSongsOutputs(false)
-                })
-            } catch (err) {
-                console.error(err);
-            } 
+            fetchSearchOutputs()
          }
     }, [debouncedSearchInput]);
 

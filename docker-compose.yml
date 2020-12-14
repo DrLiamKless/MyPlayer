@@ -61,21 +61,6 @@ services:
     depends_on: 
       - db-myplayer
 
-  app-myplayer:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev
-    stdin_open: true
-    volumes: 
-      - '/usr/app/client/node_modules'
-      - ./client:/usr/app/client
-    ports:
-      - 3030:3030
-    expose: 
-      - "3030"
-    depends_on: 
-      - api-myplayer
-    
 volumes:
   db-myplayer:
     driver: local

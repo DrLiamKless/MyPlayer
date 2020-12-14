@@ -9,7 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { brown } from '@material-ui/core/colors';
+import * as Scroll from 'react-scroll';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -45,6 +45,7 @@ function Playlist({ playlist }) {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    Scroll.animateScroll.scrollToBottom()
   };
 
   const handleRemoveFromPlaylist = (songId) => {
@@ -62,6 +63,7 @@ const date = new Date(playlist.createdAt);
         <CardHeader
           title={playlist.playlistName}
           subheader={date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() + ' by ' + playlist['Users'][0].userName}
+          subheaderTypographyProps={{color: 'white'}}
         />
         <Link to={`/playlist/${playlist.id}`}>
           <CardContent className={"logo-container"}>
