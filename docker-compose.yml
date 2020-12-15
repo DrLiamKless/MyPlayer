@@ -21,21 +21,6 @@ services:
     volumes: 
       - ./my-db:/var/lib/mysql
 
-  mysql-workbench:
-    image: ghcr.io/linuxserver/mysql-workbench
-    container_name: mysql-workbench
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - /path/to/config:/config
-    ports:
-      - 4000:3000
-    cap_add:
-      - IPC_LOCK
-    restart: unless-stopped
-
   api-myplayer:
     build:
       context: ./server
@@ -60,6 +45,8 @@ services:
       ELASTIC_PASSWORD: LQgaUr5rKdV6gy5HkUylZJvG
     depends_on: 
       - db-myplayer
+    volumes:
+      - ./server:/usr/app/server
 
 volumes:
   db-myplayer:
